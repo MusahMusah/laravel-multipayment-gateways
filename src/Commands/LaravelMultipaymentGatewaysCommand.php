@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace MusahMusah\LaravelMultipaymentGateways\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class LaravelMultipaymentGatewaysCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-multipayment-gateways';
 
     public $description = 'My command';
 
