@@ -7,6 +7,7 @@ namespace MusahMusah\LaravelMultipaymentGateways\Gateways;
 use GuzzleHttp\Exception\GuzzleException;
 use MusahMusah\LaravelMultipaymentGateways\Contracts\PaystackContract;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\HttpMethodFoundException;
+use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidConfigurationException;
 use MusahMusah\LaravelMultipaymentGateways\Traits\ConsumesExternalServices;
 
 class PaystackService implements PaystackContract
@@ -230,6 +231,12 @@ class PaystackService implements PaystackContract
 
     /**
      * Hit Paystack's API to finalize a Transfer
+     * @param string $transferCode
+     * @param string $otp
+     * @return mixed
+     * @throws GuzzleException
+     * @throws HttpMethodFoundException
+     * @throws InvalidConfigurationException
      */
     public function finalizeTransfer(string $transferCode, string $otp): mixed
     {
@@ -246,6 +253,11 @@ class PaystackService implements PaystackContract
 
     /**
      * Hit Paystack's API to verify a Transfer
+     * @param string $reference
+     * @return mixed
+     * @throws GuzzleException
+     * @throws HttpMethodFoundException
+     * @throws InvalidConfigurationException
      */
     public function verifyTransfer(string $reference): mixed
     {
@@ -257,8 +269,13 @@ class PaystackService implements PaystackContract
 
     /**
      * Hit Paystack's API to fetch a Transfer
+     * @param string $transferCode
+     * @return mixed
+     * @throws GuzzleException
+     * @throws HttpMethodFoundException
+     * @throws InvalidConfigurationException
      */
-    public function fetchTransfer(string $transferCode): mixed
+    public function fetchTransfer(string $transferCode): array
     {
         return $this->makeRequest(
             method: 'GET',
@@ -268,8 +285,11 @@ class PaystackService implements PaystackContract
 
     /**
      * Hit Paystack's API to fetch all Transfers
+     * @throws GuzzleException
+     * @throws HttpMethodFoundException
+     * @throws InvalidConfigurationException
      */
-    public function fetchTransfers(): mixed
+    public function fetchTransfers(): array
     {
         return $this->makeRequest(
             method: 'GET',
