@@ -26,6 +26,12 @@ class PaystackService implements PaystackContract
      */
     protected $secret;
 
+    /**
+     * The redirect url to consume the Paystack's service
+     * @var string
+     */
+    protected $redirectUrl;
+
     public function __construct()
     {
         $this->baseUri = config('multipayment-gateways.paystack.base_uri');
