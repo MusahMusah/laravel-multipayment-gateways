@@ -2,9 +2,9 @@
 
 namespace MusahMusah\LaravelMultipaymentGateways;
 
+use MusahMusah\LaravelMultipaymentGateways\Contracts\PaystackContract;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use MusahMusah\LaravelMultipaymentGateways\Commands\LaravelMultipaymentGatewaysCommand;
 
 class LaravelMultipaymentGatewaysServiceProvider extends PackageServiceProvider
 {
@@ -17,9 +17,16 @@ class LaravelMultipaymentGatewaysServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('laravel-multipayment-gateways')
-            ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_laravel-multipayment-gateways_table')
-            ->hasCommand(LaravelMultipaymentGatewaysCommand::class);
+            ->hasConfigFile();
+//            ->hasViews()
+//            ->hasMigration('create_laravel-multipayment-gateways_table')
+//            ->hasCommand(LaravelMultipaymentGatewaysCommand::class);
+    }
+
+    public function register()
+    {
+        $this->app->singleton(PaystackContract::class, function () {
+            return new Gateways\PaystackService;
+        });
     }
 }
