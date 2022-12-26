@@ -2,9 +2,9 @@
 
 namespace MusahMusah\LaravelMultipaymentGateways;
 
-use MusahMusah\LaravelMultipaymentGateways\Commands\LaravelMultipaymentGatewaysCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
+use MusahMusah\LaravelMultipaymentGateways\Commands\LaravelMultipaymentGatewaysCommand;
 
 class LaravelMultipaymentGatewaysServiceProvider extends PackageServiceProvider
 {
