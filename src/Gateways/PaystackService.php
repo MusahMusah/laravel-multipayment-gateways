@@ -16,18 +16,21 @@ class PaystackService implements PaystackContract
 
     /**
      * The base uri to consume the Paystack's service
+     *
      * @var string
      */
     protected $baseUri;
 
     /**
      * The secret to consume the Paystack's service
+     *
      * @var string
      */
     protected $secret;
 
     /**
      * The redirect url to consume the Paystack's service
+     *
      * @var string
      */
     protected $redirectUrl;
@@ -40,6 +43,7 @@ class PaystackService implements PaystackContract
 
     /**
      * Resolve the authorization URL / Endpoint
+     *
      * @param $queryParams
      * @param $formParams
      * @param $headers
@@ -52,6 +56,7 @@ class PaystackService implements PaystackContract
 
     /**
      * Set the access token for the request
+     *
      * @return string
      */
     public function resolveAccessToken(): string
@@ -61,6 +66,7 @@ class PaystackService implements PaystackContract
 
     /**
      * Decode the response
+     *
      * @return mixed
      */
     public function decodeResponse(): mixed
@@ -70,6 +76,7 @@ class PaystackService implements PaystackContract
 
     /**
      * Get the response
+     *
      * @return mixed
      */
     public function getResponse(): mixed
@@ -79,6 +86,7 @@ class PaystackService implements PaystackContract
 
     /**
      * Get the data from the response
+     *
      * @return mixed
      */
     public function getData(): mixed
@@ -88,6 +96,7 @@ class PaystackService implements PaystackContract
 
     /**
      * Get the authorization URL from paystack
+     *
      * @return string
      */
     public function getAuthorizationUrl(): string
@@ -97,8 +106,10 @@ class PaystackService implements PaystackContract
 
     /**
      * Hit Paystack's API to Verify that the transaction is valid
-     * @param string $reference
+     *
+     * @param  string  $reference
      * @return array
+     *
      * @throws GuzzleException
      * @throws HttpMethodFoundException
      */
@@ -112,7 +123,9 @@ class PaystackService implements PaystackContract
 
     /**
      * Hit Paystack's API to get all the Banks
+     *
      * @return mixed
+     *
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function getBanks(): array
@@ -125,9 +138,11 @@ class PaystackService implements PaystackContract
 
     /**
      * Hit Paystack's API to resolve a bank account
-     * @param string $accountNumber
-     * @param string $bankCode
+     *
+     * @param  string  $accountNumber
+     * @param  string  $bankCode
      * @return mixed
+     *
      * @throws GuzzleException
      * @throws HttpMethodFoundException
      */
@@ -145,10 +160,12 @@ class PaystackService implements PaystackContract
 
     /**
      * Hit Paystack's API to create a Transfer Recipient
-     * @param string $name
-     * @param string $accountNumber
-     * @param string $bankCode
+     *
+     * @param  string  $name
+     * @param  string  $accountNumber
+     * @param  string  $bankCode
      * @return mixed
+     *
      * @throws GuzzleException
      * @throws HttpMethodFoundException
      */
@@ -170,8 +187,10 @@ class PaystackService implements PaystackContract
 
     /**
      * Hit Paystack's API to create bulk transfers recipients
-     * @param array $recipients
+     *
+     * @param  array  $recipients
      * @return mixed
+     *
      * @throws GuzzleException
      * @throws HttpMethodFoundException
      */
@@ -189,11 +208,13 @@ class PaystackService implements PaystackContract
 
     /**
      * Hit Paystack's API to initiate a Transfer
-     * @param int $amount
-     * @param string $reference
-     * @param string $recipient
-     * @param string $reason
+     *
+     * @param  int  $amount
+     * @param  string  $reference
+     * @param  string  $recipient
+     * @param  string  $reason
      * @return mixed
+     *
      * @throws GuzzleException
      * @throws HttpMethodFoundException
      */
@@ -216,8 +237,10 @@ class PaystackService implements PaystackContract
 
     /**
      * Hit Paystack's API to initiate a Bulk Transfer
-     * @param array $transfers
+     *
+     * @param  array  $transfers
      * @return mixed
+     *
      * @throws GuzzleException
      * @throws HttpMethodFoundException
      */
@@ -237,9 +260,11 @@ class PaystackService implements PaystackContract
 
     /**
      * Hit Paystack's API to finalize a Transfer
-     * @param string $transferCode
-     * @param string $otp
+     *
+     * @param  string  $transferCode
+     * @param  string  $otp
      * @return mixed
+     *
      * @throws GuzzleException
      * @throws HttpMethodFoundException
      * @throws InvalidConfigurationException
@@ -248,7 +273,7 @@ class PaystackService implements PaystackContract
     {
         return $this->makeRequest(
             method: 'POST',
-            requestUrl: "transfer/finalize_transfer",
+            requestUrl: 'transfer/finalize_transfer',
             formParams: [
                 'transfer_code' => $transferCode,
                 'otp' => $otp,
@@ -259,8 +284,10 @@ class PaystackService implements PaystackContract
 
     /**
      * Hit Paystack's API to verify a Transfer
-     * @param string $reference
+     *
+     * @param  string  $reference
      * @return mixed
+     *
      * @throws GuzzleException
      * @throws HttpMethodFoundException
      * @throws InvalidConfigurationException
@@ -275,8 +302,10 @@ class PaystackService implements PaystackContract
 
     /**
      * Hit Paystack's API to fetch a Transfer
-     * @param string $transferCode
+     *
+     * @param  string  $transferCode
      * @return mixed
+     *
      * @throws GuzzleException
      * @throws HttpMethodFoundException
      * @throws InvalidConfigurationException
@@ -291,6 +320,7 @@ class PaystackService implements PaystackContract
 
     /**
      * Hit Paystack's API to fetch all Transfers
+     *
      * @throws GuzzleException
      * @throws HttpMethodFoundException
      * @throws InvalidConfigurationException
@@ -299,7 +329,7 @@ class PaystackService implements PaystackContract
     {
         return $this->makeRequest(
             method: 'GET',
-            requestUrl: "transfer",
+            requestUrl: 'transfer',
         );
     }
 }
