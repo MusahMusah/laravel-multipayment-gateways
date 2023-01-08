@@ -13,7 +13,7 @@ class PaystackWebhookController extends Controller
     {
         $webhookPayload = json_decode($request->getContent(), true);
         $eventName = Str::studly(str_replace('.', '_', $webhookPayload['event']));
-        $method  = "handle{$eventName}";
+        $method = "handle{$eventName}";
 
         // TODO: Dispatch event of webhook received
 
