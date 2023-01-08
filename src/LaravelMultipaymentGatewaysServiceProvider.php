@@ -14,6 +14,7 @@ class LaravelMultipaymentGatewaysServiceProvider extends PackageServiceProvider 
     {
         $package
             ->name('laravel-multipayment-gateways')
+            ->hasRoute('web')
             ->hasConfigFile();
     }
 
