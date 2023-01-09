@@ -7,4 +7,14 @@ return [
         'secret' => env('PAYSTACK_SECRET'),
         'currency' => env('PAYSTACK_CURRENCY'),
     ],
+
+    'stripe' => [
+        'base_uri' => env('STRIPE_BASE_URI'),
+        'secret' => env('STRIP_SECRET'),
+        'currency' => env('STRIPE_CURRENCY'),
+        'plans' => [
+            'monthly' => env('STRIPE_MONTHLY_PLAN'),
+            'yearly' => env('STRIPE_YEARLY_PLAN'),
+        ],
+    ],
 ];
