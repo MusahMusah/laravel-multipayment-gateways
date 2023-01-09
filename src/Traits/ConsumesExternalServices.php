@@ -19,8 +19,8 @@ trait ConsumesExternalServices
      *
      * @param  string  $method
      * @param  string  $requestUrl
-     * @param  array  $queryParams
      * @param  array  $formParams
+     * @param  array  $queryParams
      * @param  array  $headers
      * @param  bool  $isJsonRequest
      * @return mixed
@@ -29,7 +29,7 @@ trait ConsumesExternalServices
      * @throws HttpMethodFoundException
      * @throws InvalidConfigurationException
      */
-    public function makeRequest(string $method, string $requestUrl, array $queryParams = [], array $formParams = [], array $headers = [], bool $isJsonRequest = false): mixed
+    public function makeRequest(string $method, string $requestUrl, array $formParams = [], array $queryParams = [], array $headers = [], bool $isJsonRequest = false): mixed
     {
         $this->validateRequest($method);
 

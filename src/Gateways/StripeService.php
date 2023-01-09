@@ -74,31 +74,18 @@ class StripeService
 
     /**
      * Create a new payment intent
-     * @param int $value
-     * @param string|null $paymentMethod
-     * @param string $confirmationMethod
-     * @param bool $confirm
+     * @param array $data
      * @return array
      * @throws GuzzleException
      * @throws HttpMethodFoundException
      * @throws InvalidConfigurationException
      */
-    public function createIntent(int $value, string $paymentMethod = null, string $confirmationMethod = 'automatic', bool $confirm = true): array
+    public function createIntent(array $data): array
     {
         return $this->makeRequest(
             'POST',
             '/v1/payment_intents',
-            [],
-            [
-                'amount' => $value,
-                'currency' => config('multipayment-gateways.stripe.currency'),
-                'payment_method_types' => ['card'],
-                'payment_method' => $paymentMethod,
-                'confirmation_method' => $confirmationMethod,
-                'confirm' => $confirm,
-            ],
-            [],
-            $isJsonRequest = true
+            $data,
         );
     }
 
