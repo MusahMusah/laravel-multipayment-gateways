@@ -5,6 +5,8 @@ namespace MusahMusah\LaravelMultipaymentGateways;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use MusahMusah\LaravelMultipaymentGateways\Contracts\PaystackContract;
 use MusahMusah\LaravelMultipaymentGateways\Gateways\PaystackService;
+use MusahMusah\LaravelMultipaymentGateways\Gateways\StripeContract;
+use MusahMusah\LaravelMultipaymentGateways\Gateways\StripeService;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -21,10 +23,11 @@ class LaravelMultipaymentGatewaysServiceProvider extends PackageServiceProvider 
     public function packageRegistered()
     {
         $this->app->bind(PaystackContract::class, PaystackService::class);
+        $this->app->bind(StripeContract::class, StripeService::class);
     }
 
     public function provides(): array
     {
-        return [PaystackContract::class];
+        return [PaystackContract::class, StripeContract::class];
     }
 }

@@ -7,7 +7,7 @@ use MusahMusah\LaravelMultipaymentGateways\Exceptions\HttpMethodFoundException;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidConfigurationException;
 use MusahMusah\LaravelMultipaymentGateways\Traits\ConsumesExternalServices;
 
-class StripeService
+class StripeService implements StripeContract
 {
     use ConsumesExternalServices;
 
