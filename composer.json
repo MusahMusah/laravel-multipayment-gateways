@@ -19,7 +19,8 @@
         "php": "^8.1",
         "guzzlehttp/guzzle": "^7.5",
         "illuminate/contracts": "^9.0",
-        "spatie/laravel-package-tools": "^1.13.0"
+        "spatie/laravel-package-tools": "^1.13.0",
+        "stripe/stripe-php": "^10.3"
     },
     "require-dev": {
         "laravel/pint": "^1.0",
