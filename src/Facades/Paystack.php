@@ -8,6 +8,7 @@ use MusahMusah\LaravelMultipaymentGateways\Contracts\PaystackContract;
 /**
  * @method static array verifyTransaction(string $reference)
  * @method static array getBanks()
+ *
  * @return \MusahMusah\LaravelMultipaymentGateways\Gateways\PaystackService
  *
  * @see \MusahMusah\LaravelMultipaymentGateways\Gateways\PaystackService
