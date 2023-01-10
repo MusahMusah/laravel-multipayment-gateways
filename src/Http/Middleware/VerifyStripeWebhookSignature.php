@@ -24,10 +24,8 @@ class VerifyStripeWebhookSignature
                 $stripeWebHookSecret
             );
         } catch (\UnexpectedValueException $e) {
-            // Invalid payload
             throw new AccessDeniedHttpException('Invalid payload.');
         } catch (SignatureVerificationException $e) {
-            // Invalid signature
             throw new AccessDeniedHttpException('Invalid signature, possible tampering detected.');
         }
 

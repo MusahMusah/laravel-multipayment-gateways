@@ -3,7 +3,7 @@
 namespace MusahMusah\LaravelMultipaymentGateways\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use MusahMusah\LaravelMultipaymentGateways\Gateways\StripeContract;
+use MusahMusah\LaravelMultipaymentGateways\Contracts\StripeContract;
 
 class Stripe extends Facade
 {

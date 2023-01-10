@@ -3,6 +3,7 @@
 namespace MusahMusah\LaravelMultipaymentGateways\Gateways;
 
 use GuzzleHttp\Exception\GuzzleException;
+use MusahMusah\LaravelMultipaymentGateways\Contracts\StripeContract;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\HttpMethodFoundException;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidConfigurationException;
 use MusahMusah\LaravelMultipaymentGateways\Traits\ConsumesExternalServices;

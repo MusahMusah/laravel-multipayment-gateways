@@ -5,7 +5,7 @@ namespace MusahMusah\LaravelMultipaymentGateways;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use MusahMusah\LaravelMultipaymentGateways\Contracts\PaystackContract;
 use MusahMusah\LaravelMultipaymentGateways\Gateways\PaystackService;
-use MusahMusah\LaravelMultipaymentGateways\Gateways\StripeContract;
+use MusahMusah\LaravelMultipaymentGateways\Contracts\StripeContract;
 use MusahMusah\LaravelMultipaymentGateways\Gateways\StripeService;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;

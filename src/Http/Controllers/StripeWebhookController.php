@@ -11,7 +11,6 @@ class StripeWebhookController extends Controller
 {
     public function __invoke(Request $request)
     {
-        // handle stripe webhook
         $webhookPayload = json_decode($request->getContent(), true);
         $eventName = Str::studly(str_replace('.', '_', $webhookPayload['type']));
         $method = "handle{$eventName}";

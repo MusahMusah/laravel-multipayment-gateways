@@ -1,7 +1,7 @@
 <?php
 
 use MusahMusah\LaravelMultipaymentGateways\Contracts\PaystackContract;
-use MusahMusah\LaravelMultipaymentGateways\Gateways\StripeContract;
+use MusahMusah\LaravelMultipaymentGateways\Contracts\StripeContract;
 
 if (! function_exists('paystack')) {
     function paystack(): PaystackContract

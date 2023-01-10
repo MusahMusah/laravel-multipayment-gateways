@@ -1,6 +1,6 @@
 <?php
 
-namespace MusahMusah\LaravelMultipaymentGateways\Gateways;
+namespace MusahMusah\LaravelMultipaymentGateways\Contracts;
 
 use GuzzleHttp\Exception\GuzzleException;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\HttpMethodFoundException;
