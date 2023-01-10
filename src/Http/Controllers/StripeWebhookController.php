@@ -16,10 +16,7 @@ class StripeWebhookController extends Controller
         $method = "handle{$eventName}";
 
         if (method_exists($this, $method)) {
-            $response = $this->{$method}($webhookPayload);
-            info("Stripe webhook {$eventName} handled successfully");
-
-            return $response;
+            return $this->{$method}($webhookPayload);
         }
 
         return $this->methodMissing();

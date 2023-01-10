@@ -18,7 +18,7 @@ class VerifyStripeWebhookSignature
             $requestContent = $request->getContent();
             $stripeWebHookSecret = config('stripe.webhook_secret', env('STRIPE_WEBHOOK_SECRET'));
 
-             $event  = Webhook::constructEvent(
+             Webhook::constructEvent(
                 $requestContent,
                 $request->header('stripe-signature'),
                 $stripeWebHookSecret
