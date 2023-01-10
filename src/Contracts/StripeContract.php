@@ -34,8 +34,10 @@ interface StripeContract
 
     /**
      * Create a new payment intent
-     * @param array $data
+     *
+     * @param  array  $data
      * @return array
+     *
      * @throws GuzzleException
      * @throws HttpMethodFoundException
      * @throws InvalidConfigurationException
@@ -44,8 +46,10 @@ interface StripeContract
 
     /**
      * Confirm a payment intent
-     * @param string $paymentIntentId
+     *
+     * @param  string  $paymentIntentId
      * @return array
+     *
      * @throws GuzzleException
      * @throws HttpMethodFoundException
      * @throws InvalidConfigurationException
