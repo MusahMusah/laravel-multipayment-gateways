@@ -103,22 +103,19 @@ class PaystackService implements PaystackContract
         return $this->getResponse()['data'];
     }
 
-    /**
-     *
-     */
     private function generateCheckoutLink(): array
     {
         if (empty($this->payload)) {
             $this->payload = [
-                'amount'        => (int) request()->amount,
-                'email'         => request()->email,
-                'first_name'    => request()->first_name,
-                'last_name'     => request()->last_name,
-                'plan'          => request()->plan,
-                'currency'      => request()->currency ?? config('multipayment-gateways.paystack.currency') ?? 'NGN',
-                'metadata'      => request()->metadata,
-                'reference'     => request()->reference,
-                'callback_url'  => request()->callback_url,
+                'amount' => (int) request()->amount,
+                'email' => request()->email,
+                'first_name' => request()->first_name,
+                'last_name' => request()->last_name,
+                'plan' => request()->plan,
+                'currency' => request()->currency ?? config('multipayment-gateways.paystack.currency') ?? 'NGN',
+                'metadata' => request()->metadata,
+                'reference' => request()->reference,
+                'callback_url' => request()->callback_url,
             ];
         }
 
@@ -145,17 +142,18 @@ class PaystackService implements PaystackContract
     /**
      * @return \Illuminate\Http\RedirectResponse
      */
-    private function redirectRequest(): \Illuminate\Http\RedirectResponse
+    private function redirectRequest(): RedirectResponse
     {
         return redirect($this->redirectUrl);
     }
 
     /**
      * Redirect the user to Paystack's payment checkout page
-     * @param array|null $data
+     *
+     * @param  array|null  $data
      * @return RedirectResponse
      */
-    public function redirectToCheckout(array $data = null): \Illuminate\Http\RedirectResponse
+    public function redirectToCheckout(array $data = null): RedirectResponse
     {
         is_null($data) ?: $this->payload = $data;
 
@@ -166,6 +164,7 @@ class PaystackService implements PaystackContract
      * Hit Paystack's verify endpoint to validate the payment and get the payment details
      *
      * @return array
+     *
      * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException|PaymentVerificationException
      */
     public function getPaymentData(): array
@@ -177,21 +176,26 @@ class PaystackService implements PaystackContract
 
     /**
      * Hit Paystack's verify endpoint to validate the payment
+     *
      * @return void
+     *
      * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException|PaymentVerificationException
      */
     private function validateTransaction(): void
     {
         $this->verifyTransaction(reference: request()->reference ?? request()->trxref);
 
-        if ($this->getData()['status'] !== 'success') throw new PaymentVerificationException();
+        if ($this->getData()['status'] !== 'success') {
+            throw new PaymentVerificationException();
+        }
     }
 
     /**
      * Hit Paystack's API to Verify that the transaction is valid
      *
-     * @param string $reference
+     * @param  string  $reference
      * @return array
+     *
      * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException
      */
     public function verifyTransaction(string $reference): array

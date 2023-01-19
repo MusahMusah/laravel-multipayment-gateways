@@ -50,15 +50,17 @@ interface PaystackContract
 
     /**
      * Redirect the user to Paystack's payment page
-     * @param array|null $data
+     *
+     * @param  array|null  $data
      * @return RedirectResponse
      */
-    public function redirectToCheckout(array $data = null): \Illuminate\Http\RedirectResponse;
+    public function redirectToCheckout(array $data = null): RedirectResponse;
 
     /**
      * Hit Paystack's verify endpoint to validate the payment and get the payment details
      *
      * @return array
+     *
      * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException|PaymentVerificationException
      */
     public function getPaymentData(): array;
