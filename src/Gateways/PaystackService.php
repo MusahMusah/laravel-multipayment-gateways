@@ -104,7 +104,10 @@ class PaystackService implements PaystackContract
     }
 
     /**
+     * Hit Paystack's API to initiate the transaction and generate the authorization URL
      *
+     * @return array
+     * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException
      */
     private function generateCheckoutLink(): array
     {
@@ -130,9 +133,10 @@ class PaystackService implements PaystackContract
     }
 
     /**
-     * Get the authorization URL from paystack
+     * Get the authorization URL from Paystack's API
      *
-     * @return string
+     * @return self
+     * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException
      */
     private function getAuthorizationUrl(): self
     {
@@ -152,8 +156,10 @@ class PaystackService implements PaystackContract
 
     /**
      * Redirect the user to Paystack's payment checkout page
+     *
      * @param array|null $data
      * @return RedirectResponse
+     * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException
      */
     public function redirectToCheckout(array $data = null): \Illuminate\Http\RedirectResponse
     {
