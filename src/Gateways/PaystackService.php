@@ -113,15 +113,22 @@ class PaystackService implements PaystackContract
     {
         if (empty($this->payload)) {
             $this->payload = [
-                'amount'        => (int) request()->amount,
-                'email'         => request()->email,
-                'first_name'    => request()->first_name,
-                'last_name'     => request()->last_name,
-                'plan'          => request()->plan,
-                'currency'      => request()->currency ?? config('multipayment-gateways.paystack.currency') ?? 'NGN',
-                'metadata'      => request()->metadata,
-                'reference'     => request()->reference,
-                'callback_url'  => request()->callback_url,
+                'amount' => (int)request()->amount,
+                'email' => request()->email,
+                'first_name' => request()->first_name,
+                'last_name' => request()->last_name,
+                'plan' => request()->plan,
+                'currency' => request()->currency ?? config('multipayment-gateways.paystack.currency') ?? 'NGN',
+                'metadata' => request()->metadata,
+
+                'subaccount' => request()->subaccount,
+                'transaction_charge' => request()->transaction_charge,
+
+                "split_code" => request()->split_code,
+                "split" => request()->split,
+
+                'reference' => request()->reference,
+                'callback_url' => request()->callback_url,
             ];
         }
 
@@ -226,8 +233,8 @@ class PaystackService implements PaystackContract
     /**
      * Hit Paystack's API to resolve a bank account
      *
-     * @param  string  $accountNumber
-     * @param  string  $bankCode
+     * @param string $accountNumber
+     * @param string $bankCode
      * @return mixed
      *
      * @throws GuzzleException
@@ -248,9 +255,9 @@ class PaystackService implements PaystackContract
     /**
      * Hit Paystack's API to create a Transfer Recipient
      *
-     * @param  string  $name
-     * @param  string  $accountNumber
-     * @param  string  $bankCode
+     * @param string $name
+     * @param string $accountNumber
+     * @param string $bankCode
      * @return mixed
      *
      * @throws GuzzleException
@@ -275,7 +282,7 @@ class PaystackService implements PaystackContract
     /**
      * Hit Paystack's API to create bulk transfers recipients
      *
-     * @param  array  $recipients
+     * @param array $recipients
      * @return mixed
      *
      * @throws GuzzleException
@@ -296,10 +303,10 @@ class PaystackService implements PaystackContract
     /**
      * Hit Paystack's API to initiate a Transfer
      *
-     * @param  int  $amount
-     * @param  string  $reference
-     * @param  string  $recipient
-     * @param  string  $reason
+     * @param int $amount
+     * @param string $reference
+     * @param string $recipient
+     * @param string $reason
      * @return mixed
      *
      * @throws GuzzleException
@@ -325,7 +332,7 @@ class PaystackService implements PaystackContract
     /**
      * Hit Paystack's API to initiate a Bulk Transfer
      *
-     * @param  array  $transfers
+     * @param array $transfers
      * @return mixed
      *
      * @throws GuzzleException
@@ -348,8 +355,8 @@ class PaystackService implements PaystackContract
     /**
      * Hit Paystack's API to finalize a Transfer
      *
-     * @param  string  $transferCode
-     * @param  string  $otp
+     * @param string $transferCode
+     * @param string $otp
      * @return mixed
      *
      * @throws GuzzleException
@@ -372,7 +379,7 @@ class PaystackService implements PaystackContract
     /**
      * Hit Paystack's API to verify a Transfer
      *
-     * @param  string  $reference
+     * @param string $reference
      * @return mixed
      *
      * @throws GuzzleException
@@ -390,7 +397,7 @@ class PaystackService implements PaystackContract
     /**
      * Hit Paystack's API to fetch a Transfer
      *
-     * @param  string  $transferCode
+     * @param string $transferCode
      * @return mixed
      *
      * @throws GuzzleException
