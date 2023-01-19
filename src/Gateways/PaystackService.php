@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace MusahMusah\LaravelMultipaymentGateways\Gateways;
 
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Http\RedirectResponse;
 use MusahMusah\LaravelMultipaymentGateways\Contracts\PaystackContract;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\HttpMethodFoundException;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidConfigurationException;
+use MusahMusah\LaravelMultipaymentGateways\Exceptions\PaymentVerificationException;
 use MusahMusah\LaravelMultipaymentGateways\Traits\ConsumesExternalServices;
 
 class PaystackService implements PaystackContract
@@ -19,21 +21,28 @@ class PaystackService implements PaystackContract
      *
      * @var string
      */
-    protected $baseUri;
+    protected string $baseUri;
 
     /**
      * The secret to consume the Paystack's service
      *
      * @var string
      */
-    protected $secret;
+    protected string $secret;
 
     /**
      * The redirect url to consume the Paystack's service
      *
      * @var string
      */
-    protected $redirectUrl;
+    protected string $redirectUrl;
+
+    /**
+     * The payload to initiate the transaction
+     *
+     * @var array
+     */
+    protected array $payload;
 
     public function __construct()
     {
@@ -95,23 +104,95 @@ class PaystackService implements PaystackContract
     }
 
     /**
+     *
+     */
+    private function generateCheckoutLink(): array
+    {
+        if (empty($this->payload)) {
+            $this->payload = [
+                'amount'        => (int) request()->amount,
+                'email'         => request()->email,
+                'first_name'    => request()->first_name,
+                'last_name'     => request()->last_name,
+                'plan'          => request()->plan,
+                'currency'      => request()->currency ?? config('multipayment-gateways.paystack.currency') ?? 'NGN',
+                'metadata'      => request()->metadata,
+                'reference'     => request()->reference,
+                'callback_url'  => request()->callback_url,
+            ];
+        }
+
+        return $this->makeRequest(
+            method: 'POST',
+            requestUrl: 'transaction/initialize',
+            formParams: $this->payload,
+        );
+    }
+
+    /**
      * Get the authorization URL from paystack
      *
      * @return string
      */
-    public function getAuthorizationUrl(): string
+    private function getAuthorizationUrl(): self
     {
-        return $this->getData()['authorization_url'];
+        $this->generateCheckoutLink();
+        $this->redirectUrl = $this->getData()['authorization_url'];
+
+        return $this;
+    }
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    private function redirectRequest(): \Illuminate\Http\RedirectResponse
+    {
+        return redirect($this->redirectUrl);
+    }
+
+    /**
+     * Redirect the user to Paystack's payment checkout page
+     * @param array|null $data
+     * @return RedirectResponse
+     */
+    public function redirectToCheckout(array $data = null): \Illuminate\Http\RedirectResponse
+    {
+        is_null($data) ?: $this->payload = $data;
+
+        return $this->getAuthorizationUrl()->redirectRequest();
+    }
+
+    /**
+     * Hit Paystack's verify endpoint to validate the payment and get the payment details
+     *
+     * @return array
+     * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException|PaymentVerificationException
+     */
+    public function getPaymentData(): array
+    {
+        $this->validateTransaction();
+
+        return $this->getData();
+    }
+
+    /**
+     * Hit Paystack's verify endpoint to validate the payment
+     * @return void
+     * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException|PaymentVerificationException
+     */
+    private function validateTransaction(): void
+    {
+        $this->verifyTransaction(reference: request()->reference ?? request()->trxref);
+
+        if ($this->getData()['status'] !== 'success') throw new PaymentVerificationException();
     }
 
     /**
      * Hit Paystack's API to Verify that the transaction is valid
      *
-     * @param  string  $reference
+     * @param string $reference
      * @return array
-     *
-     * @throws GuzzleException
-     * @throws HttpMethodFoundException
+     * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException
      */
     public function verifyTransaction(string $reference): array
     {
@@ -179,7 +260,7 @@ class PaystackService implements PaystackContract
                 'name' => $name,
                 'account_number' => $accountNumber,
                 'bank_code' => $bankCode,
-                'currency' => config('services.paystack.currency') ?? 'NGN',
+                'currency' => config('multipayment-gateways.paystack.currency') ?? 'NGN',
             ],
             isJsonRequest: true
         );
@@ -229,7 +310,7 @@ class PaystackService implements PaystackContract
                 'amount' => $amount,
                 'recipient' => $recipient,
                 'reference' => $reference,
-                'currency' => config('services.paystack.currency') ?? 'NGN',
+                'currency' => config('multipayment-gateways.paystack.currency') ?? 'NGN',
             ],
             isJsonRequest: true
         );
@@ -252,7 +333,7 @@ class PaystackService implements PaystackContract
             formParams: [
                 'source' => 'balance',
                 'transfers' => $transfers,
-                'currency' => config('services.paystack.currency') ?? 'NGN',
+                'currency' => config('multipayment-gateways.paystack.currency') ?? 'NGN',
             ],
             isJsonRequest: true
         );

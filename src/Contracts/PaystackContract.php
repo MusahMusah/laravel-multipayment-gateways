@@ -3,7 +3,10 @@
 namespace MusahMusah\LaravelMultipaymentGateways\Contracts;
 
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Http\RedirectResponse;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\HttpMethodFoundException;
+use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidConfigurationException;
+use MusahMusah\LaravelMultipaymentGateways\Exceptions\PaymentVerificationException;
 
 interface PaystackContract
 {
@@ -46,11 +49,19 @@ interface PaystackContract
     public function getData(): mixed;
 
     /**
-     * Get the authorization URL from paystack
-     *
-     * @return string
+     * Redirect the user to Paystack's payment page
+     * @param array|null $data
+     * @return RedirectResponse
      */
-    public function getAuthorizationUrl(): string;
+    public function redirectToCheckout(array $data = null): \Illuminate\Http\RedirectResponse;
+
+    /**
+     * Hit Paystack's verify endpoint to validate the payment and get the payment details
+     *
+     * @return array
+     * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException|PaymentVerificationException
+     */
+    public function getPaymentData(): array;
 
     /**
      * Hit Paystack's API to Verify that the transaction is valid
