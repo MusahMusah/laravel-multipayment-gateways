@@ -2,16 +2,16 @@
 
 namespace MusahMusah\LaravelMultipaymentGateways\Exceptions;
 
+use Exception;
 use MusahMusah\LaravelMultipaymentGateways\Jobs\ProcessPaymentWebhookJob;
 use MusahMusah\LaravelMultipaymentGateways\Services\PaymentWebhookSignatureValidator;
-use Exception;
 
 class InvalidPaymentWebhookConfig extends Exception
 {
     /**
      * An exception thrown when the webhook configuration is not found
      *
-     * @param string $configNotFoundName
+     * @param  string  $configNotFoundName
      * @return self
      */
     public static function webhookConfigMissing(string $configNotFoundName): self
@@ -22,7 +22,7 @@ class InvalidPaymentWebhookConfig extends Exception
     /**
      * An exception thrown when the signing secret is not set
      *
-     * @param string $configNotFoundName
+     * @param  string  $configNotFoundName
      * @return self
      */
     public static function signingSecretMissing(string $configNotFoundName): self
@@ -33,7 +33,7 @@ class InvalidPaymentWebhookConfig extends Exception
     /**
      * An exception thrown an invalid webhook job class is provided
      *
-     * @param string $processWebhookJob the invalid class name
+     * @param  string  $processWebhookJob the invalid class name
      * @return self
      */
     public static function invalidWebhookJob(string $processWebhookJob): self
@@ -46,7 +46,7 @@ class InvalidPaymentWebhookConfig extends Exception
     /**
      * An exception thrown when an invalid webhook event class is provided
      *
-     * @param string $processWebhookEvent the invalid class name
+     * @param  string  $processWebhookEvent the invalid class name
      * @return self
      */
     public static function invalidWebhookEvent(string $processWebhookEvent): self
@@ -59,7 +59,7 @@ class InvalidPaymentWebhookConfig extends Exception
     /**
      * An exception thrown when an invalid signature validator event class is provided
      *
-     * @param string $processSignatureValidator the invalid class name
+     * @param  string  $processSignatureValidator the invalid class name
      * @return self
      */
     public static function invalidSignatureValidator(string $processSignatureValidator): self

@@ -2,9 +2,9 @@
 
 namespace MusahMusah\LaravelMultipaymentGateways\Http\Controllers;
 
+use Illuminate\Http\Request;
 use MusahMusah\LaravelMultipaymentGateways\Services\PaymentWebhookConfig;
 use MusahMusah\LaravelMultipaymentGateways\Services\PaymentWebhookHandler;
-use Illuminate\Http\Request;
 
 class PaymentWebhookController extends Controller
 {

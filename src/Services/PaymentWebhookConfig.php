@@ -6,7 +6,6 @@ use MusahMusah\LaravelMultipaymentGateways\Events\PaymentWebhookReceivedEvent;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidPaymentWebhookConfig;
 use MusahMusah\LaravelMultipaymentGateways\Jobs\ProcessPaymentWebhookJob;
 use MusahMusah\LaravelMultipaymentGateways\Models\PaymentWebhookLog;
-use MusahMusah\LaravelMultipaymentGateways\Services\PaymentWebhookSignatureValidator;
 
 class PaymentWebhookConfig
 {

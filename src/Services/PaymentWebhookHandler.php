@@ -2,26 +2,30 @@
 
 namespace MusahMusah\LaravelMultipaymentGateways\Services;
 
+use Exception;
+use Illuminate\Http\Request;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidPaymentWebhookConfig;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidPaymentWebhookHandler;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidPaymentWebhookSignature;
 use MusahMusah\LaravelMultipaymentGateways\Models\PaymentWebhookLog;
-use Illuminate\Http\Request;
-use MusahMusah\LaravelMultipaymentGateways\Services\PaymentWebhookConfig;
-use Illuminate\Support\Facades\Schema;
-use Exception;
 
 class PaymentWebhookHandler
 {
     protected $request;
+
     protected $webhookConfig;
+
     protected $webhookPayload;
+
     protected $webhookHash;
 
-    CONST WEBHOOK_HANDLER_JOB = 'job';
-    CONST WEBHOOK_HANDLER_EVENT = 'event';
-    CONST WEBHOOK_RESPONSE_MESSAGE = 'successful';
-    CONST WEBHOOK_RESPONSE_STATUS = 200;
+    const WEBHOOK_HANDLER_JOB = 'job';
+
+    const WEBHOOK_HANDLER_EVENT = 'event';
+
+    const WEBHOOK_RESPONSE_MESSAGE = 'successful';
+
+    const WEBHOOK_RESPONSE_STATUS = 200;
 
     public function __construct(
          Request $request,
@@ -42,7 +46,7 @@ class PaymentWebhookHandler
 
         $this->createWebhookHash();
 
-         // check if the webhook hash has already been processed
+        // check if the webhook hash has already been processed
         if ($this->hasWebhookBeenProcessed($this->webhookHash)) {
             return $this->handleDuplicateWebhook($this->webhookHash);
         }
@@ -57,11 +61,11 @@ class PaymentWebhookHandler
     }
 
     /**
-    * Set the webhook payload from the request input
-    *
-    * @return void
-    */
-    public function setWebhookPayload() : void
+     * Set the webhook payload from the request input
+     *
+     * @return void
+     */
+    public function setWebhookPayload(): void
     {
         $this->webhookPayload = $this->request->input();
     }
@@ -69,45 +73,46 @@ class PaymentWebhookHandler
     /**
      * Validate the signature of the webhook
      *
-     * @throws InvalidPaymentWebhookConfig|InvalidPaymentWebhookSignature
      * @return self
+     *
+     * @throws InvalidPaymentWebhookConfig|InvalidPaymentWebhookSignature
      */
     protected function validateSignature(): self
     {
         if (! $this->webhookConfig->signatureValidator->isValid($this->request, $this->webhookConfig)) {
-             // webhook signature is not valid
-             throw InvalidPaymentWebhookSignature::invalidSignature($this->webhookConfig->name);
+            // webhook signature is not valid
+            throw InvalidPaymentWebhookSignature::invalidSignature($this->webhookConfig->name);
         }
 
         return $this;
     }
 
     /**
-    * Create a hash of the webhook payload
-    *
-    * @return void
-    */
-    protected function createWebhookHash() : void
+     * Create a hash of the webhook payload
+     *
+     * @return void
+     */
+    protected function createWebhookHash(): void
     {
         $this->webhookHash = hash('sha256', json_encode($this->webhookPayload));
     }
 
     /**
-    * Check if the webhook hash has already been processed
-    *
-    * @param string $hash
-    * @return bool
-    */
+     * Check if the webhook hash has already been processed
+     *
+     * @param  string  $hash
+     * @return bool
+     */
     protected function hasWebhookBeenProcessed($hash)
     {
         return $this->webhookConfig->paymentWebhookModel::where('request_hash', $hash)->exists();
     }
 
     /**
-    * Handle the case when the webhook hash has already been processed
-    *
-    * @return \Illuminate\Http\JsonResponse
-    */
+     * Handle the case when the webhook hash has already been processed
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     protected function handleDuplicateWebhook()
     {
         // webhook has already been processed, return a response
@@ -115,11 +120,11 @@ class PaymentWebhookHandler
     }
 
     /**
-    * Handle the webhook response by returning a JSON response
-    *
-    * @param string $webhookResponse The message to be returned in the response
-    * @return \Illuminate\Http\JsonResponse
-    */
+     * Handle the webhook response by returning a JSON response
+     *
+     * @param  string  $webhookResponse The message to be returned in the response
+     * @return \Illuminate\Http\JsonResponse
+     */
     protected function handleWebhookResponse($webhookResponse = self::WEBHOOK_RESPONSE_MESSAGE)
     {
         return response()->json(['message' => $webhookResponse], self::WEBHOOK_RESPONSE_STATUS);
@@ -138,7 +143,7 @@ class PaymentWebhookHandler
     /**
      * Processes the payment webhook
      *
-     * @param PaymentWebhookLog $paymentWebhookLog
+     * @param  PaymentWebhookLog  $paymentWebhookLog
      * @return void
      */
     protected function processPaymentWebhook(PaymentWebhookLog $paymentWebhookLog): void
@@ -154,12 +159,12 @@ class PaymentWebhookHandler
     }
 
     /**
-    * Dispatch the job or event based on the paymentWebhookHandler
-    *
-    * @param PaymentWebhookLog $paymentWebhookLog
-    * @param string $paymentWebhookHandler
-    * @return void
-    */
+     * Dispatch the job or event based on the paymentWebhookHandler
+     *
+     * @param  PaymentWebhookLog  $paymentWebhookLog
+     * @param  string  $paymentWebhookHandler
+     * @return void
+     */
     protected function handlePaymentWebhook(PaymentWebhookLog $paymentWebhookLog, string $paymentWebhookHandler): void
     {
         switch ($paymentWebhookHandler) {
@@ -179,7 +184,7 @@ class PaymentWebhookHandler
     /**
      * Create the webhook job
      *
-     * @param PaymentWebhookLog $paymentWebhookLog
+     * @param  PaymentWebhookLog  $paymentWebhookLog
      * @return mixed
      */
     protected function createWebhookJob(PaymentWebhookLog $paymentWebhookLog)
@@ -187,10 +192,10 @@ class PaymentWebhookHandler
         return new $this->webhookConfig->paymentWebhookJobClass($this->webhookPayload, $paymentWebhookLog);
     }
 
-     /**
+    /**
      * Create the webhook event
      *
-     * @param PaymentWebhookLog $paymentWebhookLog
+     * @param  PaymentWebhookLog  $paymentWebhookLog
      * @return mixed
      */
     protected function createWebhookEvent(PaymentWebhookLog $paymentWebhookLog)
