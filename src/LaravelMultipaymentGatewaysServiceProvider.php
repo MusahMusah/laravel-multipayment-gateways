@@ -3,17 +3,17 @@
 namespace MusahMusah\LaravelMultipaymentGateways;
 
 use Illuminate\Contracts\Support\DeferrableProvider;
-use Illuminate\Support\Facades\Route;
 use MusahMusah\LaravelMultipaymentGateways\Contracts\PaystackContract;
 use MusahMusah\LaravelMultipaymentGateways\Contracts\StripeContract;
-use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidPaymentWebhookConfig;
 use MusahMusah\LaravelMultipaymentGateways\Gateways\PaystackService;
 use MusahMusah\LaravelMultipaymentGateways\Gateways\StripeService;
-use MusahMusah\LaravelMultipaymentGateways\Http\Controllers\PaymentWebhookController;
+use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidPaymentWebhookConfig;
 use MusahMusah\LaravelMultipaymentGateways\Services\PaymentWebhookConfig;
 use MusahMusah\LaravelMultipaymentGateways\Services\PaymentWebhookConfigRepository;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
+use Illuminate\Support\Facades\Route;
+use MusahMusah\LaravelMultipaymentGateways\Http\Controllers\PaymentWebhookController;
 use Illuminate\Support\Str;
 
 class LaravelMultipaymentGatewaysServiceProvider extends PackageServiceProvider implements DeferrableProvider
@@ -32,7 +32,7 @@ class LaravelMultipaymentGatewaysServiceProvider extends PackageServiceProvider 
         $this->app->bind(PaystackContract::class, PaystackService::class);
         $this->app->bind(StripeContract::class, StripeService::class);
 
-        Route::macro('webhooks', function (string $url, string $name = 'default') {
+        Route::macro('webhooks', function (string $url, string $name = 'stripe') {
             return Route::post($url, PaymentWebhookController::class)->name("{$name}-payment-webhook");
         });
 
@@ -48,7 +48,7 @@ class LaravelMultipaymentGatewaysServiceProvider extends PackageServiceProvider 
         });
 
         $this->app->bind(PaymentWebhookConfig::class, function () {
-            $routeName = request()->route()->getName() ?? '';
+            $routeName = request()->route()?->getName() ?? 'stripe-payment-webhook';
             $configName = Str::before($routeName, '-payment-webhook');
 
             $paymentWebhookConfig = app(PaymentWebhookConfigRepository::class)->getConfig($configName);
@@ -63,6 +63,6 @@ class LaravelMultipaymentGatewaysServiceProvider extends PackageServiceProvider 
 
     public function provides(): array
     {
-        return [PaystackContract::class, StripeContract::class];
+        return [PaystackContract::class, StripeContract::class, PaymentWebhookConfigRepository::class, PaymentWebhookConfig::class];
     }
 }

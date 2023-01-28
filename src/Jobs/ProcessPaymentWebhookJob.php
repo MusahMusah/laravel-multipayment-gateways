@@ -7,7 +7,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use MusahMusah\LaravelMultipaymentGateways\Models\PaymentWebhookLog;
 
 class ProcessPaymentWebhookJob implements ShouldQueue
 {
@@ -18,9 +17,7 @@ class ProcessPaymentWebhookJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(
-        public $webhookPayload,
-        public PaymentWebhookLog $paymentWebhookLog)
+    public function __construct(public $webhookPayload)
     {
     }
 }

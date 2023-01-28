@@ -4,7 +4,7 @@ namespace MusahMusah\LaravelMultipaymentGateways\Exceptions;
 
 use Exception;
 use MusahMusah\LaravelMultipaymentGateways\Jobs\ProcessPaymentWebhookJob;
-use MusahMusah\LaravelMultipaymentGateways\Services\PaymentWebhookSignatureValidator;
+use MusahMusah\LaravelMultipaymentGateways\SignatureValidator\PaymentWebhookSignatureValidator;
 
 class InvalidPaymentWebhookConfig extends Exception
 {
@@ -51,7 +51,7 @@ class InvalidPaymentWebhookConfig extends Exception
      */
     public static function invalidWebhookEvent(string $processWebhookEvent): self
     {
-        $expectedWebhookEventClass = CustomPaymentWebhookReceivedEvent::class;
+        $expectedWebhookEventClass = PaymentWebhookReceivedEvent::class;
 
         return new static("`{$processWebhookEvent}` is not a valid webhook job class. A valid class should implement `{$expectedWebhookEventClass}`.");
     }
@@ -67,5 +67,27 @@ class InvalidPaymentWebhookConfig extends Exception
         $expectedSignatureValidatorClass = PaymentWebhookSignatureValidator::class;
 
         return new static("`{$processSignatureValidator}` is not a valid signature validator class. A valid class should implement `{$expectedSignatureValidatorClass}`.");
+    }
+
+    /**
+     * An exception thrown when the job class for handling a webhook request is missing
+     *
+     * @param  string  $configNotFoundName
+     * @return self
+     */
+    public static function missingJobClass(string $configNotFoundName): self
+    {
+        return new static("The job class for `{$configNotFoundName}` is missing. Please ensure that the `payment_webhook_job` config key is set correctly.");
+    }
+
+     /**
+     * An exception thrown when the event class for handling a webhook request is missing
+     *
+     * @param  string  $configNotFoundName
+     * @return self
+     */
+    public static function missingEventClass(string $configNotFoundName): self
+    {
+        return new static("The event class for `{$configNotFoundName}` is missing. Please ensure that the `payment_webhook_event` config key is set correctly.");
     }
 }

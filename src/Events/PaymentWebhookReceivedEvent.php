@@ -6,7 +6,6 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use MusahMusah\LaravelMultipaymentGateways\Models\PaymentWebhookLog;
 
 class PaymentWebhookReceivedEvent
 {
@@ -17,9 +16,7 @@ class PaymentWebhookReceivedEvent
      *
      * @return void
      */
-    public function __construct(
-        public $webhookPayload,
-        public PaymentWebhookLog $paymentWebhookLog)
+    public function __construct(public $webhookPayload)
     {
     }
 

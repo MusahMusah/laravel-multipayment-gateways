@@ -1,8 +1,9 @@
 <?php
 
-namespace MusahMusah\LaravelMultipaymentGateways\Services;
+namespace MusahMusah\LaravelMultipaymentGateways\SignatureValidator;
 
 use Illuminate\Http\Request;
+use MusahMusah\LaravelMultipaymentGateways\Services\PaymentWebhookConfig;
 
 interface PaymentWebhookSignatureValidator
 {

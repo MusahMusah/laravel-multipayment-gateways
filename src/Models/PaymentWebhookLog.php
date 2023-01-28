@@ -41,13 +41,4 @@ class PaymentWebhookLog extends Model
 
         return $this;
     }
-
-    public function clearPaymentWebhookException(): self
-    {
-        $this->request_exception = null;
-
-        $this->save();
-
-        return $this;
-    }
 }

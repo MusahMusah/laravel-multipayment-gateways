@@ -29,7 +29,7 @@ return [
             /*
              * This secret key is used to validate the signature of the webhook call.
              */
-            'signing_secret' => env('WEBHOOK_CLIENT_SECRET'),
+            'signing_secret' => '',
 
             /*
              * This refers to the header that holds the signature.
@@ -39,9 +39,9 @@ return [
             /*
              *  This class is responsible for verifying the validity of the signature header.
              *
-             * It should implement the interface \MusahMusah\LaravelMultipaymentGateways\Services\PaymentWebhookSignatureValidator.
+             * It should implement the interface \MusahMusah\LaravelMultipaymentGateways\SignatureValidator\PaymentWebhookSignatureValidator.
              */
-            'signature_validator' => '',
+            'signature_validator' => \MusahMusah\LaravelMultipaymentGateways\SignatureValidator\DefaultSignatureValidator::class,
 
             /**
              * The webhook handler option allows you to choose how webhook requests are handled in your application.
@@ -78,7 +78,7 @@ return [
             /*
              * This secret key is used to validate the signature of the webhook call.
              */
-            'signing_secret' => env('WEBHOOK_CLIENT_SECRET'),
+            'signing_secret' => '',
 
             /*
              * This refers to the header that holds the signature.
@@ -88,9 +88,9 @@ return [
             /*
              *  This class is responsible for verifying the validity of the signature header.
              *
-             * It should implement the interface \MusahMusah\LaravelMultipaymentGateways\Services\PaymentWebhookSignatureValidator.
+            * It should implement the interface \MusahMusah\LaravelMultipaymentGateways\SignatureValidator\PaymentWebhookSignatureValidator.
              */
-            'signature_validator' => '',
+            'signature_validator' => \MusahMusah\LaravelMultipaymentGateways\SignatureValidator\DefaultSignatureValidator::class,
 
             /**
              * The webhook handler option allows you to choose how webhook requests are handled in your application.
