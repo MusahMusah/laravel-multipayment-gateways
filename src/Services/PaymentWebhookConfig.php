@@ -42,7 +42,7 @@ class PaymentWebhookConfig
             throw InvalidPaymentWebhookConfig::invalidSignatureValidator($properties['signature_validator']);
         }
 
-        $this->signatureValidator = app($properties['signature_validator']);
+        // $this->signatureValidator = app($properties['signature_validator']);
 
         if (! empty($properties['payment_webhook_job']) && ! is_subclass_of($properties['payment_webhook_job'], ProcessPaymentWebhookJob::class)) {
             throw InvalidPaymentWebhookConfig::invalidWebhookJob($properties['payment_webhook_job']);

@@ -14,6 +14,7 @@ use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Illuminate\Support\Facades\Route;
 use MusahMusah\LaravelMultipaymentGateways\Http\Controllers\PaymentWebhookController;
+use Illuminate\Support\Str;
 
 class LaravelMultipaymentGatewaysServiceProvider extends PackageServiceProvider implements DeferrableProvider
 {
@@ -32,18 +33,25 @@ class LaravelMultipaymentGatewaysServiceProvider extends PackageServiceProvider 
         $this->app->bind(StripeContract::class, StripeService::class);
 
         Route::macro('webhooks', function (string $url, string $name = 'default') {
-            return Route::post($url, [PaymentWebhookController::class, '__invoke'])->name("{$name}-payment-webhook");
+            return Route::post($url, PaymentWebhookController::class)->name("{$name}-payment-webhook");
         });
 
-        $webhookConfigs = config('multipayment-gateways.configs');
-        $webhookConfigObjects = collect($webhookConfigs)->map(fn ($config) => new PaymentWebhookConfig($config));
-        $configRepository = new PaymentWebhookConfigRepository();
-        $webhookConfigObjects->each(fn ($webhookConfig) => $configRepository->storeConfig($webhookConfig));
+        $this->app->scoped(PaymentWebhookConfigRepository::class, function () {
+            $configRepository = new PaymentWebhookConfigRepository();
+            $webhookConfigs = config('multipayment-gateways.configs');
 
-        $this->app->bind(PaymentWebhookConfig::class, function () use ($configRepository) {
+            collect($webhookConfigs)
+                ->map(fn (array $config) => new PaymentWebhookConfig($config))
+                ->each(fn (PaymentWebhookConfig $webhookConfig) => $configRepository->storeConfig($webhookConfig));
+
+            return $configRepository;
+        });
+
+        $this->app->bind(PaymentWebhookConfig::class, function () {
             $routeName = request()->route()->getName() ?? '';
             $configName = Str::before($routeName, '-payment-webhook');
-            $paymentWebhookConfig = $configRepository->getConfig($configName);
+
+            $paymentWebhookConfig = app(PaymentWebhookConfigRepository::class)->getConfig($configName);
 
             if (is_null($paymentWebhookConfig)) {
                 throw InvalidPaymentWebhookConfig::webhookConfigMissing($configName);

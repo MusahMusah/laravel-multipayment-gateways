@@ -6,7 +6,7 @@ use MusahMusah\LaravelMultipaymentGateways\Services\PaymentWebhookConfig;
 use MusahMusah\LaravelMultipaymentGateways\Services\PaymentWebhookHandler;
 use Illuminate\Http\Request;
 
-class PaymentWebhookController extends Controller
+class PaymentWebhookController
 {
     public function __invoke(Request $request, PaymentWebhookConfig $config)
     {
