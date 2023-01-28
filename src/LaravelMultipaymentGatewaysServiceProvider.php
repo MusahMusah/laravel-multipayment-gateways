@@ -3,6 +3,8 @@
 namespace MusahMusah\LaravelMultipaymentGateways;
 
 use Illuminate\Contracts\Support\DeferrableProvider;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 use MusahMusah\LaravelMultipaymentGateways\Contracts\PaystackContract;
 use MusahMusah\LaravelMultipaymentGateways\Contracts\StripeContract;
 use MusahMusah\LaravelMultipaymentGateways\Gateways\PaystackService;
@@ -12,9 +14,7 @@ use MusahMusah\LaravelMultipaymentGateways\Services\PaymentWebhookConfig;
 use MusahMusah\LaravelMultipaymentGateways\Services\PaymentWebhookConfigRepository;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Illuminate\Support\Facades\Route;
 use MusahMusah\LaravelMultipaymentGateways\Http\Controllers\PaymentWebhookController;
-use Illuminate\Support\Str;
 
 class LaravelMultipaymentGatewaysServiceProvider extends PackageServiceProvider implements DeferrableProvider
 {
