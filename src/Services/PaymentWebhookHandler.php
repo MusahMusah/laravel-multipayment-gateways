@@ -4,11 +4,11 @@ namespace MusahMusah\LaravelMultipaymentGateways\Services;
 
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidPaymentWebhookConfig;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidPaymentWebhookHandler;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidPaymentWebhookSignature;
 use MusahMusah\LaravelMultipaymentGateways\Models\PaymentWebhookLog;
-use Illuminate\Support\Facades\Schema;
 
 class PaymentWebhookHandler
 {
@@ -49,7 +49,6 @@ class PaymentWebhookHandler
         $this->setWebhookPayload();
 
         if (Schema::hasTable($this->databaseTable)) {
-
             $this->createWebhookHash();
 
             // check if the webhook hash has already been processed
@@ -172,7 +171,6 @@ class PaymentWebhookHandler
      * Dispatch the job or event based on the paymentWebhookHandler
      *
      * @param  string  $paymentWebhookHandler
-     *
      * @return void
      *
      * @throws InvalidPaymentWebhookHandler

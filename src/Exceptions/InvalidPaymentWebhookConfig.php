@@ -80,7 +80,7 @@ class InvalidPaymentWebhookConfig extends Exception
         return new static("The job class for `{$configNotFoundName}` is missing. Please ensure that the `payment_webhook_job` config key is set correctly.");
     }
 
-     /**
+    /**
      * An exception thrown when the event class for handling a webhook request is missing
      *
      * @param  string  $configNotFoundName

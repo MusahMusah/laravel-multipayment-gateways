@@ -7,14 +7,14 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use MusahMusah\LaravelMultipaymentGateways\Contracts\PaystackContract;
 use MusahMusah\LaravelMultipaymentGateways\Contracts\StripeContract;
+use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidPaymentWebhookConfig;
 use MusahMusah\LaravelMultipaymentGateways\Gateways\PaystackService;
 use MusahMusah\LaravelMultipaymentGateways\Gateways\StripeService;
-use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidPaymentWebhookConfig;
+use MusahMusah\LaravelMultipaymentGateways\Http\Controllers\PaymentWebhookController;
 use MusahMusah\LaravelMultipaymentGateways\Services\PaymentWebhookConfig;
 use MusahMusah\LaravelMultipaymentGateways\Services\PaymentWebhookConfigRepository;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use MusahMusah\LaravelMultipaymentGateways\Http\Controllers\PaymentWebhookController;
 
 class LaravelMultipaymentGatewaysServiceProvider extends PackageServiceProvider implements DeferrableProvider
 {
