@@ -43,8 +43,7 @@ return [
              */
             'signature_validator' => '',
 
-
-             /**
+            /**
              * The webhook handler option allows you to choose how webhook requests are handled in your application.
              *
              * Available options:
@@ -91,10 +90,9 @@ return [
              *
              * It should implement the interface \MusahMusah\LaravelMultipaymentGateways\Services\PaymentWebhookSignatureValidator.
              */
-            'signature_validator' =>  '',
+            'signature_validator' => '',
 
-
-             /**
+            /**
              * The webhook handler option allows you to choose how webhook requests are handled in your application.
              *
              * Available options:

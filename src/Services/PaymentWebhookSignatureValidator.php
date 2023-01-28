@@ -3,7 +3,6 @@
 namespace MusahMusah\LaravelMultipaymentGateways\Services;
 
 use Illuminate\Http\Request;
-use MusahMusah\LaravelMultipaymentGateways\Services\PaymentWebhookConfig;
 
 interface PaymentWebhookSignatureValidator
 {

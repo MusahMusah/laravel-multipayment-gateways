@@ -2,10 +2,10 @@
 
 namespace MusahMusah\LaravelMultipaymentGateways\Models;
 
-use MusahMusah\LaravelMultipaymentGateways\Services\PaymentWebhookConfig;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Exception;
+use MusahMusah\LaravelMultipaymentGateways\Services\PaymentWebhookConfig;
 
 class PaymentWebhookLog extends Model
 {
@@ -20,12 +20,12 @@ class PaymentWebhookLog extends Model
     public static function storePaymentWebhook(PaymentWebhookConfig $config, Request $request, $requestHash): PaymentWebhookLog
     {
         return self::create([
-            'payment_gateway'    => $config->name,
-            'request_hash'       => $requestHash,
-            'request_url'        => $request->fullUrl(),
-            'request_ip'         => $request->ip(),
-            'request_headers'    => $request->headers->all(),
-            'request_body'       => $request->input(),
+            'payment_gateway' => $config->name,
+            'request_hash' => $requestHash,
+            'request_url' => $request->fullUrl(),
+            'request_ip' => $request->ip(),
+            'request_headers' => $request->headers->all(),
+            'request_body' => $request->input(),
         ]);
     }
 
