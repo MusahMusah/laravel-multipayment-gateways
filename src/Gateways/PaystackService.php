@@ -107,13 +107,14 @@ class PaystackService implements PaystackContract
      * Hit Paystack's API to initiate the transaction and generate the authorization URL
      *
      * @return array
+     *
      * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException
      */
     private function generateCheckoutLink(): array
     {
         if (empty($this->payload)) {
             $this->payload = array_filter([
-                'amount' => (int)request()->amount,
+                'amount' => (int) request()->amount,
                 'email' => request()->email,
                 'first_name' => request()->first_name,
                 'last_name' => request()->last_name,
@@ -124,8 +125,8 @@ class PaystackService implements PaystackContract
                 'subaccount' => request()->subaccount,
                 'transaction_charge' => request()->transaction_charge,
 
-                "split_code" => request()->split_code,
-                "split" => request()->split,
+                'split_code' => request()->split_code,
+                'split' => request()->split,
 
                 'reference' => request()->reference,
                 'callback_url' => request()->callback_url,
@@ -143,6 +144,7 @@ class PaystackService implements PaystackContract
      * Get the authorization URL from Paystack's API
      *
      * @return self
+     *
      * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException
      */
     private function getAuthorizationUrl(): self
@@ -156,7 +158,7 @@ class PaystackService implements PaystackContract
     /**
      * @return \Illuminate\Http\RedirectResponse
      */
-    private function redirectRequest(): \Illuminate\Http\RedirectResponse
+    private function redirectRequest(): RedirectResponse
     {
         return redirect($this->redirectUrl);
     }
@@ -164,11 +166,12 @@ class PaystackService implements PaystackContract
     /**
      * Redirect the user to Paystack's payment checkout page
      *
-     * @param array|null $data
+     * @param  array|null  $data
      * @return RedirectResponse
+     *
      * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException
      */
-    public function redirectToCheckout(array $data = null): \Illuminate\Http\RedirectResponse
+    public function redirectToCheckout(array $data = null): RedirectResponse
     {
         is_null($data) ?: $this->payload = $data;
 
@@ -179,6 +182,7 @@ class PaystackService implements PaystackContract
      * Hit Paystack's verify endpoint to validate the payment and get the payment details
      *
      * @return array
+     *
      * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException|PaymentVerificationException
      */
     public function getPaymentData(): array
@@ -190,21 +194,26 @@ class PaystackService implements PaystackContract
 
     /**
      * Hit Paystack's verify endpoint to validate the payment
+     *
      * @return void
+     *
      * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException|PaymentVerificationException
      */
     private function validateTransaction(): void
     {
         $this->verifyTransaction(reference: request()->reference ?? request()->trxref);
 
-        if ($this->getData()['status'] !== 'success') throw new PaymentVerificationException();
+        if ($this->getData()['status'] !== 'success') {
+            throw new PaymentVerificationException();
+        }
     }
 
     /**
      * Hit Paystack's API to Verify that the transaction is valid
      *
-     * @param string $reference
+     * @param  string  $reference
      * @return array
+     *
      * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException
      */
     public function verifyTransaction(string $reference): array
@@ -233,8 +242,8 @@ class PaystackService implements PaystackContract
     /**
      * Hit Paystack's API to resolve a bank account
      *
-     * @param string $accountNumber
-     * @param string $bankCode
+     * @param  string  $accountNumber
+     * @param  string  $bankCode
      * @return mixed
      *
      * @throws GuzzleException
@@ -255,9 +264,9 @@ class PaystackService implements PaystackContract
     /**
      * Hit Paystack's API to create a Transfer Recipient
      *
-     * @param string $name
-     * @param string $accountNumber
-     * @param string $bankCode
+     * @param  string  $name
+     * @param  string  $accountNumber
+     * @param  string  $bankCode
      * @return mixed
      *
      * @throws GuzzleException
@@ -282,7 +291,7 @@ class PaystackService implements PaystackContract
     /**
      * Hit Paystack's API to create bulk transfers recipients
      *
-     * @param array $recipients
+     * @param  array  $recipients
      * @return mixed
      *
      * @throws GuzzleException
@@ -303,10 +312,10 @@ class PaystackService implements PaystackContract
     /**
      * Hit Paystack's API to initiate a Transfer
      *
-     * @param int $amount
-     * @param string $reference
-     * @param string $recipient
-     * @param string $reason
+     * @param  int  $amount
+     * @param  string  $reference
+     * @param  string  $recipient
+     * @param  string  $reason
      * @return mixed
      *
      * @throws GuzzleException
@@ -332,7 +341,7 @@ class PaystackService implements PaystackContract
     /**
      * Hit Paystack's API to initiate a Bulk Transfer
      *
-     * @param array $transfers
+     * @param  array  $transfers
      * @return mixed
      *
      * @throws GuzzleException
@@ -355,8 +364,8 @@ class PaystackService implements PaystackContract
     /**
      * Hit Paystack's API to finalize a Transfer
      *
-     * @param string $transferCode
-     * @param string $otp
+     * @param  string  $transferCode
+     * @param  string  $otp
      * @return mixed
      *
      * @throws GuzzleException
@@ -379,7 +388,7 @@ class PaystackService implements PaystackContract
     /**
      * Hit Paystack's API to verify a Transfer
      *
-     * @param string $reference
+     * @param  string  $reference
      * @return mixed
      *
      * @throws GuzzleException
@@ -397,7 +406,7 @@ class PaystackService implements PaystackContract
     /**
      * Hit Paystack's API to fetch a Transfer
      *
-     * @param string $transferCode
+     * @param  string  $transferCode
      * @return mixed
      *
      * @throws GuzzleException
