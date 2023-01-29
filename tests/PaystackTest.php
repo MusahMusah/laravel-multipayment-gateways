@@ -98,5 +98,10 @@ it('can make fake http request to get list of banks', function () {
     ]);
 
     expect(json_decode($body, true))
-        ->toBeArray();
+        ->toBeArray()
+        ->toHaveKeys([
+            'status',
+            'message',
+            'data',
+        ]);
 });
