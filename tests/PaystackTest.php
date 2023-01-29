@@ -8,6 +8,12 @@ beforeEach(function () {
     $this->paystack = $this->mock(PaystackContract::class);
 });
 
+it('can instantiate PaystackContract instance', function () {
+    expect($this->paystack)
+        ->toBeObject()
+        ->toBeInstanceOf(PaystackContract::class);
+});
+
 it('can redirect to checkout for payment using passed arguments', function () {
     $this->paystack
         ->shouldReceive('redirectToCheckout')
