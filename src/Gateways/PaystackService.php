@@ -112,7 +112,7 @@ class PaystackService implements PaystackContract
     private function generateCheckoutLink(): array
     {
         if (empty($this->payload)) {
-            $this->payload = [
+            $this->payload = array_filter([
                 'amount' => (int)request()->amount,
                 'email' => request()->email,
                 'first_name' => request()->first_name,
@@ -129,7 +129,7 @@ class PaystackService implements PaystackContract
 
                 'reference' => request()->reference,
                 'callback_url' => request()->callback_url,
-            ];
+            ]);
         }
 
         return $this->makeRequest(
