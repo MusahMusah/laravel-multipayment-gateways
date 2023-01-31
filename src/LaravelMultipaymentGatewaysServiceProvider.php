@@ -16,13 +16,12 @@ use MusahMusah\LaravelMultipaymentGateways\Services\PaymentWebhookConfigReposito
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class LaravelMultipaymentGatewaysServiceProvider extends PackageServiceProvider implements DeferrableProvider
+class LaravelMultipaymentGatewaysServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
         $package
             ->name('laravel-multipayment-gateways')
-            ->hasRoute('web')
             ->hasConfigFile()
             ->hasMigrations('create_payment_webhook_logs_table');
     }
@@ -32,9 +31,34 @@ class LaravelMultipaymentGatewaysServiceProvider extends PackageServiceProvider 
         $this->app->bind(PaystackContract::class, PaystackService::class);
         $this->app->bind(StripeContract::class, StripeService::class);
 
+        $this->registerWebHookConfig();
+    }
+
+    public function provides(): array
+    {
+        return [
+            PaystackContract::class, 
+            StripeContract::class, 
+            PaymentWebhookConfigRepository::class, 
+            PaymentWebhookConfig::class
+        ];
+    }
+
+    private function registerWebHookConfig()
+    {
+        $this->registerWebHookRoute();
+        $this->registerWebHookBindings();
+    }
+
+    private function registerWebHookRoute()
+    {
         Route::macro('webhooks', function (string $url, string $name = 'stripe') {
             return Route::post($url, PaymentWebhookController::class)->name("{$name}-payment-webhook");
         });
+    }
+
+    private function registerWebHookBindings()
+    {
 
         $this->app->scoped(PaymentWebhookConfigRepository::class, function () {
             $configRepository = new PaymentWebhookConfigRepository();
@@ -59,10 +83,5 @@ class LaravelMultipaymentGatewaysServiceProvider extends PackageServiceProvider 
 
             return $paymentWebhookConfig;
         });
-    }
-
-    public function provides(): array
-    {
-        return [PaystackContract::class, StripeContract::class, PaymentWebhookConfigRepository::class, PaymentWebhookConfig::class];
     }
 }
