@@ -38,14 +38,13 @@ return [
 ## Usage
 
 ```php
-$laravelMultipaymentGateways = new MusahMusah\LaravelMultipaymentGateways();
-echo $laravelMultipaymentGateways->echoPhrase('Hello, MusahMusah!');
+
 ```
 
 ## Testing
 
 ```bash
-composer test
+php artisan test
 ```
 
 ## Changelog
