@@ -2,7 +2,6 @@
 
 namespace MusahMusah\LaravelMultipaymentGateways;
 
-use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use MusahMusah\LaravelMultipaymentGateways\Contracts\PaystackContract;
@@ -37,10 +36,10 @@ class LaravelMultipaymentGatewaysServiceProvider extends PackageServiceProvider
     public function provides(): array
     {
         return [
-            PaystackContract::class, 
-            StripeContract::class, 
-            PaymentWebhookConfigRepository::class, 
-            PaymentWebhookConfig::class
+            PaystackContract::class,
+            StripeContract::class,
+            PaymentWebhookConfigRepository::class,
+            PaymentWebhookConfig::class,
         ];
     }
 
@@ -59,7 +58,6 @@ class LaravelMultipaymentGatewaysServiceProvider extends PackageServiceProvider
 
     private function registerWebHookBindings()
     {
-
         $this->app->scoped(PaymentWebhookConfigRepository::class, function () {
             $configRepository = new PaymentWebhookConfigRepository();
             $webhookConfigs = config('multipayment-gateways.configs');
