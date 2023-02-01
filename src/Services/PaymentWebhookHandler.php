@@ -45,6 +45,7 @@ class PaymentWebhookHandler
      * Handle the webhook request
      *
      * @return JsonResponse
+     *
      * @throws InvalidPaymentWebhookConfig|InvalidPaymentWebhookHandler|InvalidPaymentWebhookSignature
      */
     public function handle(): JsonResponse
@@ -111,7 +112,7 @@ class PaymentWebhookHandler
     /**
      * Check if the webhook hash has already been processed
      *
-     * @param string $hash
+     * @param  string  $hash
      * @return bool
      */
     protected function hasWebhookBeenProcessed(string $hash): bool
@@ -133,7 +134,7 @@ class PaymentWebhookHandler
     /**
      * Handle the webhook response by returning a JSON response
      *
-     * @param string $webhookResponse The message to be returned in the response
+     * @param  string  $webhookResponse The message to be returned in the response
      * @return JsonResponse
      */
     protected function handleWebhookResponse(string $webhookResponse = self::WEBHOOK_RESPONSE_MESSAGE): JsonResponse
@@ -154,8 +155,9 @@ class PaymentWebhookHandler
     /**
      * Processes the payment webhook
      *
-     * @param PaymentWebhookLog|null $webhookLog
+     * @param  PaymentWebhookLog|null  $webhookLog
      * @return void
+     *
      * @throws InvalidPaymentWebhookConfig|InvalidPaymentWebhookHandler
      */
     protected function processPaymentWebhook(PaymentWebhookLog $webhookLog = null): void
@@ -172,7 +174,7 @@ class PaymentWebhookHandler
     /**
      * Dispatch the job or event based on the paymentWebhookHandler
      *
-     * @param string $paymentWebhookHandler
+     * @param  string  $paymentWebhookHandler
      * @return void
      *
      * @throws InvalidPaymentWebhookConfig|InvalidPaymentWebhookHandler
@@ -197,6 +199,7 @@ class PaymentWebhookHandler
      * Create the webhook job
      *
      * @return mixed
+     *
      *  @throws InvalidPaymentWebhookConfig
      */
     protected function createWebhookJob(): mixed
