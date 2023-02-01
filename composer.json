@@ -3,6 +3,7 @@
     "description": "A Laravel Package that makes implementation of multiple payment Gateways endpoints and webhooks seamless ",
     "keywords": [
         "MusahMusah",
+        "Cybernerdie",
         "laravel",
         "laravel-multipayment-gateways"
     ],
@@ -12,6 +13,11 @@
         {
             "name": "MusahMusah",
             "email": "aliyumusahmusah@gmail.com",
+            "role": "Developer"
+        },
+        {
+            "name": "Joshua Paul",
+            "email": "veecthorpaul@gmail.com",
             "role": "Developer"
         }
     ],
