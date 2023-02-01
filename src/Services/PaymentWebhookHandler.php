@@ -56,7 +56,7 @@ class PaymentWebhookHandler
 
             // check if the webhook hash has already been processed
             if ($this->hasWebhookBeenProcessed($this->webhookHash)) {
-                return $this->handleDuplicateWebhook($this->webhookHash);
+                return $this->handleDuplicateWebhook();
             }
 
             $webhookLog = $this->storeWebhook();
