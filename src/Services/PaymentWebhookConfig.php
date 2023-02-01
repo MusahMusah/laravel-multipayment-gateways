@@ -22,10 +22,13 @@ class PaymentWebhookConfig
 
     public string $paymentWebhookHandler;
 
-    public string $paymentWebhookJobClass;
+    public string|ProcessPaymentWebhookJob $paymentWebhookJobClass;
 
-    public string $paymentWebhookEventClass;
+    public string|PaymentWebhookReceivedEvent $paymentWebhookEventClass;
 
+    /**
+     * @throws InvalidPaymentWebhookConfig
+     */
     public function __construct(array $properties)
     {
         $this->name = $properties['name'];

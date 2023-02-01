@@ -3,8 +3,10 @@
 namespace MusahMusah\LaravelMultipaymentGateways\Services;
 
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
+use MusahMusah\LaravelMultipaymentGateways\Events\PaymentWebhookReceivedEvent;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidPaymentWebhookConfig;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidPaymentWebhookHandler;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidPaymentWebhookSignature;
@@ -14,7 +16,7 @@ class PaymentWebhookHandler
 {
     protected $request;
 
-    protected $webhookConfig;
+    protected PaymentWebhookConfig $webhookConfig;
 
     protected $webhookPayload;
 
@@ -42,9 +44,10 @@ class PaymentWebhookHandler
     /**
      * Handle the webhook request
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
+     * @throws InvalidPaymentWebhookConfig|InvalidPaymentWebhookHandler|InvalidPaymentWebhookSignature
      */
-    public function handle()
+    public function handle(): JsonResponse
     {
         $this->setWebhookPayload();
 
@@ -108,10 +111,10 @@ class PaymentWebhookHandler
     /**
      * Check if the webhook hash has already been processed
      *
-     * @param  string  $hash
+     * @param string $hash
      * @return bool
      */
-    protected function hasWebhookBeenProcessed($hash)
+    protected function hasWebhookBeenProcessed(string $hash): bool
     {
         return $this->webhookConfig->paymentWebhookModel::where('request_hash', $hash)->exists();
     }
@@ -119,9 +122,9 @@ class PaymentWebhookHandler
     /**
      * Handle the case when the webhook hash has already been processed
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    protected function handleDuplicateWebhook()
+    protected function handleDuplicateWebhook(): JsonResponse
     {
         // webhook has already been processed, return a response
         return $this->handleWebhookResponse('Webhook has already been processed');
@@ -130,10 +133,10 @@ class PaymentWebhookHandler
     /**
      * Handle the webhook response by returning a JSON response
      *
-     * @param  string  $webhookResponse The message to be returned in the response
-     * @return \Illuminate\Http\JsonResponse
+     * @param string $webhookResponse The message to be returned in the response
+     * @return JsonResponse
      */
-    protected function handleWebhookResponse($webhookResponse = self::WEBHOOK_RESPONSE_MESSAGE)
+    protected function handleWebhookResponse(string $webhookResponse = self::WEBHOOK_RESPONSE_MESSAGE): JsonResponse
     {
         return response()->json(['message' => $webhookResponse], self::WEBHOOK_RESPONSE_STATUS);
     }
@@ -151,8 +154,9 @@ class PaymentWebhookHandler
     /**
      * Processes the payment webhook
      *
-     * @param  PaymentWebhookLog  $webhookLog
+     * @param PaymentWebhookLog|null $webhookLog
      * @return void
+     * @throws InvalidPaymentWebhookConfig|InvalidPaymentWebhookHandler
      */
     protected function processPaymentWebhook(PaymentWebhookLog $webhookLog = null): void
     {
@@ -160,9 +164,7 @@ class PaymentWebhookHandler
             $paymentWebhookHandler = $this->webhookConfig->paymentWebhookHandler ?? self::WEBHOOK_HANDLER_JOB;
             $this->handlePaymentWebhook($paymentWebhookHandler);
         } catch (Exception $exception) {
-            if ($webhookLog !== null) {
-                $webhookLog->savePaymentWebhookException($exception);
-            }
+            $webhookLog?->savePaymentWebhookException($exception);
             throw $exception;
         }
     }
@@ -170,10 +172,10 @@ class PaymentWebhookHandler
     /**
      * Dispatch the job or event based on the paymentWebhookHandler
      *
-     * @param  string  $paymentWebhookHandler
+     * @param string $paymentWebhookHandler
      * @return void
      *
-     * @throws InvalidPaymentWebhookHandler
+     * @throws InvalidPaymentWebhookConfig|InvalidPaymentWebhookHandler
      */
     protected function handlePaymentWebhook(string $paymentWebhookHandler): void
     {
@@ -195,10 +197,9 @@ class PaymentWebhookHandler
      * Create the webhook job
      *
      * @return mixed
-     *
      *  @throws InvalidPaymentWebhookConfig
      */
-    protected function createWebhookJob()
+    protected function createWebhookJob(): mixed
     {
         if (empty($this->webhookConfig->paymentWebhookJobClass)) {
             // job class is missing
@@ -212,14 +213,12 @@ class PaymentWebhookHandler
      * Create the webhook event
      *
      * @return mixed
-     *
-     *  @throws InvalidPaymentWebhookConfig
      */
-    protected function createWebhookEvent()
+    protected function createWebhookEvent(): mixed
     {
         if (empty($this->webhookConfig->paymentWebhookEventClass)) {
-            // event class is missing
-            throw InvalidPaymentWebhookConfig::missingEventClass($this->webhookConfig->name);
+//            throw InvalidPaymentWebhookConfig::missingEventClass($this->webhookConfig->name);
+            return new PaymentWebhookReceivedEvent($this->webhookPayload);
         }
 
         return new $this->webhookConfig->paymentWebhookEventClass($this->webhookPayload);

@@ -11,7 +11,7 @@ class PaymentWebhookConfigRepository
      *
      * @param  PaymentWebhookConfig  $webhookConfig
      */
-    public function storeConfig(PaymentWebhookConfig $webhookConfig)
+    public function storeConfig(PaymentWebhookConfig $webhookConfig): void
     {
         $this->webhookConfig[$webhookConfig->name] = $webhookConfig;
     }
@@ -22,7 +22,7 @@ class PaymentWebhookConfigRepository
      * @param  string  $name The name of the payment gateway
      * @return PaymentWebhookConfig|null
      */
-    public function getConfig(string $name)
+    public function getConfig(string $name): ?PaymentWebhookConfig
     {
         return $this->webhookConfig[$name] ?? null;
     }
