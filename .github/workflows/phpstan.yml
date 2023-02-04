@@ -10,9 +10,6 @@ jobs:
   phpstan:
     name: phpstan
     runs-on: ubuntu-latest
-    parameters:
-      excludePaths:
-        - 'src/Models/PaymentWebhookLog.php'
     steps:
       - uses: actions/checkout@v3
 

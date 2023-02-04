@@ -19,7 +19,7 @@ return [
         ],
     ],
 
-    'configs' => [
+    'webhooks' => [
         [
             /*
              * This refers to the name of the payment gateway being used.
