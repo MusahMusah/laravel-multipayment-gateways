@@ -14,6 +14,6 @@ class InvalidPaymentWebhookHandler extends Exception
      */
     public static function invalidHandler($configNotFoundName): self
     {
-        return new static("The webhook handler for `{$configNotFoundName}` is invalid. Please ensure that the `payment_webhook_handler` config key is entered correctly.");
+        return new self("The webhook handler for `{$configNotFoundName}` is invalid. Please ensure that the `payment_webhook_handler` config key is entered correctly.");
     }
 }

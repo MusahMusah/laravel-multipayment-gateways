@@ -14,6 +14,6 @@ class InvalidPaymentWebhookSignature extends Exception
      */
     public static function invalidSignature($configNotFoundName): self
     {
-        return new static("The signature for `{$configNotFoundName}` is invalid. Please ensure that the `signing_secret` config key is entered correctly.");
+        return new self("The signature for `{$configNotFoundName}` is invalid. Please ensure that the `signing_secret` config key is entered correctly.");
     }
 }
