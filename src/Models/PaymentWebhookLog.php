@@ -1,6 +1,5 @@
 <?php
-// ignore phpstan check for this file
-// @phpstan-ignore-next-line
+
 namespace MusahMusah\LaravelMultipaymentGateways\Models;
 
 use Exception;
@@ -20,6 +19,7 @@ class PaymentWebhookLog extends Model
 
     public static function storePaymentWebhook(PaymentWebhookConfig $config, Request $request, $requestHash): PaymentWebhookLog
     {
+        // @phpstan-ignore-next-line
         return self::create([
             'payment_gateway' => $config->name,
             'request_hash' => $requestHash,
@@ -32,6 +32,7 @@ class PaymentWebhookLog extends Model
 
     public function savePaymentWebhookException(Exception $exception): self
     {
+        // @phpstan-ignore-next-line
         $this->request_exception = [
             'code' => $exception->getCode(),
             'message' => $exception->getMessage(),
