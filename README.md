@@ -1,8 +1,8 @@
 # A Laravel Package that makes implementation of multiple payment Gateways endpoints and webhooks seamless 
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/musahmusah/laravel-multipayment-gateways.svg?style=flat-square)](https://packagist.org/packages/musahmusah/laravel-multipayment-gateways)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/musahmusah/laravel-multipayment-gateways/run-tests?label=tests)](https://github.com/musahmusah/laravel-multipayment-gateways/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/musahmusah/laravel-multipayment-gateways/Fix%20PHP%20code%20style%20issues?label=code%20style)](https://github.com/musahmusah/laravel-multipayment-gateways/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
+![Test Status](https://img.shields.io/github/actions/workflow/status/musahmusah/laravel-multipayment-gateways/run-tests.yml?branch=main&label=Tests)
+![Code Style Status](https://img.shields.io/github/actions/workflow/status/musahmusah/laravel-multipayment-gateways/phpstan.yml?branch=main&label=Code%20Style)
 [![Total Downloads](https://img.shields.io/packagist/dt/musahmusah/laravel-multipayment-gateways.svg?style=flat-square)](https://packagist.org/packages/musahmusah/laravel-multipayment-gateways)
 
 The `laravel-multipayment-gateways` package provides a convenient way to handle payments through multiple payment gateways in a Laravel application. 
