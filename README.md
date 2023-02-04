@@ -31,31 +31,169 @@ You can publish the config file with:
 php artisan vendor:publish --tag="multipayment-gateways-config"
 ```
 
-[//]: # (This is the contents of the published config file:)
+This is the contents of the published config file:
 
-[//]: # ()
-[//]: # (```php)
+```php
 
-[//]: # (return [)
+return [
+    'paystack' => [
+        'base_uri' => env('PAYSTACK_BASE_URI'),
+        'secret' => env('PAYSTACK_SECRET'),
+        'currency' => env('PAYSTACK_CURRENCY'),
+    ],
 
-[//]: # (    )
-[//]: # (];)
+    'stripe' => [
+        'base_uri' => env('STRIPE_BASE_URI'),
+        'secret' => env('STRIPE_SECRET'),
+        'webhook_secret' => env('STRIPE_WEBHOOK_SECRET'),
+        'currency' => env('STRIPE_CURRENCY'),
+        'plans' => [
+            'monthly' => env('STRIPE_MONTHLY_PLAN'),
+            'yearly' => env('STRIPE_YEARLY_PLAN'),
+        ],
+    ],
 
-[//]: # (```)
+    'configs' => [
+        [
+            /*
+             * This refers to the name of the payment gateway being used.
+             */
+            'name' => 'default',
+
+            /*
+             * This secret key is used to validate the signature of the webhook call.
+             */
+            'signing_secret' => '',
+
+            /*
+             * This refers to the header that holds the signature.
+             */
+            'signature_header_name' => 'Stripe-Signature',
+
+            /*
+             *  This class is responsible for verifying the validity of the signature header.
+             *
+             * It should implement the interface \MusahMusah\LaravelMultipaymentGateways\SignatureValidator\PaymentWebhookSignatureValidator.
+             */
+            'signature_validator' => \MusahMusah\LaravelMultipaymentGateways\SignatureValidator\DefaultSignatureValidator::class,
+
+            /**
+             * The webhook handler option allows you to choose how webhook requests are handled in your application.
+             *
+             * Available options:
+             * - 'job': Webhook requests will be handled by a job.
+             * - 'event': Webhook requests will be handled by an event.
+             *
+             * Default: 'job'
+             */
+            'payment_webhook_handler' => 'job',
+
+            /**
+             * The payment_webhook_job option allows you to specify the job class that will be used to process webhook requests for payment methods.
+             *
+             * This should be set to a class that extends \MusahMusah\LaravelMultipaymentGateways\Jobs\ProcessPaymentWebhookJob.
+             */
+            'payment_webhook_job' => '',
+
+            /**
+             * The payment_webhook_event option allows you to specify the event class that will be used to process webhook requests for payment methods.
+             *
+             * This should be set to a class that extends \MusahMusah\LaravelMultipaymentGateways\Events\PaymentWebhookReceivedEvent.
+             */
+            'payment_webhook_event' => '',
+        ],
+
+        [
+            /*
+             * This refers to the name of the payment gateway being used.
+             */
+            'name' => 'paystack',
+
+            /*
+             * This secret key is used to validate the signature of the webhook call.
+             */
+            'signing_secret' => '',
+
+            /*
+             * This refers to the header that holds the signature.
+             */
+            'signature_header_name' => 'Paystack-Signature',
+
+            /*
+             *  This class is responsible for verifying the validity of the signature header.
+             *
+            * It should implement the interface \MusahMusah\LaravelMultipaymentGateways\SignatureValidator\PaymentWebhookSignatureValidator.
+             */
+            'signature_validator' => \MusahMusah\LaravelMultipaymentGateways\SignatureValidator\DefaultSignatureValidator::class,
+
+            /**
+             * The webhook handler option allows you to choose how webhook requests are handled in your application.
+             *
+             * Available options:
+             * - 'job': Webhook requests will be handled by a job.
+             * - 'event': Webhook requests will be handled by an event.
+             *
+             * Default: 'job'
+             */
+            'payment_webhook_handler' => 'event',
+
+            /**
+             * The payment_webhook_job option allows you to specify the job class that will be used to process webhook requests for payment methods.
+             *
+             * This should be set to a class that extends \MusahMusah\LaravelMultipaymentGateways\Jobs\ProcessPaymentWebhookJob.
+             */
+            'payment_webhook_job' => '',
+
+            /**
+             * The payment_webhook_event option allows you to specify the event class that will be used to process webhook requests for payment methods.
+             *
+             * This should be set to a class that extends \MusahMusah\LaravelMultipaymentGateways\Events\PaymentWebhookReceivedEvent.
+             */
+            'payment_webhook_event' => '',
+        ],
+    ],
+];
+
+```
+To prepare your application to handle payments using any of the payment gateways, you need to add the values to your `.env` file.
+Each payment gateway has its own set of values that you need to add to your `.env` file as documented in the config file above.
+For example, to use the `paystack` payment gateway, you need to add the following values to your `.env` file:
+```dotenv
+PAYSTACK_BASE_URI=https://api.paystack.co
+PAYSTACK_SECRET=sk_test_123456789
+PAYSTACK_CURRENCY=NGN
+```
+To prepare your application to handle webhooks for any of the payment gateways, you need to update the `configs` array in the `config/multipayment_gateways.php` file generated by the package.
+Each payment gateway has to be configured with the following values:
+- `name`: This refers to the name of the payment gateway being used.
+- `signing_secret`: This secret key is used to validate the signature of the webhook call.
+- `signature_header_name`: This refers to the header that holds the signature.
+- `signature_validator`: This class is responsible for verifying the validity of the signature header. It should implement the interface `\MusahMusah\LaravelMultipaymentGateways\SignatureValidator\PaymentWebhookSignatureValidator`.
+- `payment_webhook_handler`: The webhook handler option allows you to choose how webhook requests are handled in your application. Available options are:
+    - `job`: Webhook requests will be handled by a job.
+    - `event`: Webhook requests will be handled by an event.
+    - Default: `job`
+    - `payment_webhook_job`: The payment_webhook_job option allows you to specify the job class that will be used to process webhook requests for payment methods. This should be set to a class that extends `\MusahMusah\LaravelMultipaymentGateways\Jobs\ProcessPaymentWebhookJob`.
+    - `payment_webhook_event`: The payment_webhook_event option allows you to specify the event class that will be used to process webhook requests for payment methods. This should be set to a class that extends `\MusahMusah\LaravelMultipaymentGateways\Events\PaymentWebhookReceivedEvent` by default the package provides a default event class that you can create a listener for.
+
 
 ## Usage
 This package provides various ways to handle payments and webhooks.
 The idea is to provide a way to handle payments and webhooks in laravel `web` and `api` based applications.
 ### Handling Payments
 Payment can be handled in the following ways:
-1. Using the facade
+#### Using the Facade
 ```php
 use MusahMusah\LaravelMultipaymentGateways\Facades\Paystack;
 use MusahMusah\LaravelMultipaymentGateways\Facades\Stripe;
 
-// Using Paystack Facade
-Paystack::getBanks();
-Paystack::redirectToCheckout();
+// Using Paystack Facade for web applications
+Paystack::redirectToCheckout([
+    'amount' => 1000,
+    'email' => 'musahmusah@test.com',
+    'reference' => '123456789',
+    'callback_url' => 'https://example.com',
+]);
 
 // Using Stripe Facade
 Stripe::createIntent();
