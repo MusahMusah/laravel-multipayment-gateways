@@ -87,6 +87,7 @@ paystack()->redirectToCheckout();
 // Using Stripe Helper
 stripe()->createIntent();
 stripe()->confirmIntent();
+
 ```
 
 ### Handling Webhooks
