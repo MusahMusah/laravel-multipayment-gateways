@@ -60,7 +60,7 @@ class LaravelMultipaymentGatewaysServiceProvider extends PackageServiceProvider
     {
         $this->app->scoped(PaymentWebhookConfigRepository::class, function () {
             $configRepository = new PaymentWebhookConfigRepository();
-            $webhookConfigs = config('multipayment-gateways.configs');
+            $webhookConfigs = config('multipayment-gateways.webhooks');
 
             collect($webhookConfigs)
                 ->map(fn (array $config) => new PaymentWebhookConfig($config))

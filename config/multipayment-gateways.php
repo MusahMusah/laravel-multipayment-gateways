@@ -24,7 +24,7 @@ return [
             /*
              * This refers to the name of the payment gateway being used.
              */
-            'name' => 'default',
+            'name' => 'stripe',
 
             /*
              * This secret key is used to validate the signature of the webhook call.

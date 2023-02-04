@@ -53,12 +53,12 @@ return [
         ],
     ],
 
-    'configs' => [
+    'webhooks' => [
         [
             /*
              * This refers to the name of the payment gateway being used.
              */
-            'name' => 'default',
+            'name' => 'stripe',
 
             /*
              * This secret key is used to validate the signature of the webhook call.
@@ -180,8 +180,10 @@ Each payment gateway has to be configured with the following values:
 ## Usage
 This package provides various ways to handle payments and webhooks.
 The idea is to provide a way to handle payments and webhooks in laravel `web` and `api` based applications.
+
 ### Handling Payments
 Payment can be handled in the following ways:
+
 #### Using the Facade
 ```php
 use MusahMusah\LaravelMultipaymentGateways\Facades\Paystack;
