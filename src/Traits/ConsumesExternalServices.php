@@ -73,7 +73,7 @@ trait ConsumesExternalServices
             throw new HttpMethodFoundException('Method not found');
         }
 
-        if (!$this->baseUri) {
+        if (! $this->baseUri) {
             throw new InvalidConfigurationException('Base URI not provided, please set all the required configurations');
         }
     }
