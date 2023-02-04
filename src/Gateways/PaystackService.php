@@ -21,14 +21,14 @@ class PaystackService implements PaystackContract
      *
      * @var string
      */
-    protected string $baseUri;
+    protected $baseUri;
 
     /**
      * The secret to consume the Paystack's service
      *
      * @var string
      */
-    protected string $secret;
+    protected $secret;
 
     /**
      * The redirect url to consume the Paystack's service

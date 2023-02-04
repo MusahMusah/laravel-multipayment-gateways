@@ -198,11 +198,9 @@ class PaymentWebhookHandler
     /**
      * Create the webhook job
      *
-     * @return mixed
-     *
      *  @throws InvalidPaymentWebhookConfig
      */
-    protected function createWebhookJob(): mixed
+    protected function createWebhookJob()
     {
         if (empty($this->webhookConfig->paymentWebhookJobClass)) {
             // job class is missing
@@ -214,13 +212,10 @@ class PaymentWebhookHandler
 
     /**
      * Create the webhook event
-     *
-     * @return mixed
      */
-    protected function createWebhookEvent(): mixed
+    protected function createWebhookEvent()
     {
         if (empty($this->webhookConfig->paymentWebhookEventClass)) {
-//            throw InvalidPaymentWebhookConfig::missingEventClass($this->webhookConfig->name);
             return new PaymentWebhookReceivedEvent($this->webhookPayload);
         }
 
