@@ -2,6 +2,12 @@
 
 All notable changes to `laravel-multipayment-gateways` will be documented in this file.
 
+## Payment Gateways Usage Flow  - 2023-02-04
+
+### Payment Gateways Usage Flow
+
+This release marks the first stable and ready to use version, it contains details on how to use the package to handle payments and webhook in multiple ways.
+
 ## Payment Gateways and Webhooks Integration - 2023-02-01
 
 ### Payment Gateways Added
