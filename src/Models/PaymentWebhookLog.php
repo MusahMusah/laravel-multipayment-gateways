@@ -1,6 +1,8 @@
 <?php
+
 // ignore phpstan check for this file
 // @phpstan-ignore-next-line
+
 namespace MusahMusah\LaravelMultipaymentGateways\Models;
 
 use Exception;
