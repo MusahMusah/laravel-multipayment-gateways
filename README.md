@@ -44,9 +44,93 @@ php artisan vendor:publish --tag="multipayment-gateways-config"
 [//]: # (```)
 
 ## Usage
-
+This package provides various ways to handle payments and webhooks.
+The idea is to provide a way to handle payments and webhooks in laravel `web` and `api` based applications.
+### Handling Payments
+Payment can be handled in the following ways:
+1. Using the facade
 ```php
+use MusahMusah\LaravelMultipaymentGateways\Facades\Paystack;
+use MusahMusah\LaravelMultipaymentGateways\Facades\Stripe;
 
+// Using Paystack Facade
+Paystack::getBanks();
+Paystack::redirectToCheckout();
+
+// Using Stripe Facade
+Stripe::createIntent();
+Stripe::confirmIntent();
+```
+2. Using Dependency Injection with the PaymentGateways Interface
+```php
+use Illuminate\Support\Facades\Route;
+use MusahMusah\LaravelMultipaymentGateways\Contracts\PaystackContract;
+use MusahMusah\LaravelMultipaymentGateways\Contracts\StripeContract;
+
+// Using Paystack Contract
+Route::get('/paystack/banks', function (PaystackContract $paystack) {
+    return $paystack->getBanks();
+});
+
+// Using Stripe Contract
+Route::get('/stripe/create-intent', function (StripeContract $stripe) {
+    return $stripe->createIntent();
+});
+```
+
+3. Using Helper Functions
+```php
+// Using Paystack Helper
+paystack()->getBanks();
+paystack()->redirectToCheckout();
+
+// Using Stripe Helper
+stripe()->createIntent();
+stripe()->confirmIntent();
+```
+
+### Handling Webhooks
+Webhooks can be handled in the following ways:
+1. Creating a Job Class that extends the `MusahMusah\LaravelMultipaymentGateways\Jobs\ProcessPaymentWebhookJob` class
+```php
+use MusahMusah\LaravelMultipaymentGateways\Jobs\ProcessPaymentWebhookJob;
+
+class PaymentWebhookJob extends ProcessPaymentWebhookJob implements ShouldQueue
+{
+    public function handle()
+    {
+        // Get the webhook data
+        $webhookData = $this->webhookPayload;
+        
+        // Handle the webhook
+    }
+}
+```
+2. Listening to the `MusahMusah\LaravelMultipaymentGateways\Events\PaymentWebhookReceived` event dispatched by the package.
+* Create an event listener class that will listen to the `MusahMusah\LaravelMultipaymentGateways\Events\PaymentWebhookReceived` event.
+```php
+use MusahMusah\LaravelMultipaymentGateways\Events\PaymentWebhookReceivedEvent;
+class PaymentWebhookListener
+{
+    public function handle(PaymentWebhookReceivedEvent $event)
+    {
+        // Get the webhook data
+        $webhookData = $event->webhookPayload;
+        
+        // Handle the webhook
+    }
+}
+```
+* Register the event listener in the `EventServiceProvider` class.
+```php
+use MusahMusah\LaravelMultipaymentGateways\Events\PaymentWebhookReceivedEvent;
+use App\Listeners\PaymentWebhookListener;
+
+protected $listen = [
+    PaymentWebhookReceivedEvent::class => [
+        PaymentWebhookListener::class,
+    ],
+];
 ```
 
 ## Testing
