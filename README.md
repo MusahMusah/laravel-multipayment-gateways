@@ -174,7 +174,7 @@ Each payment gateway has to be configured with the following values:
     - `event`: Webhook requests will be handled by an event.
     - Default: `job`
 - `payment_webhook_job`: The payment_webhook_job option allows you to specify the job class that will be used to process webhook requests for payment methods. This should be set to a class that extends `\MusahMusah\LaravelMultipaymentGateways\Jobs\ProcessPaymentWebhookJob`.
-- `payment_webhook_event`: The payment_webhook_event option allows you to specify the event class that will be used to process webhook requests for payment methods. This should be set to a class that extends `\MusahMusah\LaravelMultipaymentGateways\Events\PaymentWebhookReceivedEvent` by default the package provides a default event class that you can create a listener for.
+- `payment_webhook_event`: The payment_webhook_event option allows you to specify the event class that will be used to process webhook requests for payment methods. This should be set to a class that extends `\MusahMusah\LaravelMultipaymentGateways\Events\PaymentWebhookReceivedEvent` by default the package dispatches the `PaymentWebhookReceivedEvent` event that you can create a listener for. However, you can create your own event class and specify it in the `payment_webhook_event` option.
 
 
 ## Usage
