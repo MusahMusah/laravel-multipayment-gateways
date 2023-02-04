@@ -5,7 +5,10 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/musahmusah/laravel-multipayment-gateways/Fix%20PHP%20code%20style%20issues?label=code%20style)](https://github.com/musahmusah/laravel-multipayment-gateways/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/musahmusah/laravel-multipayment-gateways.svg?style=flat-square)](https://packagist.org/packages/musahmusah/laravel-multipayment-gateways)
 
-This package makes it easy to implement multiple payment gateways in your Laravel application. It provides a unified interface for the payment gateways you want to use. It also provides a way to handle webhooks from the payment gateways.
+The `laravel-multipayment-gateways` package provides a convenient way to handle payments through multiple payment gateways in a Laravel application. 
+The package currently supports multiple gateways such as Paystack and Stripe. 
+The package offers an easy to use interface that abstracts the complexities of integrating with these payment gateways. 
+It also provides a way to handle webhooks from the payment gateways.
 
 ## Installation
 

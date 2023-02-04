@@ -10,6 +10,7 @@
         "Paystack",
         "Stripe",
         "Payment Gateway",
+        "Paystack Laravel",
         "Multi Payment Gateways"
     ],
     "homepage": "https://github.com/musahmusah/laravel-multipayment-gateways",
