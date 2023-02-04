@@ -1,11 +1,16 @@
 {
     "name": "musahmusah/laravel-multipayment-gateways",
-    "description": "A Laravel Package that makes implementation of multiple payment Gateways endpoints and webhooks seamless ",
+    "description": "A Laravel Package that makes implementation of multiple payment Gateways endpoints and webhooks seamless",
     "keywords": [
         "MusahMusah",
         "Cybernerdie",
         "laravel",
-        "laravel-multipayment-gateways"
+        "laravel-multipayment-gateways",
+        "Payments",
+        "Paystack",
+        "Stripe",
+        "Payment Gateway",
+        "Multi Payment Gateways"
     ],
     "homepage": "https://github.com/musahmusah/laravel-multipayment-gateways",
     "license": "MIT",
