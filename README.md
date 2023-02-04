@@ -18,22 +18,27 @@ composer require musahmusah/laravel-multipayment-gateways
 You can publish and run the migrations with:
 
 ```bash
-php artisan vendor:publish --tag="laravel-multipayment-gateways-migrations"
+php artisan vendor:publish --tag="multipayment-gateways-migrations"
 php artisan migrate
 ```
 
 You can publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag="laravel-multipayment-gateways-config"
+php artisan vendor:publish --tag="multipayment-gateways-config"
 ```
 
-This is the contents of the published config file:
+[//]: # (This is the contents of the published config file:)
 
-```php
-return [
-];
-```
+[//]: # ()
+[//]: # (```php)
+
+[//]: # (return [)
+
+[//]: # (    )
+[//]: # (];)
+
+[//]: # (```)
 
 ## Usage
 
@@ -62,6 +67,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 ## Credits
 
 - [MusahMusah](https://github.com/MusahMusah)
+- [Cybernerdie](https://github.com/cybernerdie)
 - [All Contributors](../../contributors)
 
 ## License
