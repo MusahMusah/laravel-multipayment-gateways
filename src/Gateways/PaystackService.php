@@ -228,6 +228,7 @@ class PaystackService implements PaystackContract
      * Hit Paystack's API to get all the Banks
      *
      * @return array
+     *
      * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException
      */
     public function getBanks(): array
@@ -407,6 +408,7 @@ class PaystackService implements PaystackContract
      *
      * @param  string  $transferCode
      * @return array
+     *
      * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException
      */
     public function fetchTransfer(string $transferCode): array
