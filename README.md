@@ -178,12 +178,12 @@ Each payment gateway has to be configured with the following values:
 
 
 ## Usage
-All payment gateways can be accessed using the `facade`, `helper` or `dependency injection`.
+**All payment gateways methods and properties can be accessed using their respective `facade`, `helper` or `dependency injection`.**
 This ensures consistency in the way you access the payment gateways.  
 The idea is to provide a way to handle payments and webhooks in laravel `web` and `api` based applications.
 
 ### Handling Payments with Paystack
-Payment can be handled in the following ways:
+Web Payment can be handled in the following ways:
 1. Prepare your route to handle the payment request.
     ```php
     use Illuminate\Support\Facades\Route;
@@ -192,8 +192,7 @@ Payment can be handled in the following ways:
     Route::post('/payment', [PaystackPaymentController::class, 'initiatePayment'])->name('payment.initiate');
     ```
 
-2. Create a controller to handle the payment request.  
-In the controller, you can use your desired `Payment Gateway` to handle the payment request using the `facade`, `helper` or `dependency injection`.  
+2. Create a controller to handle the payment request. In the controller, you can use your desired `Payment Gateway` to handle the payment request using the `facade`, `helper` or `dependency injection`.  
                                                     
    - Create a controller to handle the payment request using Facade.
      ```php
@@ -266,12 +265,65 @@ In the controller, you can use your desired `Payment Gateway` to handle the paym
             <input type="hidden" name="metadata" value="{{ json_encode(['custom_fields' => ['name' => 'Musah Musah']]) }}"
             <input type="hidden" name="callback_url" value="https://example.com">
             <button type="submit">Pay</button>
-        </form>
+         </form>
         ```
      This way when the form is submitted, the `request()` object will be used to extract the data in the hidden inputs inside the `redirectToCheckout` method and make the payment request, allowing you to call the `redirectToCheckout` method without passing any parameters.  
      The `metadata` field is optional, you can add any custom fields you want to the metadata field.   
-     Additionally, you need to generate a unique reference for each payment request.
-     You can readmore about paystack payment requests [here](https://developers.paystack.co/reference#initialize-a-transaction)
+     Additionally, you need to generate a unique reference for each payment request. You can readmore about paystack payment requests [here](https://developers.paystack.co/reference#initialize-a-transaction)         
+
+3. **Handle the payment response:**  
+Upon successful payment, you will be redirected to the `callback_url` that you set in your paystack dashboard or the `callback_url` you passed in the payment request.
+    - Add a route to handle the payment response.
+        ```php
+        use Illuminate\Support\Facades\Route;
+        use App\Http\Controllers\PaymentController;
+        
+        Route::get('/payment/callback', [PaystackPaymentController::class, 'handlePaymentResponse'])->name('payment.callback');
+        ```
+    - Create a controller to handle the payment response.
+        ```php
+        use Illuminate\Http\Request;
+        use MusahMusah\LaravelMultipaymentGateways\Contracts\PaystackContract;
+        
+        class PaystackPaymentController extends Controller
+        {
+            public function handlePaymentResponse(Request $request, PaystackContract $paystack)
+            {
+                $paymentResponse = $paystack->getPaymentData();
+                
+                // Handle payment response here
+            }
+        }
+        ```
+
+For an api based application where the client is served by a mobile app or on a separate domain, you can use this approach instead:
+1. Initialize the payment with the client (mobile app or web app built with react, vue etc) served on a separate domain or port. This can be 
+done using the **Paystack Inline Popup** [here](https://paystack.com/docs/payments/accept-payments/#popup).
+2. Verify the payment using the `verifyPayment` method provided by the package. This method will verify the payment using the `reference` that has to be passed to the request body.  
+   Your route should look like this:
+    ```php
+    use Illuminate\Support\Facades\Route;
+    use App\Http\Controllers\PaymentController;
+    
+    Route::post('/payment/verify', [PaystackPaymentController::class, 'verifyPayment'])->name('payment.verify');
+    ```
+   Your Controller should look like this:
+    ```php
+    use Illuminate\Http\Request;
+    use MusahMusah\LaravelMultipaymentGateways\Contracts\PaystackContract;
+    
+    class PaystackPaymentController extends Controller
+    {
+        public function verifyPayment(Request $request, PaystackContract $paystack)
+        {
+            $paymentResponse = $paystack->verifyTransaction($request->reference);
+            
+            if ($paymentResponse->status === 'success') {
+                // Handle payment response here
+            }
+        }
+    }
+    ```
 
 ### Handling Payments with Stripe
 **Stripe Payment** can be handled in similar ways as **Paystack Payment**. 
