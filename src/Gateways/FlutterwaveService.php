@@ -64,7 +64,7 @@ class FlutterwaveService implements FlutterwaveContract
         $this->paymentGateway = 'flutterwave';
     }
 
-     /**
+    /**
      * Set the base URI for the API request
      *
      * @throws InvalidConfigurationException
