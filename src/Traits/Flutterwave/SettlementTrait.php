@@ -4,19 +4,17 @@ namespace MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave;
 
 trait SettlementTrait
 {
-    CONST SETTLEMENT_ENDPOINT = '/settlements/';
+    const SETTLEMENT_ENDPOINT = '/settlements/';
 
     /**
      * Get the settlement information for a given settlement ID
      *
-     * @param int $settlementId The ID of the settlement to retrieve information for
-     *
+     * @param  int  $settlementId The ID of the settlement to retrieve information for
      * @return mixed The settlement information
      */
-
-    public function getSettlement(int $settlementId) : mixed
+    public function getSettlement(int $settlementId): mixed
     {
-        $endpoint = $this->baseUri . self::SETTLEMENT_ENDPOINT . $settlementId;
+        $endpoint = $this->baseUri.self::SETTLEMENT_ENDPOINT.$settlementId;
 
         $settlement = $this->makeRequest(
             method: 'GET',
@@ -38,9 +36,9 @@ trait SettlementTrait
      *
      * @return array An array of all settlement information.
      */
-    public function getAllSettlements(array $options = []) : array
+    public function getAllSettlements(array $options = []): array
     {
-        $endpoint = $this->baseUri . self::SETTLEMENT_ENDPOINT;
+        $endpoint = $this->baseUri.self::SETTLEMENT_ENDPOINT;
 
         $settlements = $this->makeRequest(
             method: 'GET',
