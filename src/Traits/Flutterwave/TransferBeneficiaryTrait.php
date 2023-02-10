@@ -4,9 +4,9 @@ namespace MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave;
 
 trait TransferBeneficiaryTrait
 {
-    CONST BENEFICIARY_ENDPOINT = '/beneficiaries/';
+    const BENEFICIARY_ENDPOINT = '/beneficiaries/';
 
-     /**
+    /**
      * Create a Transfer Beneficiary
      *
      * This method allows you to create beneficiaries for Transfers.
@@ -34,13 +34,21 @@ trait TransferBeneficiaryTrait
      *
      * This function retrieves all transfer beneficiaries on the account
      *
+<<<<<<< HEAD
      * @param array $queryParams [optional]
      *
      * @return array
      */
     public function getAllTransferBeneficiaries($queryParams = []) : array
+=======
+     * @param  array  $options [optional] The options array. It can include the following keys:
+     *  - page (int): This is the page number to retrieve e.g. setting 1 retrieves the first page.
+     * @return array An array of all payment plans information
+     */
+    public function getAllTransferBeneficiaries($options = []): array
+>>>>>>> 147c762795941bdd56957373265b87f5ae710650
     {
-        $endpoint = $this->baseUri . self::BENEFICIARY_ENDPOINT;
+        $endpoint = $this->baseUri.self::BENEFICIARY_ENDPOINT;
 
         $transferBeneficiary = $this->makeRequest(
             method: 'GET',
@@ -57,9 +65,14 @@ trait TransferBeneficiaryTrait
      *
      * This method allows you to retrieve a single transfer beneficiary.
      *
+<<<<<<< HEAD
      * @param int $beneficiaryId
      *
      * @return array
+=======
+     * @param  int  $beneficiaryId - The unique ID of the transfer beneficiary you want to retrieve.
+     * @return array The transfer beneficiary data.
+>>>>>>> 147c762795941bdd56957373265b87f5ae710650
      */
     public function getTransferBeneficiary(int $beneficiaryId)
     {
@@ -79,13 +92,18 @@ trait TransferBeneficiaryTrait
      *
      * This endpoint allows you to delete a transfer beneficiary
      *
+<<<<<<< HEAD
      * @param int $beneficiaryId
      *
      * @return array
+=======
+     * @param  int  $beneficiaryId - The unique ID of the transfer beneficiary you want to delete
+     * @return array - The API response
+>>>>>>> 147c762795941bdd56957373265b87f5ae710650
      */
     public function deleteTransferBeneficiary(int $beneficiaryId)
     {
-        $endpoint = $this->baseUri . self::BENEFICIARY_ENDPOINT . $beneficiaryId;
+        $endpoint = $this->baseUri.self::BENEFICIARY_ENDPOINT.$beneficiaryId;
 
         $response = $this->makeRequest(
             method: 'DELETE',
