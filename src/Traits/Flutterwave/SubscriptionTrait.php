@@ -9,28 +9,18 @@ trait SubscriptionTrait
     /**
      * Get information for all subscriptions
      *
-     * @param  array  $options An array of optional parameters to use in the API request
+     * @param  array  $queryParams
      *
-     * @option string $email The email of the subscriber
-     * @option int $transaction_id The unique transaction identifier
-     * @option int $plan The ID of the payment plan
-     * @option string $subscribed_from The start date of the subscriptions in the format YYYY-MM-DD
-     * @option string $subscribed_to The end date for a subscription in the format YYYY-MM-DD
-     * @option string $next_due_from The start date of the next due subscriptions in the format YYYY-MM-DD
-     * @option string $next_due_to The end date of the next due subscriptions in the format YYYY-MM-DD
-     * @option int $page The page number to retrieve
-     * @option string $status The status of the queried transactions. Can be either "active" or "cancelled"
-     *
-     * @return array An array of all subscription information
+     * @return array
      */
-    public function getAllSubscriptions(array $options = []): array
+    public function getAllSubscriptions(array $queryParams = []): array
     {
         $endpoint = $this->baseUri.self::SUBSCRIPTION_ENDPOINT;
 
         $subscriptions = $this->makeRequest(
             method: 'GET',
             requestUrl: $endpoint,
-            queryParams: $options,
+            queryParams: $queryParams,
             isJsonRequest: true
         );
 
@@ -41,7 +31,8 @@ trait SubscriptionTrait
      * Activate a Subscription
      *
      * @param  int  $subscriptionId
-     * @return array An array of subscription information
+     *
+     * @return array
      */
     public function activateSubscription(int $subscriptionId): array
     {
@@ -60,6 +51,7 @@ trait SubscriptionTrait
      * Deactivate a Subscription
      *
      * @param  int  $subscriptionId
+     *
      * @return array
      */
     public function deactivateSubscription(int $subscriptionId): array
