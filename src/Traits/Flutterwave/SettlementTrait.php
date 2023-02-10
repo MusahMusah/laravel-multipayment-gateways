@@ -30,12 +30,11 @@ trait SettlementTrait
     /**
      * Get information for all settlements.
      *
-     * @param array $options [optional] The query parameters for the API request.
-     *                       Possible values include:
-     *                       - 'page' (int) The page number to retrieve (e.g. setting 1 retrieves the first page).
-     *                       - 'from' (string) The specified date to start the list from (YYYY-MM-DD).
-     *                       - 'to' (string) The specified end period for the search (YYYY-MM-DD).
-     *                       - 'subaccount_id' (string) The unique id of the sub account to retrieve.
+     * @param array $options An array of optional parameters to use in the API request
+     * @option int $page The page number to retrieve (e.g. setting 1 retrieves the first page).
+     * @option string $from The specified date to start the list from (YYYY-MM-DD).
+     * @option string $to The specified end period for the search (YYYY-MM-DD).
+     * @option string $subaccount_id The unique id of the sub account to retrieve.
      *
      * @return array An array of all settlement information.
      */

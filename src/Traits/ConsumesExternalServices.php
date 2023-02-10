@@ -69,7 +69,7 @@ trait ConsumesExternalServices
      */
     private function validateRequest(string $method): void
     {
-        if (! in_array($method, ['GET', 'POST', 'DELETE'])) {
+        if (! in_array($method, ['GET', 'POST', 'PUT', 'DELETE'])) {
             throw new HttpMethodFoundException('Method not found');
         }
 

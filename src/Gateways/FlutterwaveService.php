@@ -9,12 +9,14 @@ use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidConfigurationExcept
 use MusahMusah\LaravelMultipaymentGateways\Traits\ConsumesExternalServices;
 use MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave\BankTrait;
 use MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave\SettlementTrait;
+use MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave\SubscriptionTrait;
 
 class FlutterwaveService implements FlutterwaveContract
 {
     use ConsumesExternalServices;
     use BankTrait;
     use SettlementTrait;
+    use SubscriptionTrait;
 
     /**
      * The base uri to consume the Flutterwave's service
