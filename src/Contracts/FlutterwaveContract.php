@@ -2,12 +2,6 @@
 
 namespace MusahMusah\LaravelMultipaymentGateways\Contracts;
 
-use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Http\RedirectResponse;
-use MusahMusah\LaravelMultipaymentGateways\Exceptions\HttpMethodFoundException;
-use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidConfigurationException;
-use MusahMusah\LaravelMultipaymentGateways\Exceptions\PaymentVerificationException;
-
 interface FlutterwaveContract
 {
     /**

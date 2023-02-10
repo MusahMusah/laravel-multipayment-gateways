@@ -43,7 +43,7 @@ class LaravelMultipaymentGatewaysServiceProvider extends PackageServiceProvider
             StripeContract::class,
             PaymentWebhookConfigRepository::class,
             PaymentWebhookConfig::class,
-            FlutterwaveContract::class
+            FlutterwaveContract::class,
         ];
     }
 
