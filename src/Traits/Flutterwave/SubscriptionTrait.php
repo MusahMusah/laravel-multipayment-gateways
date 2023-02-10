@@ -4,12 +4,13 @@ namespace MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave;
 
 trait SubscriptionTrait
 {
-    CONST SUBSCRIPTION_ENDPOINT = '/subscriptions/';
+    const SUBSCRIPTION_ENDPOINT = '/subscriptions/';
 
     /**
      * Get information for all subscriptions
      *
-     * @param array $options An array of optional parameters to use in the API request
+     * @param  array  $options An array of optional parameters to use in the API request
+     *
      * @option string $email The email of the subscriber
      * @option int $transaction_id The unique transaction identifier
      * @option int $plan The ID of the payment plan
@@ -22,9 +23,9 @@ trait SubscriptionTrait
      *
      * @return array An array of all subscription information
      */
-    public function getAllSubscriptions(array $options = []) : array
+    public function getAllSubscriptions(array $options = []): array
     {
-        $endpoint = $this->baseUri . self::SUBSCRIPTION_ENDPOINT;
+        $endpoint = $this->baseUri.self::SUBSCRIPTION_ENDPOINT;
 
         $settlements = $this->makeRequest(
             method: 'GET',
@@ -39,13 +40,12 @@ trait SubscriptionTrait
     /**
      * Activate a Subscription
      *
-     * @param int $subscriptionId
-     *
+     * @param  int  $subscriptionId
      * @return array An array of subscription information
      */
-    public function activateSubscription(int $subscriptionId) : array
+    public function activateSubscription(int $subscriptionId): array
     {
-        $endpoint = $this->baseUri . self::SUBSCRIPTION_ENDPOINT . $subscriptionId . '/activate';
+        $endpoint = $this->baseUri.self::SUBSCRIPTION_ENDPOINT.$subscriptionId.'/activate';
 
         $response = $this->makeRequest(
             method: 'PUT',
@@ -57,15 +57,14 @@ trait SubscriptionTrait
     }
 
     /**
-    * Deactivate a Subscription
-    *
-    * @param int $subscriptionId
-    *
-    * @return array
-    */
-    public function deactivateSubscription(int $subscriptionId) : array
+     * Deactivate a Subscription
+     *
+     * @param  int  $subscriptionId
+     * @return array
+     */
+    public function deactivateSubscription(int $subscriptionId): array
     {
-        $endpoint = $this->baseUri . self::SUBSCRIPTION_ENDPOINT . $subscriptionId . '/cancel';
+        $endpoint = $this->baseUri.self::SUBSCRIPTION_ENDPOINT.$subscriptionId.'/cancel';
 
         $response = $this->makeRequest(
             method: 'PUT',

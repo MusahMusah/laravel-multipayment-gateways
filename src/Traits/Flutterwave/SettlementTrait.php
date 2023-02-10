@@ -28,7 +28,8 @@ trait SettlementTrait
     /**
      * Get information for all settlements.
      *
-     * @param array $options An array of optional parameters to use in the API request
+     * @param  array  $options An array of optional parameters to use in the API request
+     *
      * @option int $page The page number to retrieve (e.g. setting 1 retrieves the first page).
      * @option string $from The specified date to start the list from (YYYY-MM-DD).
      * @option string $to The specified end period for the search (YYYY-MM-DD).
