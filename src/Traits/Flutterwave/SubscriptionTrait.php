@@ -26,14 +26,14 @@ trait SubscriptionTrait
     {
         $endpoint = $this->baseUri . self::SUBSCRIPTION_ENDPOINT;
 
-        $settlements = $this->makeRequest(
+        $subscriptions = $this->makeRequest(
             method: 'GET',
             requestUrl: $endpoint,
             queryParams: $options,
             isJsonRequest: true
         );
 
-        return $settlements;
+        return $subscriptions;
     }
 
     /**
