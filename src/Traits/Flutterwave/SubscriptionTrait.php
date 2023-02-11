@@ -10,7 +10,6 @@ trait SubscriptionTrait
      * Get information for all subscriptions
      *
      * @param  array  $queryParams
-     *
      * @return array
      */
     public function getAllSubscriptions(array $queryParams = []): array
@@ -31,7 +30,6 @@ trait SubscriptionTrait
      * Activate a Subscription
      *
      * @param  int  $subscriptionId
-     *
      * @return array
      */
     public function activateSubscription(int $subscriptionId): array
@@ -51,7 +49,6 @@ trait SubscriptionTrait
      * Deactivate a Subscription
      *
      * @param  int  $subscriptionId
-     *
      * @return array
      */
     public function deactivateSubscription(int $subscriptionId): array

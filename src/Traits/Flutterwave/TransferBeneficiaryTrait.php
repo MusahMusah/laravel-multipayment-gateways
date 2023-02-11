@@ -11,8 +11,7 @@ trait TransferBeneficiaryTrait
      *
      * This method allows you to create beneficiaries for Transfers.
      *
-     * @param array $transferBeneficiaryDetails
-     *
+     * @param  array  $transferBeneficiaryDetails
      * @return mixed
      */
     public function createTransferBeneficiary(array $transferBeneficiaryDetails)
@@ -34,11 +33,10 @@ trait TransferBeneficiaryTrait
      *
      * This function retrieves all transfer beneficiaries on the account
      *
-     * @param array $queryParams [optional]
-     *
+     * @param  array  $queryParams [optional]
      * @return array
      */
-    public function getAllTransferBeneficiaries($queryParams = []) : array
+    public function getAllTransferBeneficiaries($queryParams = []): array
     {
         $endpoint = $this->baseUri.self::BENEFICIARY_ENDPOINT;
 
@@ -57,8 +55,7 @@ trait TransferBeneficiaryTrait
      *
      * This method allows you to retrieve a single transfer beneficiary.
      *
-     * @param int $beneficiaryId
-     *
+     * @param  int  $beneficiaryId
      * @return array
      */
     public function getTransferBeneficiary(int $beneficiaryId)
@@ -79,8 +76,7 @@ trait TransferBeneficiaryTrait
      *
      * This endpoint allows you to delete a transfer beneficiary
      *
-     * @param int $beneficiaryId
-     *
+     * @param  int  $beneficiaryId
      * @return array
      */
     public function deleteTransferBeneficiary(int $beneficiaryId)
