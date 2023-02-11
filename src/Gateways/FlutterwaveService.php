@@ -8,6 +8,7 @@ use MusahMusah\LaravelMultipaymentGateways\Contracts\FlutterwaveContract;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidConfigurationException;
 use MusahMusah\LaravelMultipaymentGateways\Traits\ConsumesExternalServices;
 use MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave\BankTrait;
+use MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave\OtpTrait;
 use MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave\PaymentPlanTrait;
 use MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave\SettlementTrait;
 use MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave\SubscriptionTrait;
@@ -23,6 +24,7 @@ class FlutterwaveService implements FlutterwaveContract
     use PaymentPlanTrait;
     use TransferBeneficiaryTrait;
     use TransferTrait;
+    use OtpTrait;
 
     /**
      * The base uri to consume the Flutterwave's service
