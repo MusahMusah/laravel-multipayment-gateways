@@ -14,6 +14,13 @@ use MusahMusah\LaravelMultipaymentGateways\Exceptions\PaymentVerificationExcepti
 
 class PaystackService extends BaseGateWay implements PaystackContract
 {
+    /**
+     * The payload to initiate the transaction
+     *
+     * @var array
+     */
+    protected array $payload;
+
     public function setPaymentGateway(): void
     {
         $this->paymentGateway = 'paystack';
