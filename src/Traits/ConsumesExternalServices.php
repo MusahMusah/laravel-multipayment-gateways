@@ -5,7 +5,6 @@ namespace MusahMusah\LaravelMultipaymentGateways\Traits;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\HttpMethodFoundException;
-use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidConfigurationException;
 
 trait ConsumesExternalServices
 {
@@ -25,11 +24,9 @@ trait ConsumesExternalServices
      * @param  bool  $isJsonRequest
      * @return mixed
      *
-     * @throws GuzzleException
-     * @throws HttpMethodFoundException
-     * @throws InvalidConfigurationException
+     * @throws GuzzleException|HttpMethodFoundException
      */
-    public function makeRequest(string $method, string $requestUrl, array $formParams = [], array $queryParams = [], array $headers = [], bool $isJsonRequest = false): mixed
+    public function makeRequest(string $method, string $requestUrl, array $formParams = [], bool $isJsonRequest = false, array $queryParams = [], array $headers = []): mixed
     {
         $this->validateRequest($method);
 
@@ -65,16 +62,11 @@ trait ConsumesExternalServices
      * @return void
      *
      * @throws HttpMethodFoundException
-     * @throws InvalidConfigurationException
      */
     private function validateRequest(string $method): void
     {
         if (! in_array($method, ['GET', 'POST', 'DELETE'])) {
             throw new HttpMethodFoundException('Method not found');
-        }
-
-        if (! $this->baseUri) {
-            throw new InvalidConfigurationException('Base URI not provided, please set all the required configurations');
         }
     }
 }
