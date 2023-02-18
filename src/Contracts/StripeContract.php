@@ -9,21 +9,6 @@ use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidConfigurationExcept
 interface StripeContract
 {
     /**
-     * Resolve the authorization URL / Endpoint
-     */
-    public function resolveAuthorization(&$queryParams, &$formParams, &$headers): void;
-
-    /**
-     * Set the access token for the request
-     */
-    public function resolveAccessToken(): string;
-
-    /**
-     * Decode the response
-     */
-    public function decodeResponse(): mixed;
-
-    /**
      * Create a new payment intent
      *
      *

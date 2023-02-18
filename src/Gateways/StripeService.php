@@ -3,49 +3,44 @@
 namespace MusahMusah\LaravelMultipaymentGateways\Gateways;
 
 use GuzzleHttp\Exception\GuzzleException;
+use MusahMusah\LaravelMultipaymentGateways\Abstracts\BaseGateWay;
 use MusahMusah\LaravelMultipaymentGateways\Contracts\StripeContract;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\HttpMethodFoundException;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidConfigurationException;
-use MusahMusah\LaravelMultipaymentGateways\Traits\ConsumesExternalServices;
 
-class StripeService implements StripeContract
+class StripeService extends BaseGateWay implements StripeContract
 {
-    use ConsumesExternalServices;
-
-    /**
-     * The base uri to consume the Stripe's service
-     *
-     * @var string
-     */
-    protected $baseUri;
-
-    /**
-     * The secret to consume the Stripe's service
-     *
-     * @var string
-     */
-    protected $secret;
-
-    /**
-     * The plans to consume the Stripe's service
-     *
-     * @var array
-     */
-    protected $plans;
-
-    public function __construct()
+    public function setPaymentGateway(): void
     {
-        $this->baseUri = config('multipayment-gateways.stripe.base_uri');
-        $this->secret = config('multipayment-gateways.stripe.secret');
-        $this->plans = config('multipayment-gateways.stripe.plans');
+        $this->paymentGateway = 'stripe';
     }
 
     /**
-     * Resolve the authorization URL / Endpoint
+     * @throws InvalidConfigurationException
      */
-    public function resolveAuthorization(&$queryParams, &$formParams, &$headers): void
+    public function setBaseUri(): void
     {
-        $headers['Authorization'] = $this->resolveAccessToken();
+        $baseUri = config('multipayment-gateways.stripe.base_uri');
+
+        if (! $baseUri) {
+            throw new InvalidConfigurationException("The Base URI for `{$this->paymentGateway}` is missing. Please ensure that the `base_uri` config key for `{$this->paymentGateway}` is set correctly.");
+        }
+
+        $this->baseUri = $baseUri;
+    }
+
+    /**
+     * @throws InvalidConfigurationException
+     */
+    public function setSecret(): void
+    {
+        $secret = config('multipayment-gateways.stripe.secret');
+
+        if (! $secret) {
+            throw new InvalidConfigurationException("The secret key for `{$this->paymentGateway}` is missing. Please ensure that the `secret` config key for `{$this->paymentGateway}` is set correctly.");
+        }
+
+        $this->secret = $secret;
     }
 
     /**
@@ -59,7 +54,7 @@ class StripeService implements StripeContract
     /**
      * Decode the response
      */
-    public function decodeResponse(): mixed
+    public function decodeResponse(): array
     {
         return json_decode($this->response, true);
     }
@@ -70,7 +65,6 @@ class StripeService implements StripeContract
      *
      * @throws GuzzleException
      * @throws HttpMethodFoundException
-     * @throws InvalidConfigurationException
      */
     public function createIntent(array $data): array
     {
@@ -87,7 +81,6 @@ class StripeService implements StripeContract
      *
      * @throws GuzzleException
      * @throws HttpMethodFoundException
-     * @throws InvalidConfigurationException
      */
     public function confirmIntent(string $paymentIntentId): array
     {
