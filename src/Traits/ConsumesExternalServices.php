@@ -16,13 +16,6 @@ trait ConsumesExternalServices
     /**
      * Send a request to any service.
      *
-     * @param  string  $method
-     * @param  string  $requestUrl
-     * @param  array  $formParams
-     * @param  array  $queryParams
-     * @param  array  $headers
-     * @param  bool  $isJsonRequest
-     * @return mixed
      *
      * @throws GuzzleException|HttpMethodFoundException
      */
@@ -34,7 +27,7 @@ trait ConsumesExternalServices
             'base_uri' => $this->baseUri,
         ]);
 
-        if (method_exists($this, 'resolveAuthorization') && !$skipResolve) {
+        if (method_exists($this, 'resolveAuthorization') && ! $skipResolve) {
             $this->resolveAuthorization($queryParams, $formParams, $headers);
         }
 
@@ -58,9 +51,6 @@ trait ConsumesExternalServices
     }
 
     /**
-     * @param  string  $method
-     * @return void
-     *
      * @throws HttpMethodFoundException
      */
     private function validateRequest(string $method): void
