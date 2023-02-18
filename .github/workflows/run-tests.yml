@@ -14,7 +14,7 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         php: [8.2, 8.1, 8.0]
-        laravel: [10.*, 9.*, ^8.73]
+        laravel: [10.*, 9.*, 8.*]
         stability: [prefer-lowest, prefer-stable]
         include:
           - laravel: 10.*
@@ -23,12 +23,12 @@ jobs:
           - laravel: 9.*
             testbench: ^7.0
             carbon: ^2.63
-          - laravel: ^8.73
+          - laravel: 8.*
             testbench: ^6.23
             carbon: ^2.63
         exclude:
-          - laravel: 10.*
-            php: 8.0
+          - laravel: 8.*
+            php: 8.2
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
