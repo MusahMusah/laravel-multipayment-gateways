@@ -14,7 +14,7 @@ trait SettlementTrait
      */
     public function getSettlement(int $settlementId): mixed
     {
-        $endpoint = $this->baseUri.self::SETTLEMENT_ENDPOINT.$settlementId;
+        $endpoint = sprintf('%s%s%s', $this->baseUri, self::SETTLEMENT_ENDPOINT, $settlementId);
 
         $settlement = $this->makeRequest(
             method: 'GET',
@@ -33,7 +33,7 @@ trait SettlementTrait
      */
     public function getAllSettlements(array $queryParams = []): array
     {
-        $endpoint = $this->baseUri.self::SETTLEMENT_ENDPOINT;
+        $endpoint = sprintf('%s%s', $this->baseUri, self::SETTLEMENT_ENDPOINT);
 
         $settlements = $this->makeRequest(
             method: 'GET',

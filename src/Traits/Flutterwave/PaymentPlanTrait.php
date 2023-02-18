@@ -16,7 +16,7 @@ trait PaymentPlanTrait
      */
     public function createPaymentPlan(array $planDetails)
     {
-        $endpoint = $this->baseUri.self::PAYMENT_PLAN_ENDPOINT;
+        $endpoint = sprintf('%s%s', $this->baseUri, self::PAYMENT_PLAN_ENDPOINT);
 
         $paymentPlan = $this->makeRequest(
             method: 'POST',
@@ -39,7 +39,7 @@ trait PaymentPlanTrait
      */
     public function updatePaymentPlan(int $paymentPlanId, array $planDetails)
     {
-        $endpoint = $this->baseUri.self::PAYMENT_PLAN_ENDPOINT.$paymentPlanId;
+        $endpoint = sprintf('%s%s%s', $this->baseUri, self::PAYMENT_PLAN_ENDPOINT, $paymentPlanId);
 
         $paymentPlan = $this->makeRequest(
             method: 'PUT',
@@ -61,7 +61,7 @@ trait PaymentPlanTrait
      */
     public function getAllPaymentPlans($queryParams = []): array
     {
-        $endpoint = $this->baseUri.self::PAYMENT_PLAN_ENDPOINT;
+        $endpoint = sprintf('%s%s', $this->baseUri, self::PAYMENT_PLAN_ENDPOINT);
 
         $paymentPlans = $this->makeRequest(
             method: 'GET',
@@ -83,7 +83,7 @@ trait PaymentPlanTrait
      */
     public function getPaymentPlan(int $paymentPlanId)
     {
-        $endpoint = $this->baseUri.self::PAYMENT_PLAN_ENDPOINT.$paymentPlanId;
+        $endpoint = sprintf('%s%s%s', $this->baseUri, self::PAYMENT_PLAN_ENDPOINT, $paymentPlanId);
 
         $paymentPlan = $this->makeRequest(
             method: 'GET',
@@ -104,7 +104,7 @@ trait PaymentPlanTrait
      */
     public function cancelPaymentPlan(int $paymentPlanId)
     {
-        $endpoint = $this->baseUri.self::PAYMENT_PLAN_ENDPOINT.$paymentPlanId.'/cancel';
+        $endpoint = sprintf('%s%s%s/cancel', $this->baseUri, self::PAYMENT_PLAN_ENDPOINT, $paymentPlanId);
 
         $response = $this->makeRequest(
             method: 'PUT',

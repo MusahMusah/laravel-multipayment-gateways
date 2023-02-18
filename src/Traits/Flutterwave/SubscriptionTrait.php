@@ -53,7 +53,7 @@ trait SubscriptionTrait
      */
     public function deactivateSubscription(int $subscriptionId): array
     {
-        $endpoint = $this->baseUri.self::SUBSCRIPTION_ENDPOINT.$subscriptionId.'/cancel';
+        $endpoint = sprintf('%s%s%s/cancel', $this->baseUri, self::SUBSCRIPTION_ENDPOINT, $subscriptionId);
 
         $response = $this->makeRequest(
             method: 'PUT',

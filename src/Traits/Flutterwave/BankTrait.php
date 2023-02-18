@@ -14,7 +14,7 @@ trait BankTrait
      */
     public function getBanks(string $countryCode): array
     {
-        $endpoint = $this->baseUri.self::BANK_ENDPOINT.$countryCode;
+        $endpoint = sprintf('%s%s%s', $this->baseUri, self::BANK_ENDPOINT, $countryCode);
 
         $banks = $this->makeRequest(
             method: 'GET',
@@ -36,7 +36,7 @@ trait BankTrait
      */
     public function getBankBranches(int $bankId): array
     {
-        $endpoint = $this->baseUri.self::BANK_ENDPOINT.$bankId.'/branches';
+        $endpoint = sprintf('%s%s%s/branches', $this->baseUri, self::BANK_ENDPOINT, $bankId);
 
         $branches = $this->makeRequest(
             method: 'GET',

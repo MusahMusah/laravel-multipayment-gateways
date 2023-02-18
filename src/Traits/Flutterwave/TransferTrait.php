@@ -18,7 +18,7 @@ trait TransferTrait
      */
     public function initiateTransfer($formParams)
     {
-        $endpoint = $this->baseUri.self::TRANSFER_ENDPOINT;
+        $endpoint = sprintf('%s%s', $this->baseUri, self::TRANSFER_ENDPOINT);
 
         $transferData = $this->makeRequest(
             method: 'POST',
@@ -40,7 +40,7 @@ trait TransferTrait
      */
     public function getAllTransfers($queryParams = [])
     {
-        $endpoint = $this->baseUri.self::TRANSFER_ENDPOINT;
+        $endpoint = sprintf('%s%s', $this->baseUri, self::TRANSFER_ENDPOINT);
 
         $paymentPlans = $this->makeRequest(
             method: 'GET',
@@ -62,7 +62,7 @@ trait TransferTrait
      */
     public function getTransferFees(array $queryParams = [])
     {
-        $endpoint = $this->baseUri.self::TRANSFER_ENDPOINT.'fee';
+        $endpoint = sprintf('%s%s/fee', $this->baseUri, self::TRANSFER_ENDPOINT);
 
         $transferFees = $this->makeRequest(
             method: 'GET',
@@ -88,7 +88,7 @@ trait TransferTrait
      */
     public function createBulkTransfer(array $bulkTransferData, string $title = '')
     {
-        $endpoint = $this->baseUri.self::BULK_TRANFER_ENDPOINT;
+        $endpoint = sprintf('%s%s', $this->baseUri, self::TRANSFER_ENDPOINT);
 
         $requestPayload = [
             'title' => $title,
@@ -115,7 +115,7 @@ trait TransferTrait
      */
     public function getTransfer(int $transferId)
     {
-        $endpoint = $this->baseUri.self::TRANSFER_ENDPOINT.$transferId;
+        $endpoint = sprintf('%s%s%s', $this->baseUri, self::TRANSFER_ENDPOINT, $transferId);
 
         $response = $this->makeRequest(
             method: 'GET',
@@ -136,7 +136,7 @@ trait TransferTrait
      */
     public function getTransferRates(array $queryParams)
     {
-        $endpoint = $this->baseUri.self::TRANSFER_ENDPOINT.'rates';
+        $endpoint = sprintf('%s%s/rates', $this->baseUri, self::TRANSFER_ENDPOINT);
 
         $transferRates = $this->makeRequest(
             method: 'GET',
@@ -158,7 +158,7 @@ trait TransferTrait
      */
     public function retryTransfer(int $transferId)
     {
-        $endpoint = $this->baseUri.self::TRANSFER_ENDPOINT.$transferId.'/retries';
+        $endpoint = sprintf('%s%s/retries', $this->baseUri, self::TRANSFER_ENDPOINT, $transferId);
 
         $tranferData = $this->makeRequest(
             method: 'POST',
@@ -179,7 +179,7 @@ trait TransferTrait
      */
     public function getTransferRetry(int $transferId)
     {
-        $endpoint = $this->baseUri.self::TRANSFER_ENDPOINT.$transferId.'/retries';
+        $endpoint = sprintf('%s%s/retries', $this->baseUri, self::TRANSFER_ENDPOINT, $transferId);
 
         $tranferData = $this->makeRequest(
             method: 'GET',
@@ -200,7 +200,7 @@ trait TransferTrait
      */
     public function fetchBulkTransfer(array $queryParams)
     {
-        $endpoint = $this->baseUri.self::TRANSFER_ENDPOINT;
+        $endpoint = sprintf('%s%s', $this->baseUri, self::TRANSFER_ENDPOINT);
 
         $tranferData = $this->makeRequest(
             method: 'GET',

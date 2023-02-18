@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace MusahMusah\LaravelMultipaymentGateways\Gateways;
 
+use MusahMusah\LaravelMultipaymentGateways\Abstracts\BaseGateWay;
 use MusahMusah\LaravelMultipaymentGateways\Contracts\FlutterwaveContract;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidConfigurationException;
 use MusahMusah\LaravelMultipaymentGateways\Traits\ConsumesExternalServices;
 use MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave\BankTrait;
+use MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave\ChargeTrait;
 use MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave\OtpTrait;
 use MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave\PaymentPlanTrait;
 use MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave\SettlementTrait;
@@ -15,30 +17,17 @@ use MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave\SubscriptionTrait;
 use MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave\TransferBeneficiaryTrait;
 use MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave\TransferTrait;
 
-class FlutterwaveService implements FlutterwaveContract
+class FlutterwaveService extends BaseGateWay implements FlutterwaveContract
 {
-    use ConsumesExternalServices;
-    use BankTrait;
-    use SettlementTrait;
-    use SubscriptionTrait;
-    use PaymentPlanTrait;
-    use TransferBeneficiaryTrait;
-    use TransferTrait;
-    use OtpTrait;
-
-    /**
-     * The base uri to consume the Flutterwave's service
-     *
-     * @var string
-     */
-    protected $baseUri;
-
-    /**
-     * The secret to consume the Flutterwave's service
-     *
-     * @var string
-     */
-    protected $secret;
+    use ConsumesExternalServices,
+        BankTrait,
+        SettlementTrait,
+        SubscriptionTrait,
+        PaymentPlanTrait,
+        TransferBeneficiaryTrait,
+        TransferTrait,
+        OtpTrait,
+        ChargeTrait;
 
     /**
      * The redirect url to consume the Flutterwave's service
@@ -48,32 +37,47 @@ class FlutterwaveService implements FlutterwaveContract
     protected string $redirectUrl;
 
     /**
-     * The payment gateway for the class
-     *
-     * @var string
-     */
-    protected string $paymentGateway;
-
-    /**
      * The payload to initiate the transaction
      *
      * @var array
      */
     protected array $payload;
 
+    /**
+     * The encryption key to encrypt payload for direct card charge
+     *
+     * @var string
+     */
+    protected string $encryptionKey;
+
     public function __construct()
     {
         $this->setPaymentGateway();
         $this->setBaseUri();
         $this->setSecret();
+        $this->setEncryptionKey();
     }
 
     /**
      * Set the payment gateway for the class
      */
-    protected function setPaymentGateway()
+    public function setPaymentGateway(): void
     {
         $this->paymentGateway = 'flutterwave';
+    }
+
+    /**
+     * Set the encryption key for the class
+     */
+    public function setEncryptionKey(): void
+    {
+        $encryptionKey = config('multipayment-gateways.flutterwave.encryption_key');
+
+        if (! $encryptionKey) {
+            return;
+        }
+
+        $this->encryptionKey = $encryptionKey;
     }
 
     /**
@@ -81,7 +85,7 @@ class FlutterwaveService implements FlutterwaveContract
      *
      * @throws InvalidConfigurationException
      */
-    protected function setBaseUri()
+    public function setBaseUri(): void
     {
         $baseUri = config('multipayment-gateways.flutterwave.base_uri');
 
@@ -97,7 +101,7 @@ class FlutterwaveService implements FlutterwaveContract
      *
      * @throws InvalidConfigurationException
      */
-    protected function setSecret()
+    public function setSecret(): void
     {
         $secret = config('multipayment-gateways.flutterwave.secret');
 
@@ -136,7 +140,7 @@ class FlutterwaveService implements FlutterwaveContract
      *
      * @return mixed
      */
-    public function decodeResponse(): mixed
+    public function decodeResponse(): array
     {
         return json_decode($this->response, true);
     }
@@ -146,7 +150,7 @@ class FlutterwaveService implements FlutterwaveContract
      *
      * @return mixed
      */
-    public function getResponse(): mixed
+    public function getResponse(): array
     {
         return $this->response;
     }
@@ -156,7 +160,7 @@ class FlutterwaveService implements FlutterwaveContract
      *
      * @return mixed
      */
-    public function getData(): mixed
+    public function getData(): array
     {
         return $this->getResponse()['data'];
     }

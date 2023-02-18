@@ -16,7 +16,7 @@ trait TransferBeneficiaryTrait
      */
     public function createTransferBeneficiary(array $transferBeneficiaryDetails)
     {
-        $endpoint = $this->baseUri.self::BENEFICIARY_ENDPOINT;
+        $endpoint = sprintf('%s%s', $this->baseUri, self::BENEFICIARY_ENDPOINT);
 
         $transferBeneficiary = $this->makeRequest(
             method: 'POST',
@@ -38,7 +38,7 @@ trait TransferBeneficiaryTrait
      */
     public function getAllTransferBeneficiaries($queryParams = []): array
     {
-        $endpoint = $this->baseUri.self::BENEFICIARY_ENDPOINT;
+        $endpoint = sprintf('%s%s', $this->baseUri, self::BENEFICIARY_ENDPOINT);
 
         $transferBeneficiary = $this->makeRequest(
             method: 'GET',
@@ -60,7 +60,7 @@ trait TransferBeneficiaryTrait
      */
     public function getTransferBeneficiary(int $beneficiaryId)
     {
-        $endpoint = $this->baseUri.self::BENEFICIARY_ENDPOINT.$beneficiaryId;
+        $endpoint = sprintf('%s%s%s', $this->baseUri, self::BENEFICIARY_ENDPOINT, $beneficiaryId);
 
         $transferBeneficiary = $this->makeRequest(
             method: 'GET',
@@ -81,7 +81,7 @@ trait TransferBeneficiaryTrait
      */
     public function deleteTransferBeneficiary(int $beneficiaryId)
     {
-        $endpoint = $this->baseUri.self::BENEFICIARY_ENDPOINT.$beneficiaryId;
+        $endpoint = sprintf('%s%s%s', $this->baseUri, self::BENEFICIARY_ENDPOINT, $beneficiaryId);
 
         $response = $this->makeRequest(
             method: 'DELETE',
