@@ -31,7 +31,6 @@ class LaravelMultipaymentGatewaysServiceProvider extends PackageServiceProvider
     {
         $this->app->bind(PaystackContract::class, PaystackService::class);
         $this->app->bind(StripeContract::class, StripeService::class);
-        $this->app->bind(KudaContract::class, KudaService::class);
 
         $this->registerWebHookConfig();
     }
@@ -41,7 +40,6 @@ class LaravelMultipaymentGatewaysServiceProvider extends PackageServiceProvider
         return [
             PaystackContract::class,
             StripeContract::class,
-            KudaContract::class,
             PaymentWebhookConfigRepository::class,
             PaymentWebhookConfig::class,
         ];
