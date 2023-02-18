@@ -26,7 +26,7 @@ trait ConsumesExternalServices
      *
      * @throws GuzzleException|HttpMethodFoundException
      */
-    public function makeRequest(string $method, string $requestUrl, array $formParams = [], bool $isJsonRequest = false, array $queryParams = [], array $headers = []): mixed
+    public function makeRequest(string $method, string $requestUrl, array $formParams = [], bool $isJsonRequest = false, array $queryParams = [], array $headers = [], bool $skipResolve = false): mixed
     {
         $this->validateRequest($method);
 
@@ -34,7 +34,7 @@ trait ConsumesExternalServices
             'base_uri' => $this->baseUri,
         ]);
 
-        if (method_exists($this, 'resolveAuthorization')) {
+        if (method_exists($this, 'resolveAuthorization') && !$skipResolve) {
             $this->resolveAuthorization($queryParams, $formParams, $headers);
         }
 

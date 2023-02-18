@@ -14,7 +14,7 @@ interface GatewayContract
 
     public function resolveAccessToken(): string;
 
-    public function decodeResponse(): array;
+    public function decodeResponse(): array|string;
 
     public function getResponse(): array;
 

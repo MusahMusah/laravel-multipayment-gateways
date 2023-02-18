@@ -77,9 +77,9 @@ abstract class BaseGateWay implements GatewayContract
     /**
      * Decode the response
      *
-     * @return array
+     * @return array|string
      */
-    abstract public function decodeResponse(): array;
+    abstract public function decodeResponse(): array|string;
 
     /**
      * Resolve the authorization URL / Endpoint
@@ -91,7 +91,8 @@ abstract class BaseGateWay implements GatewayContract
      */
     public function resolveAuthorization(&$queryParams, &$formParams, &$headers): void
     {
-        $headers['Authorization'] = $this->resolveAccessToken();
+//        dd(str_replace('"', '', $this->resolveAccessToken()));
+        $headers['Authorization'] = str_replace('"', '', $this->resolveAccessToken());
     }
 
     /**
