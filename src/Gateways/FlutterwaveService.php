@@ -42,22 +42,16 @@ class FlutterwaveService implements FlutterwaveContract
 
     /**
      * The redirect url to consume the Flutterwave's service
-     *
-     * @var string
      */
     protected string $redirectUrl;
 
     /**
      * The payment gateway for the class
-     *
-     * @var string
      */
     protected string $paymentGateway;
 
     /**
      * The payload to initiate the transaction
-     *
-     * @var array
      */
     protected array $payload;
 
@@ -110,11 +104,6 @@ class FlutterwaveService implements FlutterwaveContract
 
     /**
      * Resolve the authorization URL / Endpoint
-     *
-     * @param $queryParams
-     * @param $formParams
-     * @param $headers
-     * @return void
      */
     public function resolveAuthorization(&$queryParams, &$formParams, &$headers): void
     {
@@ -123,8 +112,6 @@ class FlutterwaveService implements FlutterwaveContract
 
     /**
      * Set the access token for the request
-     *
-     * @return string
      */
     public function resolveAccessToken(): string
     {
@@ -133,8 +120,6 @@ class FlutterwaveService implements FlutterwaveContract
 
     /**
      * Decode the response
-     *
-     * @return mixed
      */
     public function decodeResponse(): mixed
     {
@@ -143,8 +128,6 @@ class FlutterwaveService implements FlutterwaveContract
 
     /**
      * Get the response
-     *
-     * @return mixed
      */
     public function getResponse(): mixed
     {
@@ -153,8 +136,6 @@ class FlutterwaveService implements FlutterwaveContract
 
     /**
      * Get the data from the response
-     *
-     * @return mixed
      */
     public function getData(): mixed
     {
