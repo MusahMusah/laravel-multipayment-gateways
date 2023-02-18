@@ -57,7 +57,6 @@ trait PaymentPlanTrait
      * This method retrieves all payment plans on the account
      *
      * @param  array  $queryParams [optional] The query parameters array.
-     * @return array
      */
     public function getAllPaymentPlans($queryParams = []): array
     {

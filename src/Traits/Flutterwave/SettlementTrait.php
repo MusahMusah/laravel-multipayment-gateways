@@ -8,9 +8,6 @@ trait SettlementTrait
 
     /**
      * Get the settlement information for a given settlement ID
-     *
-     * @param  int  $settlementId
-     * @return mixed
      */
     public function getSettlement(int $settlementId): mixed
     {
@@ -28,7 +25,6 @@ trait SettlementTrait
     /**
      * Get information for all settlements.
      *
-     * @param  array  $queryParams
      * @return array An array of all settlement information.
      */
     public function getAllSettlements(array $queryParams = []): array

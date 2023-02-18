@@ -57,7 +57,6 @@ trait TransferTrait
      *
      * This method allows the merchant/developer query the fee for the transfer being made.
      *
-     * @param  array  $queryParams
      * @return array
      */
     public function getTransferFees(array $queryParams = [])
@@ -79,7 +78,6 @@ trait TransferTrait
      *
      * This method allows the developer/merchant to create a bulk transfer, i.e. a transfer attempt for multiple transfers.
      *
-     *  @param  array  $bulkTransferData
      *
      * @optional
      *
@@ -131,7 +129,6 @@ trait TransferTrait
      *
      * This method allows you to query the transfer rate for international transfers.
      *
-     * @param  array  $queryParams
      * @return array
      */
     public function getTransferRates(array $queryParams)
@@ -195,7 +192,6 @@ trait TransferTrait
      *
      * This method allows you to get the status and details of a bulk transfer.
      *
-     * @param  array  $queryParams
      * @return array
      */
     public function fetchBulkTransfer(array $queryParams)

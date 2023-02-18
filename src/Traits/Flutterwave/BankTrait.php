@@ -8,9 +8,6 @@ trait BankTrait
 
     /**
      * Get list of banks for a given country by shortcode.
-     *
-     * @param  string  $countryCode
-     * @return array
      */
     public function getBanks(string $countryCode): array
     {
@@ -32,7 +29,6 @@ trait BankTrait
      * Get all branches of a bank
      *
      * @param  int  $bankId The ID of the bank for which to retrieve branches
-     * @return array
      */
     public function getBankBranches(int $bankId): array
     {
