@@ -8,9 +8,6 @@ class InvalidPaymentWebhookSignature extends Exception
 {
     /**
      * A custom exception that is thrown when the signature is invalid
-     *
-     * @param  string  $configNotFoundName
-     * @return self
      */
     public static function invalidSignature(string $configNotFoundName): self
     {

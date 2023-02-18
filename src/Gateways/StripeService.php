@@ -42,11 +42,6 @@ class StripeService implements StripeContract
 
     /**
      * Resolve the authorization URL / Endpoint
-     *
-     * @param $queryParams
-     * @param $formParams
-     * @param $headers
-     * @return void
      */
     public function resolveAuthorization(&$queryParams, &$formParams, &$headers): void
     {
@@ -55,8 +50,6 @@ class StripeService implements StripeContract
 
     /**
      * Set the access token for the request
-     *
-     * @return string
      */
     public function resolveAccessToken(): string
     {
@@ -65,8 +58,6 @@ class StripeService implements StripeContract
 
     /**
      * Decode the response
-     *
-     * @return mixed
      */
     public function decodeResponse(): mixed
     {
@@ -76,8 +67,6 @@ class StripeService implements StripeContract
     /**
      * Create a new payment intent
      *
-     * @param  array  $data
-     * @return array
      *
      * @throws GuzzleException
      * @throws HttpMethodFoundException
@@ -95,8 +84,6 @@ class StripeService implements StripeContract
     /**
      * Confirm a payment intent
      *
-     * @param  string  $paymentIntentId
-     * @return array
      *
      * @throws GuzzleException
      * @throws HttpMethodFoundException

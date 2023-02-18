@@ -10,7 +10,6 @@ class InvalidPaymentWebhookHandler extends Exception
      * A custom exception that is thrown when the handler is invalid
      *
      * @param  string  $configNotFoundName
-     * @return self
      */
     public static function invalidHandler($configNotFoundName): self
     {

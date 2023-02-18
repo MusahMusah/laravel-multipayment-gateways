@@ -7,9 +7,6 @@ use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidConfigurationExcept
 
 class KudaService extends BaseGateWay
 {
-    /**
-     * @var string|null
-     */
     public ?string $email;
 
     public function setPaymentGateway(): void
@@ -24,7 +21,7 @@ class KudaService extends BaseGateWay
     {
         $baseUri = config('multipaymentgateways.kuda.base_uri');
 
-        if (!$baseUri) {
+        if (! $baseUri) {
             throw new InvalidConfigurationException("The Base URI for `{$this->paymentGateway}` is missing. Please ensure that the `base_uri` config key for `{$this->paymentGateway}` is set correctly.");
         }
 
@@ -38,7 +35,7 @@ class KudaService extends BaseGateWay
     {
         $secret = config('multipaymentgateways.kuda.secret');
 
-        if (!$secret) {
+        if (! $secret) {
             throw new InvalidConfigurationException("The Secret for `{$this->paymentGateway}` is missing. Please ensure that the `secret` config key for `{$this->paymentGateway}` is set correctly.");
         }
 
@@ -66,7 +63,7 @@ class KudaService extends BaseGateWay
         return cache()->remember('kuda_token', now()->addMinutes(20), function () {
             return $this->makeRequest(
                 'POST',
-                $this->baseUri . '/account/gettoken',
+                $this->baseUri.'/account/gettoken',
                 [
                     'email' => $this->email,
                     'apiKey' => $this->secret,
@@ -78,8 +75,6 @@ class KudaService extends BaseGateWay
 
     /**
      * Decode the response
-     *
-     * @return array
      */
     public function decodeResponse(): array
     {

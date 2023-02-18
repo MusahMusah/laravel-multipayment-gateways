@@ -16,8 +16,6 @@ class PaystackService extends BaseGateWay implements PaystackContract
 {
     /**
      * The payload to initiate the transaction
-     *
-     * @var array
      */
     protected array $payload;
 
@@ -56,8 +54,6 @@ class PaystackService extends BaseGateWay implements PaystackContract
 
     /**
      * Set the access token for the request
-     *
-     * @return string
      */
     public function resolveAccessToken(): string
     {
@@ -66,8 +62,6 @@ class PaystackService extends BaseGateWay implements PaystackContract
 
     /**
      * Decode the response
-     *
-     * @return array
      */
     public function decodeResponse(): array
     {
@@ -77,7 +71,6 @@ class PaystackService extends BaseGateWay implements PaystackContract
     /**
      * Hit Paystack's API to initiate the transaction and generate the authorization URL
      *
-     * @return void
      *
      * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException
      */
@@ -114,7 +107,6 @@ class PaystackService extends BaseGateWay implements PaystackContract
     /**
      * Get the authorization URL from Paystack's API
      *
-     * @return self
      *
      * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException
      */
@@ -126,9 +118,6 @@ class PaystackService extends BaseGateWay implements PaystackContract
         return $this;
     }
 
-    /**
-     * @return \Illuminate\Http\RedirectResponse
-     */
     private function redirectRequest(): RedirectResponse
     {
         return redirect($this->redirectUrl);
@@ -137,8 +126,6 @@ class PaystackService extends BaseGateWay implements PaystackContract
     /**
      * Redirect the user to Paystack's payment checkout page
      *
-     * @param  array|null  $data
-     * @return RedirectResponse
      *
      * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException
      */
@@ -152,7 +139,6 @@ class PaystackService extends BaseGateWay implements PaystackContract
     /**
      * Hit Paystack's verify endpoint to validate the payment and get the payment details
      *
-     * @return array
      *
      * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException|PaymentVerificationException
      */
@@ -166,7 +152,6 @@ class PaystackService extends BaseGateWay implements PaystackContract
     /**
      * Hit Paystack's verify endpoint to validate the payment
      *
-     * @return void
      *
      * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException|PaymentVerificationException
      */
@@ -182,8 +167,6 @@ class PaystackService extends BaseGateWay implements PaystackContract
     /**
      * Hit Paystack's API to Verify that the transaction is valid
      *
-     * @param  string  $reference
-     * @return array
      *
      * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException
      */
@@ -198,7 +181,6 @@ class PaystackService extends BaseGateWay implements PaystackContract
     /**
      * Hit Paystack's API to get all the Banks
      *
-     * @return array
      *
      * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException
      */
@@ -213,9 +195,6 @@ class PaystackService extends BaseGateWay implements PaystackContract
     /**
      * Hit Paystack's API to resolve a bank account
      *
-     * @param  string  $accountNumber
-     * @param  string  $bankCode
-     * @return mixed
      *
      * @throws GuzzleException
      * @throws HttpMethodFoundException
@@ -235,10 +214,6 @@ class PaystackService extends BaseGateWay implements PaystackContract
     /**
      * Hit Paystack's API to create a Transfer Recipient
      *
-     * @param  string  $name
-     * @param  string  $accountNumber
-     * @param  string  $bankCode
-     * @return mixed
      *
      * @throws GuzzleException
      * @throws HttpMethodFoundException
@@ -262,8 +237,6 @@ class PaystackService extends BaseGateWay implements PaystackContract
     /**
      * Hit Paystack's API to create bulk transfers recipients
      *
-     * @param  array  $recipients
-     * @return mixed
      *
      * @throws GuzzleException
      * @throws HttpMethodFoundException
@@ -283,11 +256,6 @@ class PaystackService extends BaseGateWay implements PaystackContract
     /**
      * Hit Paystack's API to initiate a Transfer
      *
-     * @param  int  $amount
-     * @param  string  $reference
-     * @param  string  $recipient
-     * @param  string  $reason
-     * @return mixed
      *
      * @throws GuzzleException
      * @throws HttpMethodFoundException
@@ -312,8 +280,6 @@ class PaystackService extends BaseGateWay implements PaystackContract
     /**
      * Hit Paystack's API to initiate a Bulk Transfer
      *
-     * @param  array  $transfers
-     * @return mixed
      *
      * @throws GuzzleException
      * @throws HttpMethodFoundException
@@ -335,9 +301,6 @@ class PaystackService extends BaseGateWay implements PaystackContract
     /**
      * Hit Paystack's API to finalize a Transfer
      *
-     * @param  string  $transferCode
-     * @param  string  $otp
-     * @return mixed
      *
      * @throws GuzzleException
      * @throws HttpMethodFoundException
@@ -359,8 +322,6 @@ class PaystackService extends BaseGateWay implements PaystackContract
     /**
      * Hit Paystack's API to verify a Transfer
      *
-     * @param  string  $reference
-     * @return mixed
      *
      * @throws GuzzleException
      * @throws HttpMethodFoundException
@@ -377,8 +338,6 @@ class PaystackService extends BaseGateWay implements PaystackContract
     /**
      * Hit Paystack's API to fetch a Transfer
      *
-     * @param  string  $transferCode
-     * @return array
      *
      * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException
      */

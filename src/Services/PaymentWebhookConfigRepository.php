@@ -8,8 +8,6 @@ class PaymentWebhookConfigRepository
 
     /**
      * Store the webhook configuration for a specific payment gateway
-     *
-     * @param  PaymentWebhookConfig  $webhookConfig
      */
     public function storeConfig(PaymentWebhookConfig $webhookConfig): void
     {
@@ -20,7 +18,6 @@ class PaymentWebhookConfigRepository
      * Retrieve the webhook configuration for a specific payment gateway
      *
      * @param  string  $name The name of the payment gateway
-     * @return PaymentWebhookConfig|null
      */
     public function getConfig(string $name): ?PaymentWebhookConfig
     {
