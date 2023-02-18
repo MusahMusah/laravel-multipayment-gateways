@@ -4,13 +4,9 @@ declare(strict_types=1);
 
 namespace MusahMusah\LaravelMultipaymentGateways\Gateways;
 
-use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Http\RedirectResponse;
 use MusahMusah\LaravelMultipaymentGateways\Abstracts\BaseGateWay;
 use MusahMusah\LaravelMultipaymentGateways\Contracts\PaystackContract;
-use MusahMusah\LaravelMultipaymentGateways\Exceptions\HttpMethodFoundException;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidConfigurationException;
-use MusahMusah\LaravelMultipaymentGateways\Exceptions\PaymentVerificationException;
 use MusahMusah\LaravelMultipaymentGateways\Traits\Paystack\BankTrait;
 use MusahMusah\LaravelMultipaymentGateways\Traits\Paystack\PaymentTrait;
 use MusahMusah\LaravelMultipaymentGateways\Traits\Paystack\TransferTrait;
