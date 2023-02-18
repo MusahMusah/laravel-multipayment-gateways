@@ -31,6 +31,7 @@
         "php": "^8.0",
         "guzzlehttp/guzzle": "^7.5",
         "illuminate/contracts": "^8.50|^9.0|^10.0",
+        "illuminate/support": "^8.50|^9.0|^10.0",
         "spatie/laravel-package-tools": "^1.11",
         "stripe/stripe-php": "^10.3"
     },
