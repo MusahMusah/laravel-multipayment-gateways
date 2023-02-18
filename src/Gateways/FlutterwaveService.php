@@ -36,15 +36,11 @@ class FlutterwaveService extends BaseGateWay implements FlutterwaveContract
 
     /**
      * The payload to initiate the transaction
-     *
-     * @var array
      */
     protected array $payload;
 
     /**
      * The encryption key to encrypt payload for direct card charge
-     *
-     * @var string
      */
     protected string $encryptionKey;
 
