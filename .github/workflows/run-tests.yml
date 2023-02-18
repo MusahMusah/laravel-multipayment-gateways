@@ -28,7 +28,7 @@ jobs:
             carbon: ^2.63
         exclude:
           - laravel: 8.*
-            php: 8.2
+            php: 8.0
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
