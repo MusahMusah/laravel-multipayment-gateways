@@ -44,7 +44,6 @@ class PaymentWebhookHandler
     /**
      * Handle the webhook request
      *
-     * @return JsonResponse
      *
      * @throws InvalidPaymentWebhookConfig|InvalidPaymentWebhookHandler|InvalidPaymentWebhookSignature
      */
@@ -74,8 +73,6 @@ class PaymentWebhookHandler
 
     /**
      * Set the webhook payload from the request input
-     *
-     * @return void
      */
     public function setWebhookPayload(): void
     {
@@ -85,7 +82,6 @@ class PaymentWebhookHandler
     /**
      * Validate the signature of the webhook
      *
-     * @return self
      *
      * @throws InvalidPaymentWebhookSignature
      */
@@ -101,8 +97,6 @@ class PaymentWebhookHandler
 
     /**
      * Create a hash of the webhook payload
-     *
-     * @return void
      */
     protected function createWebhookHash(): void
     {
@@ -111,9 +105,6 @@ class PaymentWebhookHandler
 
     /**
      * Check if the webhook hash has already been processed
-     *
-     * @param  string  $hash
-     * @return bool
      */
     protected function hasWebhookBeenProcessed(string $hash): bool
     {
@@ -122,8 +113,6 @@ class PaymentWebhookHandler
 
     /**
      * Handle the case when the webhook hash has already been processed
-     *
-     * @return JsonResponse
      */
     protected function handleDuplicateWebhook(): JsonResponse
     {
@@ -135,7 +124,6 @@ class PaymentWebhookHandler
      * Handle the webhook response by returning a JSON response
      *
      * @param  string  $webhookResponse The message to be returned in the response
-     * @return JsonResponse
      */
     protected function handleWebhookResponse(string $webhookResponse = self::WEBHOOK_RESPONSE_MESSAGE): JsonResponse
     {
@@ -144,8 +132,6 @@ class PaymentWebhookHandler
 
     /**
      * Store the webhook in the database
-     *
-     * @return PaymentWebhookLog
      */
     protected function storeWebhook(): PaymentWebhookLog
     {
@@ -155,8 +141,6 @@ class PaymentWebhookHandler
     /**
      * Processes the payment webhook
      *
-     * @param  PaymentWebhookLog|null  $webhookLog
-     * @return void
      *
      * @throws InvalidPaymentWebhookConfig|InvalidPaymentWebhookHandler
      */
@@ -174,8 +158,6 @@ class PaymentWebhookHandler
     /**
      * Dispatch the job or event based on the paymentWebhookHandler
      *
-     * @param  string  $paymentWebhookHandler
-     * @return void
      *
      * @throws InvalidPaymentWebhookConfig|InvalidPaymentWebhookHandler
      */

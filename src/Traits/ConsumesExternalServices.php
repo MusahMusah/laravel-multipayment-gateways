@@ -5,7 +5,6 @@ namespace MusahMusah\LaravelMultipaymentGateways\Traits;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\HttpMethodFoundException;
-use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidConfigurationException;
 
 trait ConsumesExternalServices
 {
@@ -17,19 +16,10 @@ trait ConsumesExternalServices
     /**
      * Send a request to any service.
      *
-     * @param  string  $method
-     * @param  string  $requestUrl
-     * @param  array  $formParams
-     * @param  array  $queryParams
-     * @param  array  $headers
-     * @param  bool  $isJsonRequest
-     * @return mixed
      *
-     * @throws GuzzleException
-     * @throws HttpMethodFoundException
-     * @throws InvalidConfigurationException
+     * @throws GuzzleException|HttpMethodFoundException
      */
-    public function makeRequest(string $method, string $requestUrl, array $formParams = [], array $queryParams = [], array $headers = [], bool $isJsonRequest = false): mixed
+    public function makeRequest(string $method, string $requestUrl, array $formParams = [], bool $isJsonRequest = false, array $queryParams = [], array $headers = [], bool $skipResolve = false): mixed
     {
         $this->validateRequest($method);
 
@@ -37,7 +27,7 @@ trait ConsumesExternalServices
             'base_uri' => $this->baseUri,
         ]);
 
-        if (method_exists($this, 'resolveAuthorization')) {
+        if (method_exists($this, 'resolveAuthorization') && ! $skipResolve) {
             $this->resolveAuthorization($queryParams, $formParams, $headers);
         }
 
@@ -61,20 +51,12 @@ trait ConsumesExternalServices
     }
 
     /**
-     * @param  string  $method
-     * @return void
-     *
      * @throws HttpMethodFoundException
-     * @throws InvalidConfigurationException
      */
     private function validateRequest(string $method): void
     {
         if (! in_array($method, ['GET', 'POST', 'PUT', 'DELETE'])) {
             throw new HttpMethodFoundException('Method not found');
-        }
-
-        if (! $this->baseUri) {
-            throw new InvalidConfigurationException('Base URI not provided, please set all the required configurations');
         }
     }
 }

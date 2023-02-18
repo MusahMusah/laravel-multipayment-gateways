@@ -6,67 +6,54 @@ namespace MusahMusah\LaravelMultipaymentGateways\Gateways;
 
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\RedirectResponse;
+use MusahMusah\LaravelMultipaymentGateways\Abstracts\BaseGateWay;
 use MusahMusah\LaravelMultipaymentGateways\Contracts\PaystackContract;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\HttpMethodFoundException;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidConfigurationException;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\PaymentVerificationException;
-use MusahMusah\LaravelMultipaymentGateways\Traits\ConsumesExternalServices;
 
-class PaystackService implements PaystackContract
+class PaystackService extends BaseGateWay implements PaystackContract
 {
-    use ConsumesExternalServices;
-
-    /**
-     * The base uri to consume the Paystack's service
-     *
-     * @var string
-     */
-    protected $baseUri;
-
-    /**
-     * The secret to consume the Paystack's service
-     *
-     * @var string
-     */
-    protected $secret;
-
-    /**
-     * The redirect url to consume the Paystack's service
-     *
-     * @var string
-     */
-    protected string $redirectUrl;
-
     /**
      * The payload to initiate the transaction
-     *
-     * @var array
      */
     protected array $payload;
 
-    public function __construct()
+    public function setPaymentGateway(): void
     {
-        $this->baseUri = config('multipayment-gateways.paystack.base_uri');
-        $this->secret = config('multipayment-gateways.paystack.secret');
+        $this->paymentGateway = 'paystack';
     }
 
     /**
-     * Resolve the authorization URL / Endpoint
-     *
-     * @param $queryParams
-     * @param $formParams
-     * @param $headers
-     * @return void
+     * @throws InvalidConfigurationException
      */
-    public function resolveAuthorization(&$queryParams, &$formParams, &$headers): void
+    public function setBaseUri(): void
     {
-        $headers['Authorization'] = $this->resolveAccessToken();
+        $baseUri = config('multipayment-gateways.paystack.base_uri');
+
+        if (! $baseUri) {
+            throw new InvalidConfigurationException("The Base URI for `{$this->paymentGateway}` is missing. Please ensure that the `base_uri` config key for `{$this->paymentGateway}` is set correctly.");
+        }
+
+        $this->baseUri = $baseUri;
+    }
+
+    /**
+     * @throws InvalidConfigurationException
+     */
+    public function setSecret(): void
+    {
+        $secret = config('multipayment-gateways.paystack.secret');
+
+        if (! $secret) {
+            throw new InvalidConfigurationException("The secret key for `{$this->paymentGateway}` is missing. Please ensure that the `secret` config key for `{$this->paymentGateway}` is set correctly.");
+        }
+
+        $this->secret = $secret;
     }
 
     /**
      * Set the access token for the request
-     *
-     * @return string
      */
     public function resolveAccessToken(): string
     {
@@ -75,42 +62,19 @@ class PaystackService implements PaystackContract
 
     /**
      * Decode the response
-     *
-     * @return mixed
      */
-    public function decodeResponse(): mixed
+    public function decodeResponse(): array
     {
         return json_decode($this->response, true);
     }
 
     /**
-     * Get the response
-     *
-     * @return mixed
-     */
-    public function getResponse(): mixed
-    {
-        return $this->response;
-    }
-
-    /**
-     * Get the data from the response
-     *
-     * @return mixed
-     */
-    public function getData(): mixed
-    {
-        return $this->getResponse()['data'];
-    }
-
-    /**
      * Hit Paystack's API to initiate the transaction and generate the authorization URL
      *
-     * @return array
      *
      * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException
      */
-    private function generateCheckoutLink(): array
+    private function generateCheckoutLink(): void
     {
         if (empty($this->payload)) {
             $this->payload = array_filter([
@@ -133,7 +97,7 @@ class PaystackService implements PaystackContract
             ]);
         }
 
-        return $this->makeRequest(
+        $this->makeRequest(
             method: 'POST',
             requestUrl: 'transaction/initialize',
             formParams: $this->payload,
@@ -143,7 +107,6 @@ class PaystackService implements PaystackContract
     /**
      * Get the authorization URL from Paystack's API
      *
-     * @return self
      *
      * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException
      */
@@ -155,9 +118,6 @@ class PaystackService implements PaystackContract
         return $this;
     }
 
-    /**
-     * @return \Illuminate\Http\RedirectResponse
-     */
     private function redirectRequest(): RedirectResponse
     {
         return redirect($this->redirectUrl);
@@ -166,8 +126,6 @@ class PaystackService implements PaystackContract
     /**
      * Redirect the user to Paystack's payment checkout page
      *
-     * @param  array|null  $data
-     * @return RedirectResponse
      *
      * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException
      */
@@ -181,7 +139,6 @@ class PaystackService implements PaystackContract
     /**
      * Hit Paystack's verify endpoint to validate the payment and get the payment details
      *
-     * @return array
      *
      * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException|PaymentVerificationException
      */
@@ -195,7 +152,6 @@ class PaystackService implements PaystackContract
     /**
      * Hit Paystack's verify endpoint to validate the payment
      *
-     * @return void
      *
      * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException|PaymentVerificationException
      */
@@ -211,8 +167,6 @@ class PaystackService implements PaystackContract
     /**
      * Hit Paystack's API to Verify that the transaction is valid
      *
-     * @param  string  $reference
-     * @return array
      *
      * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException
      */
@@ -227,7 +181,6 @@ class PaystackService implements PaystackContract
     /**
      * Hit Paystack's API to get all the Banks
      *
-     * @return array
      *
      * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException
      */
@@ -242,9 +195,6 @@ class PaystackService implements PaystackContract
     /**
      * Hit Paystack's API to resolve a bank account
      *
-     * @param  string  $accountNumber
-     * @param  string  $bankCode
-     * @return mixed
      *
      * @throws GuzzleException
      * @throws HttpMethodFoundException
@@ -264,10 +214,6 @@ class PaystackService implements PaystackContract
     /**
      * Hit Paystack's API to create a Transfer Recipient
      *
-     * @param  string  $name
-     * @param  string  $accountNumber
-     * @param  string  $bankCode
-     * @return mixed
      *
      * @throws GuzzleException
      * @throws HttpMethodFoundException
@@ -291,8 +237,6 @@ class PaystackService implements PaystackContract
     /**
      * Hit Paystack's API to create bulk transfers recipients
      *
-     * @param  array  $recipients
-     * @return mixed
      *
      * @throws GuzzleException
      * @throws HttpMethodFoundException
@@ -312,11 +256,6 @@ class PaystackService implements PaystackContract
     /**
      * Hit Paystack's API to initiate a Transfer
      *
-     * @param  int  $amount
-     * @param  string  $reference
-     * @param  string  $recipient
-     * @param  string  $reason
-     * @return mixed
      *
      * @throws GuzzleException
      * @throws HttpMethodFoundException
@@ -341,8 +280,6 @@ class PaystackService implements PaystackContract
     /**
      * Hit Paystack's API to initiate a Bulk Transfer
      *
-     * @param  array  $transfers
-     * @return mixed
      *
      * @throws GuzzleException
      * @throws HttpMethodFoundException
@@ -364,9 +301,6 @@ class PaystackService implements PaystackContract
     /**
      * Hit Paystack's API to finalize a Transfer
      *
-     * @param  string  $transferCode
-     * @param  string  $otp
-     * @return mixed
      *
      * @throws GuzzleException
      * @throws HttpMethodFoundException
@@ -388,8 +322,6 @@ class PaystackService implements PaystackContract
     /**
      * Hit Paystack's API to verify a Transfer
      *
-     * @param  string  $reference
-     * @return mixed
      *
      * @throws GuzzleException
      * @throws HttpMethodFoundException
@@ -406,8 +338,6 @@ class PaystackService implements PaystackContract
     /**
      * Hit Paystack's API to fetch a Transfer
      *
-     * @param  string  $transferCode
-     * @return array
      *
      * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException
      */

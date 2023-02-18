@@ -11,55 +11,13 @@ use MusahMusah\LaravelMultipaymentGateways\Exceptions\PaymentVerificationExcepti
 interface PaystackContract
 {
     /**
-     * Resolve the authorization URL / Endpoint
-     *
-     * @param $queryParams
-     * @param $formParams
-     * @param $headers
-     * @return void
-     */
-    public function resolveAuthorization(&$queryParams, &$formParams, &$headers): void;
-
-    /**
-     * Set the access token for the request
-     *
-     * @return string
-     */
-    public function resolveAccessToken(): string;
-
-    /**
-     * Decode the response
-     *
-     * @return mixed
-     */
-    public function decodeResponse(): mixed;
-
-    /**
-     * Get the response
-     *
-     * @return mixed
-     */
-    public function getResponse(): mixed;
-
-    /**
-     * Get the data from the response
-     *
-     * @return mixed
-     */
-    public function getData(): mixed;
-
-    /**
      * Redirect the user to Paystack's payment page
-     *
-     * @param  array|null  $data
-     * @return RedirectResponse
      */
     public function redirectToCheckout(array $data = null): RedirectResponse;
 
     /**
      * Hit Paystack's verify endpoint to validate the payment and get the payment details
      *
-     * @return array
      *
      * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException|PaymentVerificationException
      */
@@ -68,8 +26,6 @@ interface PaystackContract
     /**
      * Hit Paystack's API to Verify that the transaction is valid
      *
-     * @param  string  $reference
-     * @return array|object
      *
      * @throws GuzzleException
      * @throws HttpMethodFoundException
@@ -79,7 +35,6 @@ interface PaystackContract
     /**
      * Hit Paystack's API to get all the Banks
      *
-     * @return mixed
      *
      * @throws GuzzleException|HttpMethodFoundException
      */
@@ -88,9 +43,6 @@ interface PaystackContract
     /**
      * Hit Paystack's API to resolve a bank account
      *
-     * @param  string  $accountNumber
-     * @param  string  $bankCode
-     * @return mixed
      *
      * @throws GuzzleException
      * @throws HttpMethodFoundException
@@ -100,10 +52,6 @@ interface PaystackContract
     /**
      * Hit Paystack's API to create a Transfer Recipient
      *
-     * @param  string  $name
-     * @param  string  $accountNumber
-     * @param  string  $bankCode
-     * @return mixed
      *
      * @throws GuzzleException
      * @throws HttpMethodFoundException
@@ -113,8 +61,6 @@ interface PaystackContract
     /**
      * Hit Paystack's API to create bulk transfers recipients
      *
-     * @param  array  $recipients
-     * @return mixed
      *
      * @throws GuzzleException
      * @throws HttpMethodFoundException
@@ -124,11 +70,6 @@ interface PaystackContract
     /**
      * Hit Paystack's API to initiate a Transfer
      *
-     * @param  int  $amount
-     * @param  string  $reference
-     * @param  string  $recipient
-     * @param  string  $reason
-     * @return mixed
      *
      * @throws GuzzleException
      * @throws HttpMethodFoundException
@@ -138,8 +79,6 @@ interface PaystackContract
     /**
      * Hit Paystack's API to initiate a Bulk Transfer
      *
-     * @param  array  $transfers
-     * @return mixed
      *
      * @throws GuzzleException
      * @throws HttpMethodFoundException

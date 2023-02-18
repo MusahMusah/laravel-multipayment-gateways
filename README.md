@@ -178,57 +178,257 @@ Each payment gateway has to be configured with the following values:
 
 
 ## Usage
-This package provides various ways to handle payments and webhooks.
+**All payment gateways methods and properties can be accessed using their respective `facade`, `helper` or `dependency injection`.**
+This ensures consistency in the way you access the payment gateways.  
 The idea is to provide a way to handle payments and webhooks in laravel `web` and `api` based applications.
 
-### Handling Payments
-Payment can be handled in the following ways:
+### Handling Payments with Paystack
+Web Payment can be handled in the following ways:
+1. Prepare your route to handle the payment request.
+    ```php
+    use Illuminate\Support\Facades\Route;
+    use App\Http\Controllers\PaymentController;
+    
+    Route::post('/payment', [PaystackPaymentController::class, 'initiatePayment'])->name('payment.initiate');
+    ```
 
-#### Using the Facade
-```php
-use MusahMusah\LaravelMultipaymentGateways\Facades\Paystack;
-use MusahMusah\LaravelMultipaymentGateways\Facades\Stripe;
+2. Create a controller to handle the payment request. In the controller, you can use your desired `Payment Gateway` to handle the payment request using the `facade`, `helper` or `dependency injection`.  
+                                                    
+   - Create a controller to handle the payment request using Facade.
+     ```php
+     use Illuminate\Http\Request;
+     use MusahMusah\LaravelMultipaymentGateways\Facades\Paystack;
+    
+     class PaystackPaymentController extends Controller
+     {
+         public function initiatePayment(Request $request)
+         {
+             $payment = Paystack::redirectToCheckout([
+                 'amount' => 1000,
+                 'email' => 'musahmusah@test.com',
+                 'reference' => '123456789',
+                 'callback_url' => 'https://example.com',
+             ]);
+            
+             return $payment;
+         }
+     }
+     ```
 
-// Using Paystack Facade for web applications
-Paystack::redirectToCheckout([
-    'amount' => 1000,
-    'email' => 'musahmusah@test.com',
-    'reference' => '123456789',
-    'callback_url' => 'https://example.com',
-]);
+   - Create a controller to handle the payment request using Helper.
+     ```php
+     use Illuminate\Http\Request;
+        
+     class PaystackPaymentController extends Controller
+     {
+         public function initiatePayment(Request $request)
+         {
+             $payment = paystack()->redirectToCheckout([
+                 'amount' => 1000,
+                 'email' => 'musahmusah@test.com',
+                 'reference' => '123456789',
+             ]);
+            
+             return $payment;
+         }
+     }
+     ```
+     In the above example, the `redirectToCheckout()` method was called without the parameters 
+     `callback_url` in the array. This means you have to add callback url in your paystack dashboard 
+     [here](https://dashboard.paystack.com/#/settings/developer) to handle redirect after payment.
 
-// Using Stripe Facade
-Stripe::createIntent();
-Stripe::confirmIntent();
-```
-#### Using Dependency Injection with the PaymentGateways Interface
-```php
-use Illuminate\Support\Facades\Route;
-use MusahMusah\LaravelMultipaymentGateways\Contracts\PaystackContract;
-use MusahMusah\LaravelMultipaymentGateways\Contracts\StripeContract;
+   - Create a controller to handle the payment request using Dependency Injection through the `PaystackContract` interface.
+     ```php
+     use Illuminate\Http\Request;
+     use MusahMusah\LaravelMultipaymentGateways\Contracts\PaystackContract;
+    
+     class PaystackPaymentController extends Controller
+     {
+         public function initiatePayment(Request $request, PaystackContract $paystack)
+         {
+             $payment = $paystack->redirectToCheckout();
+            
+             return $payment;
+         }
+     }
+     ```
+     In the above example, the `PaystackContract` interface was injected into the controller through dependency injection.
+     The `redirectToCheckout` method was called without passing any parameters, this is because the package has been configured to use the values from the `request()` object to make the payment request if no parameters are passed to the method.
+     This allows you to make payment requests without having to pass any parameters to the method instead you can send the data using hidden inputs in your form or as a json object in your request body.  
+     Example of a blade form that can be used to make such a request:
+        ```html
+         <form action="{{ route('payment.initiate') }}" method="POST">
+            @csrf
+            <input type="hidden" name="amount" value="1000">
+            <input type="hidden" name="email" value="musahmusah@test.com">
+            <input type="hidden" name="reference" value="123456789">
+            <input type="hidden" name="metadata" value="{{ json_encode(['custom_fields' => ['name' => 'Musah Musah']]) }}"
+            <input type="hidden" name="callback_url" value="https://example.com">
+            <button type="submit">Pay</button>
+         </form>
+        ```
+     This way when the form is submitted, the `request()` object will be used to extract the data in the hidden inputs inside the `redirectToCheckout` method and make the payment request, allowing you to call the `redirectToCheckout` method without passing any parameters.  
+     The `metadata` field is optional, you can add any custom fields you want to the metadata field.   
+     Additionally, you need to generate a unique reference for each payment request. You can readmore about paystack payment requests [here](https://developers.paystack.co/reference#initialize-a-transaction)         
 
-// Using Paystack Contract
-Route::get('/paystack/banks', function (PaystackContract $paystack) {
-    return $paystack->getBanks();
-});
+3. **Handle the payment response:**  
+Upon successful payment, you will be redirected to the `callback_url` that you set in your paystack dashboard or the `callback_url` you passed in the payment request.
+    - Add a route to handle the payment response.
+        ```php
+        use Illuminate\Support\Facades\Route;
+        use App\Http\Controllers\PaymentController;
+        
+        Route::get('/payment/callback', [PaystackPaymentController::class, 'handlePaymentResponse'])->name('payment.callback');
+        ```
+    - Create a controller to handle the payment response.
+        ```php
+        use Illuminate\Http\Request;
+        use MusahMusah\LaravelMultipaymentGateways\Contracts\PaystackContract;
+        
+        class PaystackPaymentController extends Controller
+        {
+            public function handlePaymentResponse(Request $request, PaystackContract $paystack)
+            {
+                $paymentResponse = $paystack->getPaymentData();
+                
+                // Handle payment response here
+            }
+        }
+        ```
 
-// Using Stripe Contract
-Route::get('/stripe/create-intent', function (StripeContract $stripe) {
-    return $stripe->createIntent();
-});
-```
+For an api based application where the client is served by a mobile app or on a separate domain, you can use this approach instead:
+1. Initialize the payment with the client (mobile app or web app built with react, vue etc) served on a separate domain or port. This can be 
+done using the **Paystack Inline Popup** [here](https://paystack.com/docs/payments/accept-payments/#popup).
+2. Verify the payment using the `verifyPayment` method provided by the package. This method will verify the payment using the `reference` that has to be passed to the request body.  
+   Your route should look like this:
+    ```php
+    use Illuminate\Support\Facades\Route;
+    use App\Http\Controllers\PaymentController;
+    
+    Route::post('/payment/verify', [PaystackPaymentController::class, 'verifyPayment'])->name('payment.verify');
+    ```
+   Your Controller should look like this:
+    ```php
+    use Illuminate\Http\Request;
+    use MusahMusah\LaravelMultipaymentGateways\Contracts\PaystackContract;
+    
+    class PaystackPaymentController extends Controller
+    {
+        public function verifyPayment(Request $request, PaystackContract $paystack)
+        {
+            $paymentResponse = $paystack->verifyTransaction($request->reference);
+            
+            if ($paymentResponse->status === 'success') {
+                // Handle payment response here
+            }
+        }
+    }
+    ```
 
-#### Using Helper Functions
-```php
-// Using Paystack Helper
-paystack()->getBanks();
-paystack()->redirectToCheckout();
+### Handling Payments with Stripe
+**Stripe Payment** can be handled in similar ways as **Paystack Payment**. 
+The package allow you to make payment requests using the `facade`, `helper` or `dependency injection`.
+1. Prepare your route to handle the payment request.
+    ```php
+    use Illuminate\Support\Facades\Route;
+    use App\Http\Controllers\StripePaymentController;
+    
+    Route::post('/payment/stripe', [StripePaymentController::class, 'initiatePayment'])->name('payment.stripe.initiate');
+    ```
 
-// Using Stripe Helper
-stripe()->createIntent();
-stripe()->confirmIntent();
+2. Create a controller to handle the payment request using Facade.
+    ```php
+    use Illuminate\Http\Request;
+    use MusahMusah\LaravelMultipaymentGateways\Facades\Stripe;
+    
+    class StripePaymentController extends Controller
+    {
+        public function initiatePayment(Request $request)
+        {
+            $payment = Stripe::createIntent([
+                'amount' => 1000,
+                'currency' => 'usd',
+                'payment_method_types' => ['card'],
+                'payment_method' => 'xxxxxxx',
+                'metadata' => ['custom_fields' => ['name' => 'Musah Musah']],
+            ]);
+            
+            return $payment;
+        }
+    }
+    ```
+3. Create a controller to handle the payment request using Dependency Injection through the `StripeContract` interface.
+    ```php
+    use Illuminate\Http\Request;
+    use MusahMusah\LaravelMultipaymentGateways\Contracts\StripeContract;
+    
+    class StripePaymentController extends Controller
+    {
+        public function initiatePayment(Request $request, StripeContract $stripe)
+        {
+            $payment = $stripe->createIntent([
+                'amount' => 1000,
+                'currency' => 'usd',
+                'payment_method_types' => ['card'],
+                'payment_method' => 'xxxxxxx',
+                'metadata' => ['custom_fields' => ['name' => 'Musah Musah']],
+            ]);
+            
+            return $payment;
+        }
+    }
+    ```
 
-```
+4. Create a controller to handle the payment request using Helper.
+    ```php
+    use Illuminate\Http\Request;
+    
+    class StripePaymentController extends Controller
+    {
+        public function initiatePayment(Request $request)
+        {
+            $payment = stripe()->createIntent([
+                'amount' => 1000,
+                'currency' => 'usd',
+                'payment_method_types' => ['card'],
+                'payment_method' => 'xxxxxxx',
+                'metadata' => ['custom_fields' => ['name' => 'Musah Musah']],
+            ]);
+            
+            return $payment;
+        }
+    }
+    ```
+   
+The `createIntent` method will create a payment intent and return the client secret to be used in the frontend to confirm the payment. In addition, the package also provides a method to confirm the payment intent.
+You can confirm the payment intent in the following ways:
+1. Prepare your route to handle the payment confirmation request.
+    ```php
+    use Illuminate\Support\Facades\Route;
+    use App\Http\Controllers\StripePaymentController;
+    
+    Route::post('/payment/stripe/confirm', [StripePaymentController::class, 'confirmPayment'])->name('payment.stripe.confirm');
+    ```
+
+2. Create a controller to handle the payment confirmation request using Facade.
+    ```php
+    use Illuminate\Http\Request;
+    use MusahMusah\LaravelMultipaymentGateways\Facades\Stripe;
+    
+    class StripePaymentController extends Controller
+    {
+        public function confirmPayment(Request $request)
+        {
+            $payment = Stripe::confirmIntent($request->payment_intent_id);
+            
+            if ($payment->status === 'succeeded') {
+                // Payment was successful
+            }
+            
+            return $payment;
+        }
+    }
+    ```
 
 ### Handling Webhooks
 Webhooks can be handled in the following ways:
