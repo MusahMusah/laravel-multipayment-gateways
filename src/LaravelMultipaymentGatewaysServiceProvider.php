@@ -22,7 +22,7 @@ class LaravelMultipaymentGatewaysServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-multipayment-gateways')
             ->hasConfigFile()
-            ->hasMigrations('create_payment_webhook_logs_table');
+            ->hasMigrations(['create_payment_webhook_logs_table']);
     }
 
     public function packageRegistered()
