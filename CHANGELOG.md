@@ -2,6 +2,13 @@
 
 All notable changes to `laravel-multipayment-gateways` will be documented in this file.
 
+## 1.1.0 - 2023-02-18
+
+### What's Changed
+
+- Add Laravel 8 and 10 Support by @MusahMusah in #5
+- Add BaseGateway Abstract class to encapsulate commonalities among payment gateways
+
 ## Payment Gateways Usage Flow  - 2023-02-04
 
 ### Payment Gateways Usage Flow
