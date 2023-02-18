@@ -4,11 +4,9 @@ namespace MusahMusah\LaravelMultipaymentGateways;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
-use MusahMusah\LaravelMultipaymentGateways\Contracts\KudaContract;
 use MusahMusah\LaravelMultipaymentGateways\Contracts\PaystackContract;
 use MusahMusah\LaravelMultipaymentGateways\Contracts\StripeContract;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidPaymentWebhookConfig;
-use MusahMusah\LaravelMultipaymentGateways\Gateways\KudaService;
 use MusahMusah\LaravelMultipaymentGateways\Gateways\PaystackService;
 use MusahMusah\LaravelMultipaymentGateways\Gateways\StripeService;
 use MusahMusah\LaravelMultipaymentGateways\Http\Controllers\PaymentWebhookController;
