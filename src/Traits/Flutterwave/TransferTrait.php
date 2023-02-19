@@ -155,7 +155,7 @@ trait TransferTrait
      */
     public function retryTransfer(int $transferId)
     {
-        $endpoint = sprintf('%s%s/retries', $this->baseUri, self::TRANSFER_ENDPOINT, $transferId);
+        $endpoint = sprintf('%s%s%s/retries', $this->baseUri, self::TRANSFER_ENDPOINT, $transferId);
 
         $tranferData = $this->makeRequest(
             method: 'POST',
@@ -176,7 +176,7 @@ trait TransferTrait
      */
     public function getTransferRetry(int $transferId)
     {
-        $endpoint = sprintf('%s%s/retries', $this->baseUri, self::TRANSFER_ENDPOINT, $transferId);
+        $endpoint = sprintf('%s%s%s/retries', $this->baseUri, self::TRANSFER_ENDPOINT, $transferId);
 
         $tranferData = $this->makeRequest(
             method: 'GET',
