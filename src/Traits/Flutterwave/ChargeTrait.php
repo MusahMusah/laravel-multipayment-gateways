@@ -2,6 +2,8 @@
 
 namespace MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave;
 
+use GuzzleHttp\Exception\GuzzleException;
+use MusahMusah\LaravelMultipaymentGateways\Exceptions\HttpMethodFoundException;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidConfigurationException;
 
 trait ChargeTrait
@@ -45,10 +47,11 @@ trait ChargeTrait
     /**
      * Initiate a debit or credit card payment.
      *
-     * @param  array  $formParams An associative array of payment data.
+     * @param array $formParams An associative array of payment data.
      * @return array
+     * @throws InvalidConfigurationException|GuzzleException|HttpMethodFoundException
      */
-    public function initiateCardCharge(array $formParams)
+    public function initiateCardCharge(array $formParams): array
     {
         $endpoint = sprintf('%s%s', $this->baseUri, self::CHARGE_ENDPOINT);
 
@@ -56,21 +59,21 @@ trait ChargeTrait
             'type' => self::CARD_PAYMENT_CHARGE_TYPE,
         ];
 
-        $cardPaymentData = $this->makeRequest(
+        return $this->makeRequest(
             method: 'POST',
             requestUrl: $endpoint,
-            queryParams: $queryParams,
             formParams: $this->encryptPayload($formParams),
-            isJsonRequest: true
+            isJsonRequest: true,
+            queryParams: $queryParams
         );
-
-        return $cardPaymentData;
     }
 
     /**
      * Initiate a bank transfer payment.
      *
-     * @param  array  $formParams An associative array of tranfer data.
+     * @param array $formParams An associative array of tranfer data.
+     * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
     public function initiateBankTransfer(array $formParams): array
     {
@@ -83,10 +86,11 @@ trait ChargeTrait
      * This method charges a Nigerian bank account using Flutterwave. It requires the bank numeric code, account number,
      * amount, email address and transaction reference to be provided in the request body.
      *
-     * @param  array  $formParams An associative array of tranfer data.
+     * @param array $formParams An associative array of tranfer data.
      * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
-    public function chargeNigerianBankAccount(array $formParams)
+    public function chargeNigerianBankAccount(array $formParams): array
     {
         return $this->chargePayment(self::NG_ACCOUNT_DEBIT_TYPE, $formParams);
     }
@@ -97,7 +101,9 @@ trait ChargeTrait
      * This payment method helps you charge UK Bank accounts using Flutterwave.
      * We recommend you read the method overview before you proceed.
      *
-     * @param  array  $formParams An associative array of charge data.
+     * @param array $formParams An associative array of charge data.
+     * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
     public function chargeUkBankAccount(array $formParams): array
     {
@@ -109,7 +115,9 @@ trait ChargeTrait
      *
      * This payment method allows you to collect USD and ZAR payments via ACH.
      *
-     * @param  array  $formParams An associative array of charge data.
+     * @param array $formParams An associative array of charge data.
+     * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
     public function chargeAchPayment(array $formParams): array
     {
@@ -122,10 +130,11 @@ trait ChargeTrait
      * This payment method allows you to accept payments from your customers via Apple Pay.
      * We recommend you read the method overview before you proceed.
      *
-     * @param  array  $formParams An associative array of charge data.
+     * @param array $formParams An associative array of charge data.
      * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
-    public function chargeApplePay($formParams)
+    public function chargeApplePay(array $formParams): array
     {
         return $this->chargePayment(self::APPLE_PAY_CHARGE_TYPE, $formParams);
     }
@@ -136,10 +145,11 @@ trait ChargeTrait
      * This payment method allows you to accept payments from your customers via Google Pay.
      * We recommend you read the method overview before you proceed.
      *
-     * @param  array  $formParams An associative array of charge data.
+     * @param array $formParams An associative array of charge data.
      * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
-    public function chargeGooglePay($formParams)
+    public function chargeGooglePay(array $formParams): array
     {
         return $this->chargePayment(self::APPLE_PAY_CHARGE_TYPE, $formParams);
     }
@@ -149,7 +159,9 @@ trait ChargeTrait
      *
      * This payment method allows you to accept payments from your customers via Fawry Pay.
      *
-     * @param  array  $formParams An associative array of charge data.
+     * @param array $formParams An associative array of charge data.
+     * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
     public function chargeFawryPay(array $formParams): array
     {
@@ -161,7 +173,9 @@ trait ChargeTrait
      *
      * This payment method allows you to accept payments from your customers via PayPal.
      *
-     * @param  array  $formParams An associative array of charge data.
+     * @param array $formParams An associative array of charge data.
+     * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
     public function chargePaypal(array $formParams): array
     {
@@ -173,7 +187,9 @@ trait ChargeTrait
      *
      * This payment method allows you to accept payments from your customers via M-Pesa.
      *
-     * @param  array  $formParams An associative array of charge data.
+     * @param array $formParams An associative array of charge data.
+     * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
     public function chargeMpesa(array $formParams): array
     {
@@ -185,7 +201,9 @@ trait ChargeTrait
      *
      * This payment method allows you to accept payments from your customers via mobile money in Ghana.
      *
-     * @param  array  $formParams An associative array of charge data.
+     * @param array $formParams An associative array of charge data.
+     * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
     public function chargeGhanaMobileMoney(array $formParams): array
     {
@@ -197,7 +215,9 @@ trait ChargeTrait
      *
      * This payment method allows you to accept payments from your customers via mobile money in Uganda.
      *
-     * @param  array  $formParams An associative array of charge data.
+     * @param array $formParams An associative array of charge data.
+     * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
     public function chargeUgandaMobileMoney(array $formParams): array
     {
@@ -209,7 +229,9 @@ trait ChargeTrait
      *
      * This payment method allows you to accept payments from your customers via Mobile Money Franco.
      *
-     * @param  array  $formParams An associative array of charge data.
+     * @param array $formParams An associative array of charge data.
+     * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
     public function chargeMobileMoneyFranco(array $formParams): array
     {
@@ -221,7 +243,9 @@ trait ChargeTrait
      *
      * This payment method allows you to accept payments from your customers via Mobile Money Rwanda.
      *
-     * @param  array  $formParams An associative array of charge data.
+     * @param array $formParams An associative array of charge data.
+     * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
     public function chargeMobileMoneyRwanda(array $formParams): array
     {
@@ -233,10 +257,11 @@ trait ChargeTrait
      *
      * This payment method allows you to accept payments from your customers via mobile money in Zambia.
      *
-     * @param  array  $formParams An associative array of charge data.
+     * @param array $formParams An associative array of charge data.
      * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
-    public function chargeZambiaMobileMoney($formParams)
+    public function chargeZambiaMobileMoney(array $formParams): array
     {
         return $this->chargePayment(self::ZAMBIA_MOBILE_MONEY_CHARGE_TYPE, $formParams);
     }
@@ -246,10 +271,11 @@ trait ChargeTrait
      *
      * This payment method allows you to accept payments from your customers via USSD.
      *
-     * @param  array  $formParams An associative array of charge data.
+     * @param array $formParams An associative array of charge data.
      * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
-    public function chargeUssd($formParams)
+    public function chargeUssd(array $formParams): array
     {
         return $this->chargePayment(self::USSD_CHARGE_TYPE, $formParams);
     }
@@ -257,8 +283,10 @@ trait ChargeTrait
     /**
      * Charge a customer's payment using the specified payment method.
      *
-     * @param  string  $paymentMethod The payment method to use.
-     * @param  array  $formParams An associative array of charge data.
+     * @param string $paymentMethod The payment method to use.
+     * @param array $formParams An associative array of charge data.
+     * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
     private function chargePayment(string $paymentMethod, array $formParams): array
     {
@@ -268,15 +296,13 @@ trait ChargeTrait
             'type' => $paymentMethod,
         ];
 
-        $chargeData = $this->makeRequest(
+        return $this->makeRequest(
             method: 'POST',
             requestUrl: $endpoint,
-            queryParams: $queryParams,
             formParams: $formParams,
-            isJsonRequest: true
+            isJsonRequest: true,
+            queryParams: $queryParams
         );
-
-        return $chargeData;
     }
 
     /**

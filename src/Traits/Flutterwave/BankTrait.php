@@ -2,6 +2,9 @@
 
 namespace MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave;
 
+use GuzzleHttp\Exception\GuzzleException;
+use MusahMusah\LaravelMultipaymentGateways\Exceptions\HttpMethodFoundException;
+
 trait BankTrait
 {
     const BANK_ENDPOINT = '/banks/';
@@ -28,18 +31,18 @@ trait BankTrait
     /**
      * Get all branches of a bank
      *
-     * @param  int  $bankId The ID of the bank for which to retrieve branches
+     * @param int $bankId The ID of the bank for which to retrieve branches
+     * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
     public function getBankBranches(int $bankId): array
     {
         $endpoint = sprintf('%s%s%s/branches', $this->baseUri, self::BANK_ENDPOINT, $bankId);
 
-        $branches = $this->makeRequest(
+        return $this->makeRequest(
             method: 'GET',
             requestUrl: $endpoint,
             isJsonRequest: true
         );
-
-        return $branches;
     }
 }
