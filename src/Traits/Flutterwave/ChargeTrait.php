@@ -6,31 +6,46 @@ use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidConfigurationExcept
 
 trait ChargeTrait
 {
-    const CHARGE_ENDPOINT                        = '/charges/';
-    const VALIDATE_CHARGE_ENDPOINT               = '/validate-charge';
-    const CARD_PAYMENT_CHARGE_TYPE               = 'card';
-    const BANK_TRANSFER_CHARGE_TYPE              = 'bank_transfer';
-    const NG_ACCOUNT_DEBIT_TYPE                  = 'debit_ng_account';
-    const UK_ACCOUNT_DEBIT_TYPE                  = 'debit_uk_account';
-    const ACH_PAYMENT_CHARGE_TYPE                = 'ach_payment';
-    const APPLE_PAY_CHARGE_TYPE                  = 'applepay';
-    const GOOGLE_PAY_CHARGE_TYPE                 = 'googlepay';
-    const FAWRY_PAY_CHARGE_TYPE                  = 'fawry_pay';
-    const PAYPAL_CHARGE_TYPE                     = 'paypal';
-    const MPESA_PAY_CHARGE_TYPE                  = 'mpesa';
-    const GHANA_MOBILE_MONEY_CHARGE_TYPE         = 'mobile_money_ghana';
-    const UGANDA_MOBILE_MONEY_CHARGE_TYPE        = 'mobile_money_uganda';
-    const FRANCOPHONE_MOBILE_MONEY_CHARGE_TYPE   = 'mobile_money_franco';
-    const RWANDA_MOBILE_MONEY_CHARGE_TYPE        = 'mobile_money_rwanda';
-    const ZAMBIA_MOBILE_MONEY_CHARGE_TYPE        = 'mobile_money_zambia';
-    const USSD_CHARGE_TYPE                       = 'ussd';
+    const CHARGE_ENDPOINT = '/charges/';
 
+    const VALIDATE_CHARGE_ENDPOINT = '/validate-charge';
+
+    const CARD_PAYMENT_CHARGE_TYPE = 'card';
+
+    const BANK_TRANSFER_CHARGE_TYPE = 'bank_transfer';
+
+    const NG_ACCOUNT_DEBIT_TYPE = 'debit_ng_account';
+
+    const UK_ACCOUNT_DEBIT_TYPE = 'debit_uk_account';
+
+    const ACH_PAYMENT_CHARGE_TYPE = 'ach_payment';
+
+    const APPLE_PAY_CHARGE_TYPE = 'applepay';
+
+    const GOOGLE_PAY_CHARGE_TYPE = 'googlepay';
+
+    const FAWRY_PAY_CHARGE_TYPE = 'fawry_pay';
+
+    const PAYPAL_CHARGE_TYPE = 'paypal';
+
+    const MPESA_PAY_CHARGE_TYPE = 'mpesa';
+
+    const GHANA_MOBILE_MONEY_CHARGE_TYPE = 'mobile_money_ghana';
+
+    const UGANDA_MOBILE_MONEY_CHARGE_TYPE = 'mobile_money_uganda';
+
+    const FRANCOPHONE_MOBILE_MONEY_CHARGE_TYPE = 'mobile_money_franco';
+
+    const RWANDA_MOBILE_MONEY_CHARGE_TYPE = 'mobile_money_rwanda';
+
+    const ZAMBIA_MOBILE_MONEY_CHARGE_TYPE = 'mobile_money_zambia';
+
+    const USSD_CHARGE_TYPE = 'ussd';
 
     /**
      * Initiate a debit or credit card payment.
      *
-     * @param array $formParams An associative array of payment data.
-     *
+     * @param  array  $formParams An associative array of payment data.
      * @return array
      */
     public function initiateCardCharge(array $formParams)
@@ -38,7 +53,7 @@ trait ChargeTrait
         $endpoint = sprintf('%s%s', $this->baseUri, self::CHARGE_ENDPOINT);
 
         $queryParams = [
-            'type' => self::CARD_PAYMENT_CHARGE_TYPE
+            'type' => self::CARD_PAYMENT_CHARGE_TYPE,
         ];
 
         $cardPaymentData = $this->makeRequest(
@@ -55,9 +70,7 @@ trait ChargeTrait
     /**
      * Initiate a bank transfer payment.
      *
-     * @param array $formParams An associative array of tranfer data.
-     *
-     * @return array
+     * @param  array  $formParams An associative array of tranfer data.
      */
     public function initiateBankTransfer(array $formParams): array
     {
@@ -70,8 +83,7 @@ trait ChargeTrait
      * This method charges a Nigerian bank account using Flutterwave. It requires the bank numeric code, account number,
      * amount, email address and transaction reference to be provided in the request body.
      *
-     * @param array $formParams An associative array of tranfer data.
-     *
+     * @param  array  $formParams An associative array of tranfer data.
      * @return array
      */
     public function chargeNigerianBankAccount(array $formParams)
@@ -85,9 +97,7 @@ trait ChargeTrait
      * This payment method helps you charge UK Bank accounts using Flutterwave.
      * We recommend you read the method overview before you proceed.
      *
-     * @param array $formParams An associative array of charge data.
-     *
-     * @return array
+     * @param  array  $formParams An associative array of charge data.
      */
     public function chargeUkBankAccount(array $formParams): array
     {
@@ -99,9 +109,7 @@ trait ChargeTrait
      *
      * This payment method allows you to collect USD and ZAR payments via ACH.
      *
-     * @param array $formParams An associative array of charge data.
-     *
-     * @return array
+     * @param  array  $formParams An associative array of charge data.
      */
     public function chargeAchPayment(array $formParams): array
     {
@@ -114,8 +122,7 @@ trait ChargeTrait
      * This payment method allows you to accept payments from your customers via Apple Pay.
      * We recommend you read the method overview before you proceed.
      *
-     * @param array $formParams An associative array of charge data.
-     *
+     * @param  array  $formParams An associative array of charge data.
      * @return array
      */
     public function chargeApplePay($formParams)
@@ -129,8 +136,7 @@ trait ChargeTrait
      * This payment method allows you to accept payments from your customers via Google Pay.
      * We recommend you read the method overview before you proceed.
      *
-     * @param array $formParams An associative array of charge data.
-     *
+     * @param  array  $formParams An associative array of charge data.
      * @return array
      */
     public function chargeGooglePay($formParams)
@@ -143,9 +149,7 @@ trait ChargeTrait
      *
      * This payment method allows you to accept payments from your customers via Fawry Pay.
      *
-     * @param array $formParams An associative array of charge data.
-     *
-     * @return array
+     * @param  array  $formParams An associative array of charge data.
      */
     public function chargeFawryPay(array $formParams): array
     {
@@ -157,9 +161,7 @@ trait ChargeTrait
      *
      * This payment method allows you to accept payments from your customers via PayPal.
      *
-     * @param array $formParams An associative array of charge data.
-     *
-     * @return array
+     * @param  array  $formParams An associative array of charge data.
      */
     public function chargePaypal(array $formParams): array
     {
@@ -171,9 +173,7 @@ trait ChargeTrait
      *
      * This payment method allows you to accept payments from your customers via M-Pesa.
      *
-     * @param array $formParams An associative array of charge data.
-     *
-     * @return array
+     * @param  array  $formParams An associative array of charge data.
      */
     public function chargeMpesa(array $formParams): array
     {
@@ -185,9 +185,7 @@ trait ChargeTrait
      *
      * This payment method allows you to accept payments from your customers via mobile money in Ghana.
      *
-     * @param array $formParams An associative array of charge data.
-     *
-     * @return array
+     * @param  array  $formParams An associative array of charge data.
      */
     public function chargeGhanaMobileMoney(array $formParams): array
     {
@@ -199,9 +197,7 @@ trait ChargeTrait
      *
      * This payment method allows you to accept payments from your customers via mobile money in Uganda.
      *
-     * @param array $formParams An associative array of charge data.
-     *
-     * @return array
+     * @param  array  $formParams An associative array of charge data.
      */
     public function chargeUgandaMobileMoney(array $formParams): array
     {
@@ -213,9 +209,7 @@ trait ChargeTrait
      *
      * This payment method allows you to accept payments from your customers via Mobile Money Franco.
      *
-     * @param array $formParams An associative array of charge data.
-     *
-     * @return array
+     * @param  array  $formParams An associative array of charge data.
      */
     public function chargeMobileMoneyFranco(array $formParams): array
     {
@@ -227,9 +221,7 @@ trait ChargeTrait
      *
      * This payment method allows you to accept payments from your customers via Mobile Money Rwanda.
      *
-     * @param array $formParams An associative array of charge data.
-     *
-     * @return array
+     * @param  array  $formParams An associative array of charge data.
      */
     public function chargeMobileMoneyRwanda(array $formParams): array
     {
@@ -241,8 +233,7 @@ trait ChargeTrait
      *
      * This payment method allows you to accept payments from your customers via mobile money in Zambia.
      *
-     * @param array $formParams An associative array of charge data.
-     *
+     * @param  array  $formParams An associative array of charge data.
      * @return array
      */
     public function chargeZambiaMobileMoney($formParams)
@@ -255,8 +246,7 @@ trait ChargeTrait
      *
      * This payment method allows you to accept payments from your customers via USSD.
      *
-     * @param array $formParams An associative array of charge data.
-     *
+     * @param  array  $formParams An associative array of charge data.
      * @return array
      */
     public function chargeUssd($formParams)
@@ -267,17 +257,15 @@ trait ChargeTrait
     /**
      * Charge a customer's payment using the specified payment method.
      *
-     * @param string $paymentMethod The payment method to use.
-     * @param array $formParams An associative array of charge data.
-     *
-     * @return array
+     * @param  string  $paymentMethod The payment method to use.
+     * @param  array  $formParams An associative array of charge data.
      */
     private function chargePayment(string $paymentMethod, array $formParams): array
     {
         $endpoint = sprintf('%s%s', $this->baseUri, self::CHARGE_ENDPOINT);
 
         $queryParams = [
-            'type' => $paymentMethod
+            'type' => $paymentMethod,
         ];
 
         $chargeData = $this->makeRequest(
@@ -292,14 +280,13 @@ trait ChargeTrait
     }
 
     /**
-    *   Encrypts an array payload using 3DES-24 encryption.
-    *
-    *   @param array $payload The payload to be encrypted.
-    *
-    *   @throws InvalidConfigurationException If the encryption key is missing.
-    *
-    *   @return string The encrypted payload in base64 encoded format.
-    */
+     *   Encrypts an array payload using 3DES-24 encryption.
+     *
+     *   @param  array  $payload The payload to be encrypted.
+     *   @return string The encrypted payload in base64 encoded format.
+     *
+     *   @throws InvalidConfigurationException If the encryption key is missing.
+     */
     private function encryptPayload(array $payload)
     {
         $encryptionKey = $this->encryptionKey;
@@ -311,13 +298,12 @@ trait ChargeTrait
         $encrypted = openssl_encrypt(json_encode($payload), 'DES-EDE3', $encryptionKey, OPENSSL_RAW_DATA);
 
         return base64_encode($encrypted);
-     }
+    }
 
-     /**
+    /**
      * Validate a charge.
      *
-     * @param array $formParams An associative array of charge validation data.
-     *
+     * @param  array  $formParams An associative array of charge validation data.
      * @return array
      */
     public function validateCharge(array $formParams)
@@ -337,9 +323,8 @@ trait ChargeTrait
     /**
      * Capture payment for an existing uncaptured charge.
      *
-     * @param string $flwRef  The data.flw_ref returned in the charge response.
-     * @param array $formParams An associative array of charge validation data.
-     *
+     * @param  string  $flwRef  The data.flw_ref returned in the charge response.
+     * @param  array  $formParams An associative array of charge validation data.
      * @return array
      */
     public function captureCharge($flwRef, $formParams)
@@ -359,8 +344,7 @@ trait ChargeTrait
     /**
      * Void a previously captured charge to release the hold on the funds.
      *
-     * @param string $flwRef  The data.flw_ref returned in the charge response.
-     *
+     * @param  string  $flwRef  The data.flw_ref returned in the charge response.
      * @return array
      */
     public function voidCharge($flwRef)
@@ -379,9 +363,8 @@ trait ChargeTrait
     /**
      * Create a refund for an existing charge
      *
-     * @param string $flwRef  The data.flw_ref returned in the charge response.
-     * @param array $formParams An associative array of charge validation data.
-     *
+     * @param  string  $flwRef  The data.flw_ref returned in the charge response.
+     * @param  array  $formParams An associative array of charge validation data.
      * @return array
      */
     public function createRefund($flwRef, $formParams)
@@ -401,9 +384,8 @@ trait ChargeTrait
     /**
      * Capture the payment of a previously uncaptured PayPal charge
      *
-     * @param string $flwRef  The data.flw_ref returned in the charge response.
-     * @param array $formParams An associative array of charge validation data.
-     *
+     * @param  string  $flwRef  The data.flw_ref returned in the charge response.
+     * @param  array  $formParams An associative array of charge validation data.
      * @return array
      */
     public function capturePaypalCharge($flwRef, $formParams)
@@ -423,8 +405,7 @@ trait ChargeTrait
     /**
      * Void a previously captured charge to release the hold on the funds.
      *
-     * @param string $flwRef  The data.flw_ref returned in the charge response.
-     *
+     * @param  string  $flwRef  The data.flw_ref returned in the charge response.
      * @return array
      */
     public function voidPaypalCharge($flwRef)
