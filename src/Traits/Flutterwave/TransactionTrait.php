@@ -33,7 +33,7 @@ trait TransactionTrait
      * Create a refund for a disputed transaction.
      *
      * @param  string  $transactionId The ID of the transaction to be verified.
-     * @param array $formParams An associative array of refund data.
+     * @param  array  $formParams An associative array of refund data.
      */
     public function createTransactionRefund(string $transactionId, $formParams = []): array
     {
@@ -126,7 +126,7 @@ trait TransactionTrait
      * Resend failed webhooks to your server for a specific transaction.
      *
      * @param  string  $transactionId This is a unique reference for the refunded transaction
-     * @param array $formParams An associative array of retry data.
+     * @param  array  $formParams An associative array of retry data.
      */
     public function resendFailedWebhook(string $transactionId, $formParams = []): array
     {
