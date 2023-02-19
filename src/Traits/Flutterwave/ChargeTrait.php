@@ -384,7 +384,7 @@ trait ChargeTrait
      *
      * @return array
      */
-    public function createChargeRefund($flwRef, $formParams)
+    public function createRefund($flwRef, $formParams)
     {
         $endpoint = sprintf('%s%s%s/refund', $this->baseUri, self::CHARGE_ENDPOINT, $flwRef);
 
@@ -421,7 +421,7 @@ trait ChargeTrait
     }
 
     /**
-     * Void a previously captured charge to release the hold on the Paypal funds.
+     * Void a previously captured charge to release the hold on the funds.
      *
      * @param string $flwRef  The data.flw_ref returned in the charge response.
      *
@@ -429,7 +429,7 @@ trait ChargeTrait
      */
     public function voidPaypalCharge($flwRef)
     {
-        $endpoint = sprintf('%s%s%s/paypal-void', $this->baseUri, self::CHARGE_ENDPOINT, $flwRef);
+        $endpoint = sprintf('%s%s%s/void', $this->baseUri, self::CHARGE_ENDPOINT, $flwRef);
 
         $chargeData = $this->makeRequest(
             method: 'POST',
