@@ -68,7 +68,6 @@ abstract class BaseGateWay implements GatewayContract
      */
     public function resolveAuthorization(&$queryParams, &$formParams, &$headers): void
     {
-//        dd(str_replace('"', '', $this->resolveAccessToken()));
         $headers['Authorization'] = str_replace('"', '', $this->resolveAccessToken());
     }
 

@@ -6,7 +6,8 @@ use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidConfigurationExcept
 
 trait ChargeTrait
 {
-    const CHARGE_ENDPOINT                        = '/charges';
+    const CHARGE_ENDPOINT                        = '/charges/';
+    const VALIDATE_CHARGE_ENDPOINT               = '/validate-charge';
     const CARD_PAYMENT_CHARGE_TYPE               = 'card';
     const BANK_TRANSFER_CHARGE_TYPE              = 'bank_transfer';
     const NG_ACCOUNT_DEBIT_TYPE                  = 'debit_ng_account';
@@ -32,7 +33,7 @@ trait ChargeTrait
      *
      * @return array
      */
-    public function initiateCardPayment(array $formParams)
+    public function initiateCardCharge(array $formParams)
     {
         $endpoint = sprintf('%s%s', $this->baseUri, self::CHARGE_ENDPOINT);
 
@@ -312,4 +313,130 @@ trait ChargeTrait
         return base64_encode($encrypted);
      }
 
+     /**
+     * Validate a charge.
+     *
+     * @param array $formParams An associative array of charge validation data.
+     *
+     * @return array
+     */
+    public function validateCharge(array $formParams)
+    {
+        $endpoint = sprintf('%s%s', $this->baseUri, self::VALIDATE_CHARGE_ENDPOINT);
+
+        $chargeData = $this->makeRequest(
+            method: 'POST',
+            requestUrl: $endpoint,
+            formParams: $formParams,
+            isJsonRequest: true
+        );
+
+        return $chargeData;
+    }
+
+    /**
+     * Capture payment for an existing uncaptured charge.
+     *
+     * @param string $flwRef  The data.flw_ref returned in the charge response.
+     * @param array $formParams An associative array of charge validation data.
+     *
+     * @return array
+     */
+    public function captureCharge($flwRef, $formParams)
+    {
+        $endpoint = sprintf('%s%s%s/capture', $this->baseUri, self::CHARGE_ENDPOINT, $flwRef);
+
+        $chargeData = $this->makeRequest(
+            method: 'POST',
+            requestUrl: $endpoint,
+            formParams: $formParams,
+            isJsonRequest: true
+        );
+
+        return $chargeData;
+    }
+
+    /**
+     * Void a previously captured charge to release the hold on the funds.
+     *
+     * @param string $flwRef  The data.flw_ref returned in the charge response.
+     *
+     * @return array
+     */
+    public function voidCharge($flwRef)
+    {
+        $endpoint = sprintf('%s%s%s/void', $this->baseUri, self::CHARGE_ENDPOINT, $flwRef);
+
+        $chargeData = $this->makeRequest(
+            method: 'POST',
+            requestUrl: $endpoint,
+            isJsonRequest: true
+        );
+
+        return $chargeData;
+    }
+
+    /**
+     * Create a refund for an existing charge
+     *
+     * @param string $flwRef  The data.flw_ref returned in the charge response.
+     * @param array $formParams An associative array of charge validation data.
+     *
+     * @return array
+     */
+    public function createChargeRefund($flwRef, $formParams)
+    {
+        $endpoint = sprintf('%s%s%s/refund', $this->baseUri, self::CHARGE_ENDPOINT, $flwRef);
+
+        $chargeData = $this->makeRequest(
+            method: 'POST',
+            requestUrl: $endpoint,
+            formParams: $formParams,
+            isJsonRequest: true
+        );
+
+        return $chargeData;
+    }
+
+    /**
+     * Capture the payment of a previously uncaptured PayPal charge
+     *
+     * @param string $flwRef  The data.flw_ref returned in the charge response.
+     * @param array $formParams An associative array of charge validation data.
+     *
+     * @return array
+     */
+    public function capturePaypalCharge($flwRef, $formParams)
+    {
+        $endpoint = sprintf('%s%s%s/paypal-capture', $this->baseUri, self::CHARGE_ENDPOINT, $flwRef);
+
+        $chargeData = $this->makeRequest(
+            method: 'POST',
+            requestUrl: $endpoint,
+            formParams: $formParams,
+            isJsonRequest: true
+        );
+
+        return $chargeData;
+    }
+
+    /**
+     * Void a previously captured charge to release the hold on the Paypal funds.
+     *
+     * @param string $flwRef  The data.flw_ref returned in the charge response.
+     *
+     * @return array
+     */
+    public function voidPaypalCharge($flwRef)
+    {
+        $endpoint = sprintf('%s%s%s/paypal-void', $this->baseUri, self::CHARGE_ENDPOINT, $flwRef);
+
+        $chargeData = $this->makeRequest(
+            method: 'POST',
+            requestUrl: $endpoint,
+            isJsonRequest: true
+        );
+
+        return $chargeData;
+    }
 }

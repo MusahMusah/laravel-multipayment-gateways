@@ -14,6 +14,7 @@ use MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave\OtpTrait;
 use MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave\PaymentPlanTrait;
 use MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave\SettlementTrait;
 use MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave\SubscriptionTrait;
+use MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave\TransactionTrait;
 use MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave\TransferBeneficiaryTrait;
 use MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave\TransferTrait;
 
@@ -27,7 +28,8 @@ class FlutterwaveService extends BaseGateWay implements FlutterwaveContract
         TransferBeneficiaryTrait,
         TransferTrait,
         OtpTrait,
-        ChargeTrait;
+        ChargeTrait,
+        TransactionTrait;
 
     /**
      * The redirect url to consume the Flutterwave's service
