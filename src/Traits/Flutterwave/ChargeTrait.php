@@ -18,15 +18,13 @@ trait ChargeTrait
      */
     public function initiateCardCharge(array $formParams): array
     {
-        $endpoint = sprintf('%s%s', $this->baseUri, FlutterwaveConstant::CHARGE_ENDPOINT);
-
         $queryParams = [
             'type' => FlutterwaveConstant::CARD_PAYMENT_CHARGE_TYPE,
         ];
 
         return $this->makeRequest(
             method: 'POST',
-            requestUrl: $endpoint,
+            requestUrl: FlutterwaveConstant::CHARGE_ENDPOINT,
             formParams: $this->encryptPayload($formParams),
             isJsonRequest: true,
             queryParams: $queryParams
@@ -255,15 +253,13 @@ trait ChargeTrait
      */
     private function chargePayment(string $paymentMethod, array $formParams): array
     {
-        $endpoint = sprintf('%s%s', $this->baseUri, FlutterwaveConstant::CHARGE_ENDPOINT);
-
         $queryParams = [
             'type' => $paymentMethod,
         ];
 
         return $this->makeRequest(
             method: 'POST',
-            requestUrl: $endpoint,
+            requestUrl: FlutterwaveConstant::CHARGE_ENDPOINT,
             formParams: $formParams,
             isJsonRequest: true,
             queryParams: $queryParams
@@ -300,11 +296,9 @@ trait ChargeTrait
      */
     public function validateCharge(array $formParams): array
     {
-        $endpoint = sprintf('%s%s', $this->baseUri, FlutterwaveConstant::VALIDATE_CHARGE_ENDPOINT);
-
         return $this->makeRequest(
             method: 'POST',
-            requestUrl: $endpoint,
+            requestUrl: FlutterwaveConstant::VALIDATE_CHARGE_ENDPOINT,
             formParams: $formParams,
             isJsonRequest: true
         );
@@ -320,11 +314,9 @@ trait ChargeTrait
      */
     public function captureCharge(string $flwRef, array $formParams): array
     {
-        $endpoint = sprintf('%s%s%s/capture', $this->baseUri, FlutterwaveConstant::CHARGE_ENDPOINT, $flwRef);
-
         return $this->makeRequest(
             method: 'POST',
-            requestUrl: $endpoint,
+            requestUrl: FlutterwaveConstant::CHARGE_ENDPOINT.$flwRef.'/capture',
             formParams: $formParams,
             isJsonRequest: true
         );
@@ -339,11 +331,9 @@ trait ChargeTrait
      */
     public function voidCharge(string $flwRef): array
     {
-        $endpoint = sprintf('%s%s%s/void', $this->baseUri, FlutterwaveConstant::CHARGE_ENDPOINT, $flwRef);
-
         return $this->makeRequest(
             method: 'POST',
-            requestUrl: $endpoint,
+            requestUrl: FlutterwaveConstant::CHARGE_ENDPOINT.$flwRef.'/void',
             isJsonRequest: true
         );
     }
@@ -358,11 +348,9 @@ trait ChargeTrait
      */
     public function createRefund(string $flwRef, array $formParams): array
     {
-        $endpoint = sprintf('%s%s%s/refund', $this->baseUri, FlutterwaveConstant::CHARGE_ENDPOINT, $flwRef);
-
         return $this->makeRequest(
             method: 'POST',
-            requestUrl: $endpoint,
+            requestUrl: FlutterwaveConstant::CHARGE_ENDPOINT.$flwRef.'/refund',
             formParams: $formParams,
             isJsonRequest: true
         );
@@ -378,11 +366,9 @@ trait ChargeTrait
      */
     public function capturePaypalCharge(string $flwRef, array $formParams): array
     {
-        $endpoint = sprintf('%s%s%s/paypal-capture', $this->baseUri, FlutterwaveConstant::CHARGE_ENDPOINT, $flwRef);
-
         return $this->makeRequest(
             method: 'POST',
-            requestUrl: $endpoint,
+            requestUrl: FlutterwaveConstant::CHARGE_ENDPOINT.$flwRef.'/paypal-capture',
             formParams: $formParams,
             isJsonRequest: true
         );
@@ -397,11 +383,9 @@ trait ChargeTrait
      */
     public function voidPaypalCharge(string $flwRef): array
     {
-        $endpoint = sprintf('%s%s%s/void', $this->baseUri, FlutterwaveConstant::CHARGE_ENDPOINT, $flwRef);
-
         return $this->makeRequest(
             method: 'POST',
-            requestUrl: $endpoint,
+            requestUrl: FlutterwaveConstant::CHARGE_ENDPOINT.$flwRef.'/void',
             isJsonRequest: true
         );
     }

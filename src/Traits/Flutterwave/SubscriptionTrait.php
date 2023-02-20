@@ -44,11 +44,9 @@ trait SubscriptionTrait
      */
     public function deactivateSubscription(int $subscriptionId): array
     {
-        $endpoint = sprintf('%s%s%s/cancel', $this->baseUri, FlutterwaveConstant::SUBSCRIPTION_ENDPOINT, $subscriptionId);
-
         return $this->makeRequest(
             method: 'PUT',
-            requestUrl: $endpoint,
+            requestUrl: FlutterwaveConstant::SUBSCRIPTION_ENDPOINT.$subscriptionId.'/cancel',
             isJsonRequest: true
         );
     }

@@ -17,11 +17,9 @@ trait TransferBeneficiaryTrait
      */
     public function createTransferBeneficiary(array $transferBeneficiaryDetails): mixed
     {
-        $endpoint = sprintf('%s%s', $this->baseUri, FlutterwaveConstant::BENEFICIARY_ENDPOINT);
-
         return $this->makeRequest(
             method: 'POST',
-            requestUrl: $endpoint,
+            requestUrl: FlutterwaveConstant::BENEFICIARY_ENDPOINT,
             formParams: $transferBeneficiaryDetails,
             isJsonRequest: true
         );
@@ -38,11 +36,9 @@ trait TransferBeneficiaryTrait
      */
     public function getAllTransferBeneficiaries(array $queryParams = []): array
     {
-        $endpoint = sprintf('%s%s', $this->baseUri, FlutterwaveConstant::BENEFICIARY_ENDPOINT);
-
         return $this->makeRequest(
             method: 'GET',
-            requestUrl: $endpoint,
+            requestUrl: FlutterwaveConstant::BENEFICIARY_ENDPOINT,
             isJsonRequest: true,
             queryParams: $queryParams
         );
@@ -57,11 +53,9 @@ trait TransferBeneficiaryTrait
      */
     public function getTransferBeneficiary(int $beneficiaryId): array
     {
-        $endpoint = sprintf('%s%s%s', $this->baseUri, FlutterwaveConstant::BENEFICIARY_ENDPOINT, $beneficiaryId);
-
         return $this->makeRequest(
             method: 'GET',
-            requestUrl: $endpoint,
+            requestUrl: FlutterwaveConstant::BENEFICIARY_ENDPOINT.$beneficiaryId,
             isJsonRequest: true
         );
     }
@@ -75,11 +69,9 @@ trait TransferBeneficiaryTrait
      */
     public function deleteTransferBeneficiary(int $beneficiaryId): array
     {
-        $endpoint = sprintf('%s%s%s', $this->baseUri, FlutterwaveConstant::BENEFICIARY_ENDPOINT, $beneficiaryId);
-
         return $this->makeRequest(
             method: 'DELETE',
-            requestUrl: $endpoint,
+            requestUrl: FlutterwaveConstant::BENEFICIARY_ENDPOINT.$beneficiaryId,
             isJsonRequest: true
         );
     }

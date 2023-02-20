@@ -17,11 +17,9 @@ trait SettlementTrait
      */
     public function getSettlement(int $settlementId): array
     {
-        $endpoint = sprintf('%s%s%s', $this->baseUri, FlutterwaveConstant::SETTLEMENT_ENDPOINT, $settlementId);
-
         return $this->makeRequest(
             method: 'GET',
-            requestUrl: $endpoint,
+            requestUrl: FlutterwaveConstant::SETTLEMENT_ENDPOINT.$settlementId,
             isJsonRequest: true
         );
     }
@@ -35,11 +33,9 @@ trait SettlementTrait
      */
     public function getAllSettlements(array $queryParams = []): array
     {
-        $endpoint = sprintf('%s%s', $this->baseUri, FlutterwaveConstant::SETTLEMENT_ENDPOINT);
-
         return $this->makeRequest(
             method: 'GET',
-            requestUrl: $endpoint,
+            requestUrl: FlutterwaveConstant::SETTLEMENT_ENDPOINT,
             isJsonRequest: true,
             queryParams: $queryParams
         );

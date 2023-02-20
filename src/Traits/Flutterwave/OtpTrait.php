@@ -17,11 +17,9 @@ trait OtpTrait
      */
     public function createOtp(array $formParams): array
     {
-        $endpoint = sprintf('%s%s', $this->baseUri, FlutterwaveConstant::OTP_ENDPOINT);
-
         return $this->makeRequest(
             method: 'POST',
-            requestUrl: $endpoint,
+            requestUrl: FlutterwaveConstant::OTP_ENDPOINT,
             formParams: $formParams,
             isJsonRequest: true
         );
@@ -36,11 +34,9 @@ trait OtpTrait
      */
     public function verifyOtp(string $reference, array $formParams): array
     {
-        $endpoint = sprintf('%s%s%s/validate', $this->baseUri, FlutterwaveConstant::OTP_ENDPOINT, $reference);
-
         return $this->makeRequest(
             method: 'POST',
-            requestUrl: $endpoint,
+            requestUrl: FlutterwaveConstant::OTP_ENDPOINT.$reference.'/validate',
             formParams: $formParams,
             isJsonRequest: true
         );

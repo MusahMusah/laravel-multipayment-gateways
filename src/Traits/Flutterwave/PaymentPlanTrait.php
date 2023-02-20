@@ -19,11 +19,9 @@ trait PaymentPlanTrait
      */
     public function createPaymentPlan(array $planDetails): array
     {
-        $endpoint = sprintf('%s%s', $this->baseUri, FlutterwaveConstant::PAYMENT_PLAN_ENDPOINT);
-
         return $this->makeRequest(
             method: 'POST',
-            requestUrl: $endpoint,
+            requestUrl: FlutterwaveConstant::PAYMENT_PLAN_ENDPOINT,
             formParams: $planDetails,
             isJsonRequest: true
         );
@@ -41,11 +39,9 @@ trait PaymentPlanTrait
      */
     public function updatePaymentPlan(int $paymentPlanId, array $planDetails): array
     {
-        $endpoint = sprintf('%s%s%s', $this->baseUri, FlutterwaveConstant::PAYMENT_PLAN_ENDPOINT, $paymentPlanId);
-
         return $this->makeRequest(
             method: 'PUT',
-            requestUrl: $endpoint,
+            requestUrl: FlutterwaveConstant::PAYMENT_PLAN_ENDPOINT.$paymentPlanId,
             formParams: $planDetails,
             isJsonRequest: true
         );
@@ -62,11 +58,9 @@ trait PaymentPlanTrait
      */
     public function getAllPaymentPlans(array $queryParams = []): array
     {
-        $endpoint = sprintf('%s%s', $this->baseUri, FlutterwaveConstant::PAYMENT_PLAN_ENDPOINT);
-
         return $this->makeRequest(
             method: 'GET',
-            requestUrl: $endpoint,
+            requestUrl: FlutterwaveConstant::PAYMENT_PLAN_ENDPOINT,
             isJsonRequest: true,
             queryParams: $queryParams
         );
@@ -83,11 +77,9 @@ trait PaymentPlanTrait
      */
     public function getPaymentPlan(int $paymentPlanId): array
     {
-        $endpoint = sprintf('%s%s%s', $this->baseUri, FlutterwaveConstant::PAYMENT_PLAN_ENDPOINT, $paymentPlanId);
-
         return $this->makeRequest(
             method: 'GET',
-            requestUrl: $endpoint,
+            requestUrl: FlutterwaveConstant::PAYMENT_PLAN_ENDPOINT.$paymentPlanId,
             isJsonRequest: true
         );
     }
@@ -103,11 +95,9 @@ trait PaymentPlanTrait
      */
     public function cancelPaymentPlan(int $paymentPlanId): array
     {
-        $endpoint = sprintf('%s%s%s/cancel', $this->baseUri, FlutterwaveConstant::PAYMENT_PLAN_ENDPOINT, $paymentPlanId);
-
         return $this->makeRequest(
             method: 'PUT',
-            requestUrl: $endpoint,
+            requestUrl: FlutterwaveConstant::PAYMENT_PLAN_ENDPOINT.$paymentPlanId.'/cancel',
             isJsonRequest: true
         );
     }

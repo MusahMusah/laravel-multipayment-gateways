@@ -17,11 +17,9 @@ trait TransferTrait
      */
     public function initiateTransfer(array $formParams): array
     {
-        $endpoint = sprintf('%s%s', $this->baseUri, FlutterwaveConstant::TRANSFER_ENDPOINT);
-
         return $this->makeRequest(
             method: 'POST',
-            requestUrl: $endpoint,
+            requestUrl: FlutterwaveConstant::TRANSFER_ENDPOINT,
             formParams: $formParams,
             isJsonRequest: true
         );
@@ -36,11 +34,9 @@ trait TransferTrait
      */
     public function getAllTransfers(array $queryParams = []): array
     {
-        $endpoint = sprintf('%s%s', $this->baseUri, FlutterwaveConstant::TRANSFER_ENDPOINT);
-
         return $this->makeRequest(
             method: 'GET',
-            requestUrl: $endpoint,
+            requestUrl: FlutterwaveConstant::TRANSFER_ENDPOINT,
             isJsonRequest: true,
             queryParams: $queryParams
         );
@@ -55,11 +51,9 @@ trait TransferTrait
      */
     public function getTransferFees(array $queryParams = []): array
     {
-        $endpoint = sprintf('%s%s/fee', $this->baseUri, FlutterwaveConstant::TRANSFER_ENDPOINT);
-
         return $this->makeRequest(
             method: 'GET',
-            requestUrl: $endpoint,
+            requestUrl: FlutterwaveConstant::TRANSFER_ENDPOINT.'fee',
             isJsonRequest: true,
             queryParams: $queryParams
         );
@@ -79,8 +73,6 @@ trait TransferTrait
      */
     public function createBulkTransfer(array $bulkTransferData, string $title = ''): array
     {
-        $endpoint = sprintf('%s%s', $this->baseUri, FlutterwaveConstant::TRANSFER_ENDPOINT);
-
         $requestPayload = [
             'title' => $title,
             'bulk_data' => $bulkTransferData,
@@ -88,7 +80,7 @@ trait TransferTrait
 
         return $this->makeRequest(
             method: 'POST',
-            requestUrl: $endpoint,
+            requestUrl: FlutterwaveConstant::TRANSFER_ENDPOINT,
             formParams: $requestPayload,
             isJsonRequest: true
         );
@@ -105,11 +97,9 @@ trait TransferTrait
      */
     public function getTransfer(int $transferId): array
     {
-        $endpoint = sprintf('%s%s%s', $this->baseUri, FlutterwaveConstant::TRANSFER_ENDPOINT, $transferId);
-
         return $this->makeRequest(
             method: 'GET',
-            requestUrl: $endpoint,
+            requestUrl: FlutterwaveConstant::TRANSFER_ENDPOINT.$transferId,
             isJsonRequest: true
         );
     }
@@ -123,11 +113,9 @@ trait TransferTrait
      */
     public function getTransferRates(array $queryParams): array
     {
-        $endpoint = sprintf('%s%s/rates', $this->baseUri, FlutterwaveConstant::TRANSFER_ENDPOINT);
-
         return $this->makeRequest(
             method: 'GET',
-            requestUrl: $endpoint,
+            requestUrl: FlutterwaveConstant::TRANSFER_ENDPOINT.'rates',
             isJsonRequest: true,
             queryParams: $queryParams
         );
@@ -144,11 +132,9 @@ trait TransferTrait
      */
     public function retryTransfer(int $transferId): array
     {
-        $endpoint = sprintf('%s%s%s/retries', $this->baseUri, FlutterwaveConstant::TRANSFER_ENDPOINT, $transferId);
-
         return $this->makeRequest(
             method: 'POST',
-            requestUrl: $endpoint,
+            requestUrl: FlutterwaveConstant::TRANSFER_ENDPOINT.$transferId.'/retries',
             isJsonRequest: true
         );
     }
@@ -164,11 +150,9 @@ trait TransferTrait
      */
     public function getTransferRetry(int $transferId): array
     {
-        $endpoint = sprintf('%s%s%s/retries', $this->baseUri, FlutterwaveConstant::TRANSFER_ENDPOINT, $transferId);
-
         return $this->makeRequest(
             method: 'GET',
-            requestUrl: $endpoint,
+            requestUrl: FlutterwaveConstant::TRANSFER_ENDPOINT.$transferId.'/retries',
             isJsonRequest: true
         );
     }
@@ -182,11 +166,9 @@ trait TransferTrait
      */
     public function fetchBulkTransfer(array $queryParams): array
     {
-        $endpoint = sprintf('%s%s', $this->baseUri, FlutterwaveConstant::TRANSFER_ENDPOINT);
-
         return $this->makeRequest(
             method: 'GET',
-            requestUrl: $endpoint,
+            requestUrl: FlutterwaveConstant::TRANSFER_ENDPOINT,
             isJsonRequest: true,
             queryParams: $queryParams
         );
