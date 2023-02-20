@@ -5,7 +5,7 @@
 ![Code Style Status](https://img.shields.io/github/actions/workflow/status/musahmusah/laravel-multipayment-gateways/phpstan.yml?branch=main&label=Code%20Style)
 [![Total Downloads](https://img.shields.io/packagist/dt/musahmusah/laravel-multipayment-gateways.svg?style=flat-square)](https://packagist.org/packages/musahmusah/laravel-multipayment-gateways)
 
-The `laravel-multipayment-gateways` package provides a convenient way to handle payments through multiple payment gateways in a Laravel application. 
+The `laravel-multipayment-gateways` package provides a convenient way to handle payments through multiple payment gateways in a **Laravel 8, 9 and 10 application**. 
 The package currently supports multiple gateways such as **Paystack**, **Flutterwave** and **Stripe**. 
 The package offers an easy to use interface that abstracts the complexities of integrating with these payment gateways. 
 It also provides a way to handle webhooks from the payment gateways.
