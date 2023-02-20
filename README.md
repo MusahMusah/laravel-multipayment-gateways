@@ -41,6 +41,13 @@ return [
         'secret' => env('PAYSTACK_SECRET'),
         'currency' => env('PAYSTACK_CURRENCY'),
     ],
+    
+    'flutterwave' => [
+        'base_uri' => env('FLUTTERWAVE_BASE_URI'),
+        'secret' => env('FLUTTERWAVE_SECRET'),
+        'currency' => env('FLUTTERWAVE_CURRENCY'),
+        'encryption_key' => env('FLUTTERWAVE_ENCRYPTION_KEY'),
+    ],
 
     'stripe' => [
         'base_uri' => env('STRIPE_BASE_URI'),
