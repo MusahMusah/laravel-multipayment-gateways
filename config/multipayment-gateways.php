@@ -19,6 +19,13 @@ return [
         ],
     ],
 
+    'flutterwave' => [
+        'base_uri' => env('FLUTTERWAVE_BASE_URI'),
+        'secret' => env('FLUTTERWAVE_SECRET'),
+        'currency' => env('FLUTTERWAVE_CURRENCY'),
+        'encryption_key' => env('FLUTTERWAVE_ENCRYPTION_KEY'),
+    ],
+
     'webhooks' => [
         [
             /*

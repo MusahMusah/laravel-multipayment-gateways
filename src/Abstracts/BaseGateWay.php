@@ -14,12 +14,12 @@ abstract class BaseGateWay implements GatewayContract
     /**
      * The base uri to consume the payment gateway's service
      */
-    protected ?string $baseUri;
+    protected $baseUri;
 
     /**
      * The secret to consume the payment gateway's service
      */
-    protected ?string $secret;
+    protected $secret;
 
     /**
      * The redirect url to consume the payment gateway's service

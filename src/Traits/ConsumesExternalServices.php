@@ -19,7 +19,7 @@ trait ConsumesExternalServices
      *
      * @throws GuzzleException|HttpMethodFoundException
      */
-    public function makeRequest(string $method, string $requestUrl, array $formParams = [], bool $isJsonRequest = false, array $queryParams = [], array $headers = [], bool $skipResolve = false): mixed
+    public function makeRequest(string $method, string $requestUrl, array|string $formParams = [], bool $isJsonRequest = false, array $queryParams = [], array $headers = [], bool $skipResolve = false): mixed
     {
         $this->validateRequest($method);
 
@@ -55,7 +55,7 @@ trait ConsumesExternalServices
      */
     private function validateRequest(string $method): void
     {
-        if (! in_array($method, ['GET', 'POST', 'DELETE'])) {
+        if (! in_array($method, ['GET', 'POST', 'PUT', 'DELETE'])) {
             throw new HttpMethodFoundException('Method not found');
         }
     }
