@@ -48,9 +48,7 @@ class FlutterwaveService extends BaseGateWay implements FlutterwaveContract
 
     public function __construct()
     {
-        $this->setPaymentGateway();
-        $this->setBaseUri();
-        $this->setSecret();
+        parent::__construct();
         $this->setEncryptionKey();
     }
 
