@@ -2,162 +2,162 @@
 
 namespace MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave;
 
+use GuzzleHttp\Exception\GuzzleException;
+use MusahMusah\LaravelMultipaymentGateways\Constants\FlutterwaveConstant;
+use MusahMusah\LaravelMultipaymentGateways\Exceptions\HttpMethodFoundException;
+
 trait TransactionTrait
 {
-    const TRANSACTION_ENDPOINT = '/transactions/';
-
-    const REFUND_ENDPOINT = '/refunds/';
-
     /**
      * Verify a transaction.
      *
      * This endpoint helps developers to query the final status of a transaction.
      * This can be used to check transactions of all payment types after they have been attempted.
      *
-     * @param  string  $transactionId The ID of the transaction to be verified.
+     * @param string $transactionId The ID of the transaction to be verified.
+     * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
     public function verifyTransaction(string $transactionId): array
     {
-        $endpoint = sprintf('%s%s%s/verify', $this->baseUri, self::TRANSACTION_ENDPOINT, $transactionId);
+        $endpoint = sprintf('%s%s%s/verify', $this->baseUri, FlutterwaveConstant::TRANSACTION_ENDPOINT, $transactionId);
 
-        $transactionData = $this->makeRequest(
+        return $this->makeRequest(
             method: 'GET',
             requestUrl: $endpoint,
             isJsonRequest: true
         );
-
-        return $transactionData;
     }
 
     /**
      * Create a refund for a disputed transaction.
      *
-     * @param  string  $transactionId The ID of the transaction to be verified.
-     * @param  array  $formParams An associative array of refund data.
+     * @param string $transactionId The ID of the transaction to be verified.
+     * @param array $formParams An associative array of refund data.
+     * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
-    public function createTransactionRefund(string $transactionId, $formParams = []): array
+    public function createTransactionRefund(string $transactionId, array $formParams = []): array
     {
-        $endpoint = sprintf('%s%s%s/refund', $this->baseUri, self::TRANSACTION_ENDPOINT, $transactionId);
+        $endpoint = sprintf('%s%s%s/refund', $this->baseUri, FlutterwaveConstant::TRANSACTION_ENDPOINT, $transactionId);
 
-        $transactionData = $this->makeRequest(
+        return $this->makeRequest(
             method: 'POST',
             requestUrl: $endpoint,
             formParams: $formParams,
             isJsonRequest: true
         );
-
-        return $transactionData;
     }
 
     /**
      * Get multiple transactions
      *
-     * @param  array  $queryParams Query parameters for filtering and pagination
+     * @param array $queryParams Query parameters for filtering and pagination
+     * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
     public function getTransactions(array $queryParams = []): array
     {
-        $endpoint = sprintf('%s%s', $this->baseUri, self::TRANSACTION_ENDPOINT);
+        $endpoint = sprintf('%s%s', $this->baseUri, FlutterwaveConstant::TRANSACTION_ENDPOINT);
 
-        $transactionData = $this->makeRequest(
+        return $this->makeRequest(
             method: 'GET',
             requestUrl: $endpoint,
-            queryParams: $queryParams,
-            isJsonRequest: true
+            isJsonRequest: true,
+            queryParams: $queryParams
         );
-
-        return $transactionData;
     }
 
     /**
      * Get multiple refund transactions
      *
-     * @param  array  $queryParams Query parameters for filtering and pagination
+     * @param array $queryParams Query parameters for filtering and pagination
+     * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
     public function getRefundTransactions(array $queryParams = []): array
     {
-        $endpoint = sprintf('%s%s', $this->baseUri, self::REFUND_ENDPOINT);
+        $endpoint = sprintf('%s%s', $this->baseUri, FlutterwaveConstant::REFUND_ENDPOINT);
 
-        $refundData = $this->makeRequest(
+        return $this->makeRequest(
             method: 'GET',
             requestUrl: $endpoint,
-            queryParams: $queryParams,
-            isJsonRequest: true
+            isJsonRequest: true,
+            queryParams: $queryParams
         );
-
-        return $refundData;
     }
 
     /**
      * Get multiple refund transactions
      *
-     * @param  string  $refundId This is a unique reference for the refunded transaction
+     * @param string $refundId This is a unique reference for the refunded transaction
+     * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
     public function getRefundDetails(string $refundId): array
     {
-        $endpoint = sprintf('%s%s%s', $this->baseUri, self::REFUND_ENDPOINT, $refundId);
+        $endpoint = sprintf('%s%s%s', $this->baseUri, FlutterwaveConstant::REFUND_ENDPOINT, $refundId);
 
-        $refundData = $this->makeRequest(
+        return $this->makeRequest(
             method: 'GET',
             requestUrl: $endpoint,
             isJsonRequest: true
         );
-
-        return $refundData;
     }
 
     /**
      * Get the transaction fees for a particular amount and currency
+     * @param array $queryParams Query parameters for filtering
+     * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
     public function getTransactionFee(array $queryParams): array
     {
-        $endpoint = sprintf('%s%s/fee', $this->baseUri, self::TRANSACTION_ENDPOINT);
+        $endpoint = sprintf('%s%s/fee', $this->baseUri, FlutterwaveConstant::TRANSACTION_ENDPOINT);
 
-        $transactionFeeData = $this->makeRequest(
+        return $this->makeRequest(
             method: 'GET',
             requestUrl: $endpoint,
-            queryParams: $queryParams,
-            isJsonRequest: true
+            isJsonRequest: true,
+            queryParams: $queryParams
         );
-
-        return $transactionFeeData;
     }
 
     /**
      * Resend failed webhooks to your server for a specific transaction.
      *
-     * @param  string  $transactionId This is a unique reference for the refunded transaction
-     * @param  array  $formParams An associative array of retry data.
+     * @param string $transactionId This is a unique reference for the refunded transaction
+     * @param array $formParams An associative array of retry data.
+     * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
-    public function resendFailedWebhook(string $transactionId, $formParams = []): array
+    public function resendFailedWebhook(string $transactionId, array $formParams = []): array
     {
-        $endpoint = sprintf('%s%s%s/resend-hook', $this->baseUri, self::TRANSACTION_ENDPOINT, $transactionId);
+        $endpoint = sprintf('%s%s%s/resend-hook', $this->baseUri, FlutterwaveConstant::TRANSACTION_ENDPOINT, $transactionId);
 
-        $retryData = $this->makeRequest(
+        return $this->makeRequest(
             method: 'POST',
             requestUrl: $endpoint,
             formParams: $formParams,
             isJsonRequest: true
         );
-
-        return $retryData;
     }
 
     /**
      * View transaction timeline
      *
-     * @param  string  $transactionId This is a unique transaction identifier generated by our systems
+     * @param string $transactionId This is a unique transaction identifier generated by our systems
      * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
-    public function viewTransactionTimeline(string $transactionId)
+    public function viewTransactionTimeline(string $transactionId): array
     {
-        $endpoint = sprintf('%s%s%s/events', $this->baseUri, self::TRANSACTION_ENDPOINT, $transactionId);
+        $endpoint = sprintf('%s%s%s/events', $this->baseUri, FlutterwaveConstant::TRANSACTION_ENDPOINT, $transactionId);
 
-        $transactionTimelineData = $this->makeRequest(
+        return $this->makeRequest(
             method: 'GET',
             requestUrl: $endpoint,
             isJsonRequest: true
         );
-
-        return $transactionTimelineData;
     }
 }

@@ -2,42 +2,45 @@
 
 namespace MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave;
 
+use GuzzleHttp\Exception\GuzzleException;
+use MusahMusah\LaravelMultipaymentGateways\Constants\FlutterwaveConstant;
+use MusahMusah\LaravelMultipaymentGateways\Exceptions\HttpMethodFoundException;
+
 trait SettlementTrait
 {
-    const SETTLEMENT_ENDPOINT = '/settlements/';
-
     /**
      * Get the settlement information for a given settlement ID
+     * @param int $settlementId The settlement ID to get information for.
+     * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
-    public function getSettlement(int $settlementId): mixed
+    public function getSettlement(int $settlementId): array
     {
-        $endpoint = sprintf('%s%s%s', $this->baseUri, self::SETTLEMENT_ENDPOINT, $settlementId);
+        $endpoint = sprintf('%s%s%s', $this->baseUri, FlutterwaveConstant::SETTLEMENT_ENDPOINT, $settlementId);
 
-        $settlement = $this->makeRequest(
+        return $this->makeRequest(
             method: 'GET',
             requestUrl: $endpoint,
             isJsonRequest: true
         );
-
-        return $settlement;
     }
 
     /**
      * Get information for all settlements.
      *
+     * @param array $queryParams
      * @return array An array of all settlement information.
+     * @throws GuzzleException|HttpMethodFoundException
      */
     public function getAllSettlements(array $queryParams = []): array
     {
-        $endpoint = sprintf('%s%s', $this->baseUri, self::SETTLEMENT_ENDPOINT);
+        $endpoint = sprintf('%s%s', $this->baseUri, FlutterwaveConstant::SETTLEMENT_ENDPOINT);
 
-        $settlements = $this->makeRequest(
+        return $this->makeRequest(
             method: 'GET',
             requestUrl: $endpoint,
-            queryParams: $queryParams,
-            isJsonRequest: true
+            isJsonRequest: true,
+            queryParams: $queryParams
         );
-
-        return $settlements;
     }
 }

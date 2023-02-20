@@ -2,32 +2,31 @@
 
 namespace MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave;
 
+use GuzzleHttp\Exception\GuzzleException;
+use MusahMusah\LaravelMultipaymentGateways\Constants\FlutterwaveConstant;
+use MusahMusah\LaravelMultipaymentGateways\Exceptions\HttpMethodFoundException;
+
 trait TransferTrait
 {
-    const TRANSFER_ENDPOINT = '/transfers/';
-
-    const BULK_TRANFER_ENDPOINT = '/bulk-transfers/';
-
     /**
      * Initiate a Transfer with Flutterwave
      *
      * This method allows you to Initate a transfer with Flutterwave
      *
-     * @param  array  $formParams
+     * @param array $formParams
      * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
-    public function initiateTransfer($formParams)
+    public function initiateTransfer(array $formParams): array
     {
-        $endpoint = sprintf('%s%s', $this->baseUri, self::TRANSFER_ENDPOINT);
+        $endpoint = sprintf('%s%s', $this->baseUri, FlutterwaveConstant::TRANSFER_ENDPOINT);
 
-        $transferData = $this->makeRequest(
+        return $this->makeRequest(
             method: 'POST',
             requestUrl: $endpoint,
             formParams: $formParams,
             isJsonRequest: true
         );
-
-        return $transferData;
     }
 
     /**
@@ -35,21 +34,20 @@ trait TransferTrait
      *
      * This method allows the developer/merchant to retrieve all their transfers.
      *
-     * @param  array  $queryParams
+     * @param array $queryParams
      * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
-    public function getAllTransfers($queryParams = [])
+    public function getAllTransfers(array $queryParams = []): array
     {
-        $endpoint = sprintf('%s%s', $this->baseUri, self::TRANSFER_ENDPOINT);
+        $endpoint = sprintf('%s%s', $this->baseUri, FlutterwaveConstant::TRANSFER_ENDPOINT);
 
-        $paymentPlans = $this->makeRequest(
+        return $this->makeRequest(
             method: 'GET',
             requestUrl: $endpoint,
-            queryParams: $queryParams,
-            isJsonRequest: true
+            isJsonRequest: true,
+            queryParams: $queryParams
         );
-
-        return $paymentPlans;
     }
 
     /**
@@ -57,20 +55,20 @@ trait TransferTrait
      *
      * This method allows the merchant/developer query the fee for the transfer being made.
      *
+     * @param array $queryParams
      * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
-    public function getTransferFees(array $queryParams = [])
+    public function getTransferFees(array $queryParams = []): array
     {
-        $endpoint = sprintf('%s%s/fee', $this->baseUri, self::TRANSFER_ENDPOINT);
+        $endpoint = sprintf('%s%s/fee', $this->baseUri, FlutterwaveConstant::TRANSFER_ENDPOINT);
 
-        $transferFees = $this->makeRequest(
+        return $this->makeRequest(
             method: 'GET',
             requestUrl: $endpoint,
-            queryParams: $queryParams,
-            isJsonRequest: true
+            isJsonRequest: true,
+            queryParams: $queryParams
         );
-
-        return $transferFees;
     }
 
     /**
@@ -81,26 +79,26 @@ trait TransferTrait
      *
      * @optional
      *
-     * @param  string  $title This is the title of the bulk transfer attempt.
+     * @param array $bulkTransferData
+     * @param string $title This is the title of the bulk transfer attempt.
      * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
-    public function createBulkTransfer(array $bulkTransferData, string $title = '')
+    public function createBulkTransfer(array $bulkTransferData, string $title = ''): array
     {
-        $endpoint = sprintf('%s%s', $this->baseUri, self::TRANSFER_ENDPOINT);
+        $endpoint = sprintf('%s%s', $this->baseUri, FlutterwaveConstant::TRANSFER_ENDPOINT);
 
         $requestPayload = [
             'title' => $title,
             'bulk_data' => $bulkTransferData,
         ];
 
-        $bulkTransfers = $this->makeRequest(
+        return $this->makeRequest(
             method: 'POST',
             requestUrl: $endpoint,
             formParams: $requestPayload,
             isJsonRequest: true
         );
-
-        return $bulkTransfers;
     }
 
     /**
@@ -108,20 +106,19 @@ trait TransferTrait
      *
      * This method helps you fetch the details of a transfer.
      *
-     * @param  int  $transferId - The unique ID of the transfer you want to retrieve
+     * @param int $transferId - The unique ID of the transfer you want to retrieve
      * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
-    public function getTransfer(int $transferId)
+    public function getTransfer(int $transferId): array
     {
-        $endpoint = sprintf('%s%s%s', $this->baseUri, self::TRANSFER_ENDPOINT, $transferId);
+        $endpoint = sprintf('%s%s%s', $this->baseUri, FlutterwaveConstant::TRANSFER_ENDPOINT, $transferId);
 
-        $response = $this->makeRequest(
+        return $this->makeRequest(
             method: 'GET',
             requestUrl: $endpoint,
             isJsonRequest: true
         );
-
-        return $response;
     }
 
     /**
@@ -129,20 +126,20 @@ trait TransferTrait
      *
      * This method allows you to query the transfer rate for international transfers.
      *
+     * @param array $queryParams
      * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
-    public function getTransferRates(array $queryParams)
+    public function getTransferRates(array $queryParams): array
     {
-        $endpoint = sprintf('%s%s/rates', $this->baseUri, self::TRANSFER_ENDPOINT);
+        $endpoint = sprintf('%s%s/rates', $this->baseUri, FlutterwaveConstant::TRANSFER_ENDPOINT);
 
-        $transferRates = $this->makeRequest(
+        return $this->makeRequest(
             method: 'GET',
             requestUrl: $endpoint,
-            queryParams: $queryParams,
-            isJsonRequest: true
+            isJsonRequest: true,
+            queryParams: $queryParams
         );
-
-        return $transferRates;
     }
 
     /**
@@ -150,20 +147,19 @@ trait TransferTrait
      *
      * This method allows you to retry a previously failed transfer.
      *
-     * @param  int  $transferId - The unique ID of the transfer you want to retry
+     * @param int $transferId - The unique ID of the transfer you want to retry
      * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
-    public function retryTransfer(int $transferId)
+    public function retryTransfer(int $transferId): array
     {
-        $endpoint = sprintf('%s%s%s/retries', $this->baseUri, self::TRANSFER_ENDPOINT, $transferId);
+        $endpoint = sprintf('%s%s%s/retries', $this->baseUri, FlutterwaveConstant::TRANSFER_ENDPOINT, $transferId);
 
-        $tranferData = $this->makeRequest(
+        return $this->makeRequest(
             method: 'POST',
             requestUrl: $endpoint,
             isJsonRequest: true
         );
-
-        return $tranferData;
     }
 
     /**
@@ -171,20 +167,19 @@ trait TransferTrait
      *
      * This method allows you to fetch the details of a transfer retry.
      *
-     * @param  int  $transferId - The unique ID of the transfer you want to retry
+     * @param int $transferId - The unique ID of the transfer you want to retry
      * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
-    public function getTransferRetry(int $transferId)
+    public function getTransferRetry(int $transferId): array
     {
-        $endpoint = sprintf('%s%s%s/retries', $this->baseUri, self::TRANSFER_ENDPOINT, $transferId);
+        $endpoint = sprintf('%s%s%s/retries', $this->baseUri, FlutterwaveConstant::TRANSFER_ENDPOINT, $transferId);
 
-        $tranferData = $this->makeRequest(
+        return $this->makeRequest(
             method: 'GET',
             requestUrl: $endpoint,
             isJsonRequest: true
         );
-
-        return $tranferData;
     }
 
     /**
@@ -192,19 +187,19 @@ trait TransferTrait
      *
      * This method allows you to get the status and details of a bulk transfer.
      *
+     * @param array $queryParams
      * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
-    public function fetchBulkTransfer(array $queryParams)
+    public function fetchBulkTransfer(array $queryParams): array
     {
-        $endpoint = sprintf('%s%s', $this->baseUri, self::TRANSFER_ENDPOINT);
+        $endpoint = sprintf('%s%s', $this->baseUri, FlutterwaveConstant::TRANSFER_ENDPOINT);
 
-        $tranferData = $this->makeRequest(
+        return $this->makeRequest(
             method: 'GET',
             requestUrl: $endpoint,
-            queryParams: $queryParams,
-            isJsonRequest: true
+            isJsonRequest: true,
+            queryParams: $queryParams
         );
-
-        return $tranferData;
     }
 }

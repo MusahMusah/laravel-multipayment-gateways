@@ -2,29 +2,31 @@
 
 namespace MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave;
 
+use GuzzleHttp\Exception\GuzzleException;
+use MusahMusah\LaravelMultipaymentGateways\Constants\FlutterwaveConstant;
+use MusahMusah\LaravelMultipaymentGateways\Exceptions\HttpMethodFoundException;
+
 trait TransferBeneficiaryTrait
 {
-    const BENEFICIARY_ENDPOINT = '/beneficiaries/';
-
     /**
      * Create a Transfer Beneficiary
      *
      * This method allows you to create beneficiaries for Transfers.
      *
+     * @param array $transferBeneficiaryDetails
      * @return mixed
+     * @throws GuzzleException|HttpMethodFoundException
      */
-    public function createTransferBeneficiary(array $transferBeneficiaryDetails)
+    public function createTransferBeneficiary(array $transferBeneficiaryDetails): mixed
     {
-        $endpoint = sprintf('%s%s', $this->baseUri, self::BENEFICIARY_ENDPOINT);
+        $endpoint = sprintf('%s%s', $this->baseUri, FlutterwaveConstant::BENEFICIARY_ENDPOINT);
 
-        $transferBeneficiary = $this->makeRequest(
+        return $this->makeRequest(
             method: 'POST',
             requestUrl: $endpoint,
             formParams: $transferBeneficiaryDetails,
             isJsonRequest: true
         );
-
-        return $transferBeneficiary;
     }
 
     /**
@@ -32,20 +34,20 @@ trait TransferBeneficiaryTrait
      *
      * This function retrieves all transfer beneficiaries on the account
      *
-     * @param  array  $queryParams [optional]
+     * @param array $queryParams [optional]
+     * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
-    public function getAllTransferBeneficiaries($queryParams = []): array
+    public function getAllTransferBeneficiaries(array $queryParams = []): array
     {
-        $endpoint = sprintf('%s%s', $this->baseUri, self::BENEFICIARY_ENDPOINT);
+        $endpoint = sprintf('%s%s', $this->baseUri, FlutterwaveConstant::BENEFICIARY_ENDPOINT);
 
-        $transferBeneficiary = $this->makeRequest(
+        return $this->makeRequest(
             method: 'GET',
             requestUrl: $endpoint,
-            queryParams: $queryParams,
-            isJsonRequest: true
+            isJsonRequest: true,
+            queryParams: $queryParams
         );
-
-        return $transferBeneficiary;
     }
 
     /**
@@ -53,19 +55,19 @@ trait TransferBeneficiaryTrait
      *
      * This method allows you to retrieve a single transfer beneficiary.
      *
+     * @param int $beneficiaryId
      * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
-    public function getTransferBeneficiary(int $beneficiaryId)
+    public function getTransferBeneficiary(int $beneficiaryId): array
     {
-        $endpoint = sprintf('%s%s%s', $this->baseUri, self::BENEFICIARY_ENDPOINT, $beneficiaryId);
+        $endpoint = sprintf('%s%s%s', $this->baseUri, FlutterwaveConstant::BENEFICIARY_ENDPOINT, $beneficiaryId);
 
-        $transferBeneficiary = $this->makeRequest(
+        return $this->makeRequest(
             method: 'GET',
             requestUrl: $endpoint,
             isJsonRequest: true
         );
-
-        return $transferBeneficiary;
     }
 
     /**
@@ -73,18 +75,18 @@ trait TransferBeneficiaryTrait
      *
      * This endpoint allows you to delete a transfer beneficiary
      *
+     * @param int $beneficiaryId
      * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
-    public function deleteTransferBeneficiary(int $beneficiaryId)
+    public function deleteTransferBeneficiary(int $beneficiaryId): array
     {
-        $endpoint = sprintf('%s%s%s', $this->baseUri, self::BENEFICIARY_ENDPOINT, $beneficiaryId);
+        $endpoint = sprintf('%s%s%s', $this->baseUri, FlutterwaveConstant::BENEFICIARY_ENDPOINT, $beneficiaryId);
 
-        $response = $this->makeRequest(
+        return $this->makeRequest(
             method: 'DELETE',
             requestUrl: $endpoint,
             isJsonRequest: true
         );
-
-        return $response;
     }
 }
