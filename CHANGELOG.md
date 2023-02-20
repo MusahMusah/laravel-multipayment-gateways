@@ -2,6 +2,12 @@
 
 All notable changes to `laravel-multipayment-gateways` will be documented in this file.
 
+## 1.2.0 - 2023-02-20
+
+### What's Changed
+
+- Add Support for Flutterwave Gateway by @cybernerdie in #6
+
 ## 1.1.0 - 2023-02-18
 
 ### What's Changed
