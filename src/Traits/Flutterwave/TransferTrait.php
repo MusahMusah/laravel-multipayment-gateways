@@ -13,8 +13,6 @@ trait TransferTrait
      *
      * This method allows you to Initate a transfer with Flutterwave
      *
-     * @param array $formParams
-     * @return array
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function initiateTransfer(array $formParams): array
@@ -34,8 +32,6 @@ trait TransferTrait
      *
      * This method allows the developer/merchant to retrieve all their transfers.
      *
-     * @param array $queryParams
-     * @return array
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function getAllTransfers(array $queryParams = []): array
@@ -55,8 +51,6 @@ trait TransferTrait
      *
      * This method allows the merchant/developer query the fee for the transfer being made.
      *
-     * @param array $queryParams
-     * @return array
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function getTransferFees(array $queryParams = []): array
@@ -79,9 +73,8 @@ trait TransferTrait
      *
      * @optional
      *
-     * @param array $bulkTransferData
-     * @param string $title This is the title of the bulk transfer attempt.
-     * @return array
+     * @param  string  $title This is the title of the bulk transfer attempt.
+     *
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function createBulkTransfer(array $bulkTransferData, string $title = ''): array
@@ -106,8 +99,8 @@ trait TransferTrait
      *
      * This method helps you fetch the details of a transfer.
      *
-     * @param int $transferId - The unique ID of the transfer you want to retrieve
-     * @return array
+     * @param  int  $transferId - The unique ID of the transfer you want to retrieve
+     *
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function getTransfer(int $transferId): array
@@ -126,8 +119,6 @@ trait TransferTrait
      *
      * This method allows you to query the transfer rate for international transfers.
      *
-     * @param array $queryParams
-     * @return array
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function getTransferRates(array $queryParams): array
@@ -147,8 +138,8 @@ trait TransferTrait
      *
      * This method allows you to retry a previously failed transfer.
      *
-     * @param int $transferId - The unique ID of the transfer you want to retry
-     * @return array
+     * @param  int  $transferId - The unique ID of the transfer you want to retry
+     *
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function retryTransfer(int $transferId): array
@@ -167,8 +158,8 @@ trait TransferTrait
      *
      * This method allows you to fetch the details of a transfer retry.
      *
-     * @param int $transferId - The unique ID of the transfer you want to retry
-     * @return array
+     * @param  int  $transferId - The unique ID of the transfer you want to retry
+     *
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function getTransferRetry(int $transferId): array
@@ -187,8 +178,6 @@ trait TransferTrait
      *
      * This method allows you to get the status and details of a bulk transfer.
      *
-     * @param array $queryParams
-     * @return array
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function fetchBulkTransfer(array $queryParams): array

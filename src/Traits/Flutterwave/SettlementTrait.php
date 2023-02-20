@@ -10,8 +10,9 @@ trait SettlementTrait
 {
     /**
      * Get the settlement information for a given settlement ID
-     * @param int $settlementId The settlement ID to get information for.
-     * @return array
+     *
+     * @param  int  $settlementId The settlement ID to get information for.
+     *
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function getSettlement(int $settlementId): array
@@ -28,8 +29,8 @@ trait SettlementTrait
     /**
      * Get information for all settlements.
      *
-     * @param array $queryParams
      * @return array An array of all settlement information.
+     *
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function getAllSettlements(array $queryParams = []): array

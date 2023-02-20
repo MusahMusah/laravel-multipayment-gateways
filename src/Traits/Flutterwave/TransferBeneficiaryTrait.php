@@ -13,8 +13,6 @@ trait TransferBeneficiaryTrait
      *
      * This method allows you to create beneficiaries for Transfers.
      *
-     * @param array $transferBeneficiaryDetails
-     * @return mixed
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function createTransferBeneficiary(array $transferBeneficiaryDetails): mixed
@@ -34,8 +32,8 @@ trait TransferBeneficiaryTrait
      *
      * This function retrieves all transfer beneficiaries on the account
      *
-     * @param array $queryParams [optional]
-     * @return array
+     * @param  array  $queryParams [optional]
+     *
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function getAllTransferBeneficiaries(array $queryParams = []): array
@@ -55,8 +53,6 @@ trait TransferBeneficiaryTrait
      *
      * This method allows you to retrieve a single transfer beneficiary.
      *
-     * @param int $beneficiaryId
-     * @return array
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function getTransferBeneficiary(int $beneficiaryId): array
@@ -75,8 +71,6 @@ trait TransferBeneficiaryTrait
      *
      * This endpoint allows you to delete a transfer beneficiary
      *
-     * @param int $beneficiaryId
-     * @return array
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function deleteTransferBeneficiary(int $beneficiaryId): array

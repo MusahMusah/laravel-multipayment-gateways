@@ -13,8 +13,8 @@ trait PaymentPlanTrait
      *
      * This method helps you create a payment plan
      *
-     * @param array $planDetails The details of the plan.
-     * @return array
+     * @param  array  $planDetails The details of the plan.
+     *
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function createPaymentPlan(array $planDetails): array
@@ -34,9 +34,9 @@ trait PaymentPlanTrait
      *
      * This method allows you update a payment plan
      *
-     * @param int $paymentPlanId The ID of the payment plan to update.
-     * @param array $planDetails The updated details of the plan.
-     * @return array
+     * @param  int  $paymentPlanId The ID of the payment plan to update.
+     * @param  array  $planDetails The updated details of the plan.
+     *
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function updatePaymentPlan(int $paymentPlanId, array $planDetails): array
@@ -56,8 +56,8 @@ trait PaymentPlanTrait
      *
      * This method retrieves all payment plans on the account
      *
-     * @param array $queryParams [optional] The query parameters array.
-     * @return array
+     * @param  array  $queryParams [optional] The query parameters array.
+     *
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function getAllPaymentPlans(array $queryParams = []): array
@@ -77,8 +77,8 @@ trait PaymentPlanTrait
      *
      * This method allows you to retrieve a single payment plan based on its ID.
      *
-     * @param int $paymentPlanId The ID of the payment plan to retrieve.
-     * @return array
+     * @param  int  $paymentPlanId The ID of the payment plan to retrieve.
+     *
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function getPaymentPlan(int $paymentPlanId): array
@@ -97,8 +97,8 @@ trait PaymentPlanTrait
      *
      * This method allows the merchant/developer cancel an existing payment plan.
      *
-     * @param int $paymentPlanId - The unique ID of the payment plan you want to cancel
-     * @return array
+     * @param  int  $paymentPlanId - The unique ID of the payment plan you want to cancel
+     *
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function cancelPaymentPlan(int $paymentPlanId): array

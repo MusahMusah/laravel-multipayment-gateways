@@ -12,8 +12,8 @@ trait ChargeTrait
     /**
      * Initiate a debit or credit card payment.
      *
-     * @param array $formParams An associative array of payment data.
-     * @return array
+     * @param  array  $formParams An associative array of payment data.
+     *
      * @throws InvalidConfigurationException|GuzzleException|HttpMethodFoundException
      */
     public function initiateCardCharge(array $formParams): array
@@ -36,8 +36,8 @@ trait ChargeTrait
     /**
      * Initiate a bank transfer payment.
      *
-     * @param array $formParams An associative array of tranfer data.
-     * @return array
+     * @param  array  $formParams An associative array of tranfer data.
+     *
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function initiateBankTransfer(array $formParams): array
@@ -51,8 +51,8 @@ trait ChargeTrait
      * This method charges a Nigerian bank account using Flutterwave. It requires the bank numeric code, account number,
      * amount, email address and transaction reference to be provided in the request body.
      *
-     * @param array $formParams An associative array of tranfer data.
-     * @return array
+     * @param  array  $formParams An associative array of tranfer data.
+     *
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function chargeNigerianBankAccount(array $formParams): array
@@ -66,8 +66,8 @@ trait ChargeTrait
      * This payment method helps you charge UK Bank accounts using Flutterwave.
      * We recommend you read the method overview before you proceed.
      *
-     * @param array $formParams An associative array of charge data.
-     * @return array
+     * @param  array  $formParams An associative array of charge data.
+     *
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function chargeUkBankAccount(array $formParams): array
@@ -80,8 +80,8 @@ trait ChargeTrait
      *
      * This payment method allows you to collect USD and ZAR payments via ACH.
      *
-     * @param array $formParams An associative array of charge data.
-     * @return array
+     * @param  array  $formParams An associative array of charge data.
+     *
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function chargeAchPayment(array $formParams): array
@@ -95,8 +95,8 @@ trait ChargeTrait
      * This payment method allows you to accept payments from your customers via Apple Pay.
      * We recommend you read the method overview before you proceed.
      *
-     * @param array $formParams An associative array of charge data.
-     * @return array
+     * @param  array  $formParams An associative array of charge data.
+     *
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function chargeApplePay(array $formParams): array
@@ -110,8 +110,8 @@ trait ChargeTrait
      * This payment method allows you to accept payments from your customers via Google Pay.
      * We recommend you read the method overview before you proceed.
      *
-     * @param array $formParams An associative array of charge data.
-     * @return array
+     * @param  array  $formParams An associative array of charge data.
+     *
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function chargeGooglePay(array $formParams): array
@@ -124,8 +124,8 @@ trait ChargeTrait
      *
      * This payment method allows you to accept payments from your customers via Fawry Pay.
      *
-     * @param array $formParams An associative array of charge data.
-     * @return array
+     * @param  array  $formParams An associative array of charge data.
+     *
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function chargeFawryPay(array $formParams): array
@@ -138,8 +138,8 @@ trait ChargeTrait
      *
      * This payment method allows you to accept payments from your customers via PayPal.
      *
-     * @param array $formParams An associative array of charge data.
-     * @return array
+     * @param  array  $formParams An associative array of charge data.
+     *
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function chargePaypal(array $formParams): array
@@ -152,8 +152,8 @@ trait ChargeTrait
      *
      * This payment method allows you to accept payments from your customers via M-Pesa.
      *
-     * @param array $formParams An associative array of charge data.
-     * @return array
+     * @param  array  $formParams An associative array of charge data.
+     *
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function chargeMpesa(array $formParams): array
@@ -166,8 +166,8 @@ trait ChargeTrait
      *
      * This payment method allows you to accept payments from your customers via mobile money in Ghana.
      *
-     * @param array $formParams An associative array of charge data.
-     * @return array
+     * @param  array  $formParams An associative array of charge data.
+     *
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function chargeGhanaMobileMoney(array $formParams): array
@@ -180,8 +180,8 @@ trait ChargeTrait
      *
      * This payment method allows you to accept payments from your customers via mobile money in Uganda.
      *
-     * @param array $formParams An associative array of charge data.
-     * @return array
+     * @param  array  $formParams An associative array of charge data.
+     *
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function chargeUgandaMobileMoney(array $formParams): array
@@ -194,8 +194,8 @@ trait ChargeTrait
      *
      * This payment method allows you to accept payments from your customers via Mobile Money Franco.
      *
-     * @param array $formParams An associative array of charge data.
-     * @return array
+     * @param  array  $formParams An associative array of charge data.
+     *
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function chargeMobileMoneyFranco(array $formParams): array
@@ -208,8 +208,8 @@ trait ChargeTrait
      *
      * This payment method allows you to accept payments from your customers via Mobile Money Rwanda.
      *
-     * @param array $formParams An associative array of charge data.
-     * @return array
+     * @param  array  $formParams An associative array of charge data.
+     *
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function chargeMobileMoneyRwanda(array $formParams): array
@@ -222,8 +222,8 @@ trait ChargeTrait
      *
      * This payment method allows you to accept payments from your customers via mobile money in Zambia.
      *
-     * @param array $formParams An associative array of charge data.
-     * @return array
+     * @param  array  $formParams An associative array of charge data.
+     *
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function chargeZambiaMobileMoney(array $formParams): array
@@ -236,8 +236,8 @@ trait ChargeTrait
      *
      * This payment method allows you to accept payments from your customers via USSD.
      *
-     * @param array $formParams An associative array of charge data.
-     * @return array
+     * @param  array  $formParams An associative array of charge data.
+     *
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function chargeUssd(array $formParams): array
@@ -248,9 +248,9 @@ trait ChargeTrait
     /**
      * Charge a customer's payment using the specified payment method.
      *
-     * @param string $paymentMethod The payment method to use.
-     * @param array $formParams An associative array of charge data.
-     * @return array
+     * @param  string  $paymentMethod The payment method to use.
+     * @param  array  $formParams An associative array of charge data.
+     *
      * @throws GuzzleException|HttpMethodFoundException
      */
     private function chargePayment(string $paymentMethod, array $formParams): array
@@ -294,8 +294,8 @@ trait ChargeTrait
     /**
      * Validate a charge.
      *
-     * @param array $formParams An associative array of charge validation data.
-     * @return array
+     * @param  array  $formParams An associative array of charge validation data.
+     *
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function validateCharge(array $formParams): array
@@ -313,9 +313,9 @@ trait ChargeTrait
     /**
      * Capture payment for an existing uncaptured charge.
      *
-     * @param string $flwRef The data.flw_ref returned in the charge response.
-     * @param array $formParams An associative array of charge validation data.
-     * @return array
+     * @param  string  $flwRef The data.flw_ref returned in the charge response.
+     * @param  array  $formParams An associative array of charge validation data.
+     *
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function captureCharge(string $flwRef, array $formParams): array
@@ -333,8 +333,8 @@ trait ChargeTrait
     /**
      * Void a previously captured charge to release the hold on the funds.
      *
-     * @param string $flwRef The data.flw_ref returned in the charge response.
-     * @return array
+     * @param  string  $flwRef The data.flw_ref returned in the charge response.
+     *
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function voidCharge(string $flwRef): array
@@ -351,9 +351,9 @@ trait ChargeTrait
     /**
      * Create a refund for an existing charge
      *
-     * @param string $flwRef The data.flw_ref returned in the charge response.
-     * @param array $formParams An associative array of charge validation data.
-     * @return array
+     * @param  string  $flwRef The data.flw_ref returned in the charge response.
+     * @param  array  $formParams An associative array of charge validation data.
+     *
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function createRefund(string $flwRef, array $formParams): array
@@ -371,9 +371,9 @@ trait ChargeTrait
     /**
      * Capture the payment of a previously uncaptured PayPal charge
      *
-     * @param string $flwRef The data.flw_ref returned in the charge response.
-     * @param array $formParams An associative array of charge validation data.
-     * @return array
+     * @param  string  $flwRef The data.flw_ref returned in the charge response.
+     * @param  array  $formParams An associative array of charge validation data.
+     *
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function capturePaypalCharge(string $flwRef, array $formParams): array
@@ -391,8 +391,8 @@ trait ChargeTrait
     /**
      * Void a previously captured charge to release the hold on the funds.
      *
-     * @param string $flwRef The data.flw_ref returned in the charge response.
-     * @return array
+     * @param  string  $flwRef The data.flw_ref returned in the charge response.
+     *
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function voidPaypalCharge(string $flwRef): array
