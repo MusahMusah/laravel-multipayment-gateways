@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Http;
 use MusahMusah\LaravelMultipaymentGateways\Contracts\FlutterwaveContract;
 
 beforeEach(function () {
@@ -36,7 +34,6 @@ it('can get the list of all banks by country code', function () {
 });
 
 it('can retrieve all bank branches for a given bank ID', function () {
-
     $bankID = 280;
 
     $this->flutterwave
@@ -57,5 +54,3 @@ it('can retrieve all bank branches for a given bank ID', function () {
             'data' => ['*'],
         ]);
 });
-
-
