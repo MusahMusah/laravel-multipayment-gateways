@@ -345,69 +345,71 @@ The package allow you to make payment requests using the `facade`, `helper` or `
     Route::post('/payment/stripe', [StripePaymentController::class, 'initiatePayment'])->name('payment.stripe.initiate');
     ```
 
-2. Create a controller to handle the payment request using Facade.
-    ```php
-    use Illuminate\Http\Request;
-    use MusahMusah\LaravelMultipaymentGateways\Facades\Stripe;
-    
-    class StripePaymentController extends Controller
-    {
-        public function initiatePayment(Request $request)
-        {
-            $payment = Stripe::createIntent([
-                'amount' => 1000,
-                'currency' => 'usd',
-                'payment_method_types' => ['card'],
-                'payment_method' => 'xxxxxxx',
-                'metadata' => ['custom_fields' => ['name' => 'Musah Musah']],
-            ]);
-            
-            return $payment;
-        }
-    }
-    ```
-3. Create a controller to handle the payment request using Dependency Injection through the `StripeContract` interface.
-    ```php
-    use Illuminate\Http\Request;
-    use MusahMusah\LaravelMultipaymentGateways\Contracts\StripeContract;
-    
-    class StripePaymentController extends Controller
-    {
-        public function initiatePayment(Request $request, StripeContract $stripe)
-        {
-            $payment = $stripe->createIntent([
-                'amount' => 1000,
-                'currency' => 'usd',
-                'payment_method_types' => ['card'],
-                'payment_method' => 'xxxxxxx',
-                'metadata' => ['custom_fields' => ['name' => 'Musah Musah']],
-            ]);
-            
-            return $payment;
-        }
-    }
-    ```
+2. Create a controller to handle the payment request. In the controller, you can use your desired Payment Gateway to handle the payment request using the **facade**, **helper** or **dependency injection**
 
-4. Create a controller to handle the payment request using Helper.
-    ```php
-    use Illuminate\Http\Request;
+    - Create a controller to handle the payment request using Facade.
+       ```php
+       use Illuminate\Http\Request;
+       use MusahMusah\LaravelMultipaymentGateways\Facades\Stripe;
     
-    class StripePaymentController extends Controller
-    {
-        public function initiatePayment(Request $request)
-        {
-            $payment = stripe()->createIntent([
-                'amount' => 1000,
-                'currency' => 'usd',
-                'payment_method_types' => ['card'],
-                'payment_method' => 'xxxxxxx',
-                'metadata' => ['custom_fields' => ['name' => 'Musah Musah']],
-            ]);
+       class StripePaymentController extends Controller
+       {
+           public function initiatePayment(Request $request)
+           {
+               $payment = Stripe::createIntent([
+                   'amount' => 1000,
+                   'currency' => 'usd',
+                   'payment_method_types' => ['card'],
+                   'payment_method' => 'xxxxxxx',
+                   'metadata' => ['custom_fields' => ['name' => 'Musah Musah']],
+               ]);
             
-            return $payment;
-        }
-    }
-    ```
+               return $payment;
+           }
+       }
+       ```
+   - Create a controller to handle the payment request using Dependency Injection through the `StripeContract` interface.
+       ```php
+       use Illuminate\Http\Request;
+       use MusahMusah\LaravelMultipaymentGateways\Contracts\StripeContract;
+    
+       class StripePaymentController extends Controller
+       {
+           public function initiatePayment(Request $request, StripeContract $stripe)
+           {
+               $payment = $stripe->createIntent([
+                   'amount' => 1000,
+                   'currency' => 'usd',
+                   'payment_method_types' => ['card'],
+                   'payment_method' => 'xxxxxxx',
+                   'metadata' => ['custom_fields' => ['name' => 'Musah Musah']],
+               ]);
+            
+               return $payment;
+           }
+       }
+       ```
+
+   - Create a controller to handle the payment request using Helper.
+       ```php
+       use Illuminate\Http\Request;
+    
+       class StripePaymentController extends Controller
+       {
+           public function initiatePayment(Request $request)
+           {
+               $payment = stripe()->createIntent([
+                   'amount' => 1000,
+                   'currency' => 'usd',
+                   'payment_method_types' => ['card'],
+                   'payment_method' => 'xxxxxxx',
+                   'metadata' => ['custom_fields' => ['name' => 'Musah Musah']],
+               ]);
+            
+               return $payment;
+           }
+       }
+       ```
    
 The `createIntent` method will create a payment intent and return the client secret to be used in the frontend to confirm the payment. In addition, the package also provides a method to confirm the payment intent.
 You can confirm the payment intent in the following ways:
@@ -438,25 +440,33 @@ You can confirm the payment intent in the following ways:
         }
     }
     ```
+   The `confirmIntent` method will confirm the payment intent and return the payment response. This can also be done using the **helper** or **dependency injection**.
 
 ### Handling Webhooks
 Webhooks can be handled in the following ways:
-1. Creating a Job Class that extends the `MusahMusah\LaravelMultipaymentGateways\Jobs\ProcessPaymentWebhookJob` class
-```php
-use MusahMusah\LaravelMultipaymentGateways\Jobs\ProcessPaymentWebhookJob;
+1. Prepare your route to handle in-coming webhook request.
+    ```php
+    use Illuminate\Support\Facades\Route;
+    
+    Route::webhook('/payment/your-payment-gateway-name', 'your-payment-gateway-name');
+    ```
 
-class PaymentWebhookJob extends ProcessPaymentWebhookJob implements ShouldQueue
-{
-    public function handle()
+2. Creating a Job Class that extends the `MusahMusah\LaravelMultipaymentGateways\Jobs\ProcessPaymentWebhookJob` class
+    ```php
+    use MusahMusah\LaravelMultipaymentGateways\Jobs\ProcessPaymentWebhookJob;
+    
+    class PaymentWebhookJob extends ProcessPaymentWebhookJob implements ShouldQueue
     {
-        // Get the webhook data
-        $webhookData = $this->webhookPayload;
-        
-        // Handle the webhook
+        public function handle()
+        {
+            // Get the webhook data
+            $webhookData = $this->webhookPayload;
+            
+            // Handle the webhook
+        }
     }
-}
-```
-2. Listening to the `MusahMusah\LaravelMultipaymentGateways\Events\PaymentWebhookReceived` event dispatched by the package.
+    ```
+3. Listening to the `MusahMusah\LaravelMultipaymentGateways\Events\PaymentWebhookReceived` event dispatched by the package.
 * Create an event listener class that will listen to the `MusahMusah\LaravelMultipaymentGateways\Events\PaymentWebhookReceived` event.
 ```php
 use MusahMusah\LaravelMultipaymentGateways\Events\PaymentWebhookReceivedEvent;
