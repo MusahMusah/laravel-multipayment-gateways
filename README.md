@@ -466,32 +466,33 @@ Webhooks can be handled in the following ways:
         }
     }
     ```
-3. Listening to the `MusahMusah\LaravelMultipaymentGateways\Events\PaymentWebhookReceived` event dispatched by the package.
-* Create an event listener class that will listen to the `MusahMusah\LaravelMultipaymentGateways\Events\PaymentWebhookReceived` event.
-```php
-use MusahMusah\LaravelMultipaymentGateways\Events\PaymentWebhookReceivedEvent;
-class PaymentWebhookListener
-{
-    public function handle(PaymentWebhookReceivedEvent $event)
-    {
-        // Get the webhook data
-        $webhookData = $event->webhookPayload;
-        
-        // Handle the webhook
-    }
-}
-```
-* Register the event listener in the `EventServiceProvider` class.
-```php
-use MusahMusah\LaravelMultipaymentGateways\Events\PaymentWebhookReceivedEvent;
-use App\Listeners\PaymentWebhookListener;
-
-protected $listen = [
-    PaymentWebhookReceivedEvent::class => [
-        PaymentWebhookListener::class,
-    ],
-];
-```
+    ### **OR** 
+    Listening to the `MusahMusah\LaravelMultipaymentGateways\Events\PaymentWebhookReceived` event dispatched by the package.
+    * Create an event listener class that will listen to the `MusahMusah\LaravelMultipaymentGateways\Events\PaymentWebhookReceived` event.
+      ```php
+      use MusahMusah\LaravelMultipaymentGateways\Events\PaymentWebhookReceivedEvent;
+      class PaymentWebhookListener
+      {
+          public function handle(PaymentWebhookReceivedEvent $event)
+          {
+              // Get the webhook data
+              $webhookData = $event->webhookPayload;
+            
+              // Handle the webhook
+          }
+      }
+      ```
+    * Register the event listener in the `EventServiceProvider` class.
+       ```php
+       use MusahMusah\LaravelMultipaymentGateways\Events\PaymentWebhookReceivedEvent;
+       use App\Listeners\PaymentWebhookListener;
+    
+       protected $listen = [
+           PaymentWebhookReceivedEvent::class => [
+               PaymentWebhookListener::class,
+           ],
+       ];
+       ```
 
 ## Testing
 
