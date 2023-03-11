@@ -1,0 +1,30 @@
+{
+    "name": "laravel-multipayment-gateways",
+    "version": "1.0.0",
+    "description": "A Laravel Package that makes implementation of multiple payment Gateways endpoints and webhooks seamless",
+    "main": "index.js",
+    "scripts": {
+      "docs:dev": "vitepress dev docs",
+      "docs:build": "vitepress build docs",
+      "docs:serve": "vitepress serve docs"
+    },
+    "keywords": [],
+    "authors": [
+      {
+          "name": "MusahMusah",
+          "email": "aliyumusahmusah@gmail.com",
+          "role": "Developer"
+      },
+      {
+          "name": "Joshua Paul (cybernerdie)",
+          "email": "veecthorpaul@gmail.com",
+          "role": "Developer"
+      }
+  ],
+    "repository": "https://github.com/MusahMusah/laravel-multipayment-gateways/docs",
+    "license": "ISC",
+    "dependencies": {
+      "vitepress": "^1.0.0-alpha.27",
+      "vue": "^3.2.41"
+    }
+  }
