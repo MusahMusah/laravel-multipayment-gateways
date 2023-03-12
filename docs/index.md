@@ -14,7 +14,7 @@ hero:
       link: /getting-started/installation
     - theme: alt
       text: View on GitHub
-      link: https://github.com/cybernerdie/laravel-terminal-africa
+      link: https://github.com/musahmusah/laravel-multi-payment-gateways
 
 # Meta property
 head:
