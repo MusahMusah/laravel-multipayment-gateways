@@ -494,6 +494,28 @@ Webhooks can be handled in the following ways:
        ];
        ```
 
+3. Performing Webhook Signature Validation:  
+   The package provides `\MusahMusah\LaravelMultipaymentGateways\SignatureValidator\PaymentWebhookSignatureValidator` interface to validate the signature of the in-coming webhook request. 
+   You can create your own signature validator class by implementing the `\MusahMusah\LaravelMultipaymentGateways\SignatureValidator\PaymentWebhookSignatureValidator` interface.
+    ```php
+    use MusahMusah\LaravelMultipaymentGateways\SignatureValidator\PaymentWebhookSignatureValidator;
+   
+    class StripeWebhookSignatureValidator implements PaymentWebhookSignatureValidator
+    {
+        public function isValid(string $signature, string $payload, string $secret): bool
+        {
+            // Validate the signature
+        }
+    }
+    ```
+    Then, register the signature validator class in the `config/multipayment-gateways.php` file.
+    ```php
+    'signature_validators' => [
+        'stripe' => \App\SignatureValidators\StripeWebhookSignatureValidator::class,
+    ],
+    ```
+   This will ensure that the signature of the in-coming webhook request is valid before the webhook is processed. Allowing you to handle invalid signatures as you wish.
+
 ## Testing
 
 ```bash
