@@ -503,7 +503,7 @@ Webhooks can be handled in the following ways:
    
     class StripeWebhookSignatureValidator implements PaymentWebhookSignatureValidator
     {
-        public function isValid(Request $request): bool
+        public function isValid(Request $request, PaymentWebhookConfig $config): bool
         {
             // Validate the signature
         }
