@@ -50,6 +50,7 @@ class PaymentWebhookHandler
     public function handle(): JsonResponse
     {
         $this->setWebhookPayload();
+        $this->validateSignature();
 
         if (Schema::hasTable($this->databaseTable)) {
             $this->createWebhookHash();
@@ -63,8 +64,6 @@ class PaymentWebhookHandler
         } else {
             $webhookLog = null;
         }
-
-        $this->validateSignature();
 
         $this->processPaymentWebhook($webhookLog);
 
