@@ -1,0 +1,1 @@
+import{_ as a,c as e,o as s,N as t}from"./chunks/framework.a618ffea.js";const m=JSON.parse('{"title":"Installation","description":"","frontmatter":{},"headers":[],"relativePath":"stripe/installation.md"}'),n={name:"stripe/installation.md"},o=t("",9),l=[o];function r(i,p,c,h,u,d){return s(),e("div",null,l)}const y=a(n,[["render",r]]);export{m as __pageData,y as default};

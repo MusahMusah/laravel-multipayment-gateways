@@ -1,0 +1,1 @@
+import{_ as e,c as a,o as s,N as t}from"./chunks/framework.a618ffea.js";const f=JSON.parse('{"title":"Usage","description":"","frontmatter":{},"headers":[],"relativePath":"flutterwave/usage.md"}'),n={name:"flutterwave/usage.md"},r=t("",4),o=[r];function l(p,i,c,x,_,h){return s(),a("div",null,o)}const E=e(n,[["render",l]]);export{f as __pageData,E as default};

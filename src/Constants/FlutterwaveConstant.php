@@ -24,7 +24,7 @@ class FlutterwaveConstant
 
     const TRANSFER_ENDPOINT = '/transfers/';
 
-    const BULK_TRANFER_ENDPOINT = '/bulk-transfers/';
+    const BULK_TRANSFER_ENDPOINT = '/bulk-transfers/';
 
     const VALIDATE_CHARGE_ENDPOINT = '/validate-charge';
 

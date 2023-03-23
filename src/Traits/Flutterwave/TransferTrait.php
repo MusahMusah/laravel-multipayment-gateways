@@ -80,7 +80,7 @@ trait TransferTrait
 
         return $this->makeRequest(
             method: 'POST',
-            requestUrl: FlutterwaveConstant::TRANSFER_ENDPOINT,
+            requestUrl: FlutterwaveConstant::BULK_TRANSFER_ENDPOINT,
             formParams: $requestPayload,
             isJsonRequest: true
         );

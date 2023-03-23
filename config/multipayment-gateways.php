@@ -134,12 +134,12 @@ return [
             /*
              * This secret key is used to validate the signature of the webhook call.
              */
-            'signing_secret' => '',
+            'signing_secret' => env('FLUTTERWAVE_SECRET_HASH'),
 
             /*
              * This refers to the header that holds the signature.
              */
-            'signature_header_name' => 'Flutterwave-Signature',
+            'signature_header_name' => 'verif-hash',
 
             /*
              *  This class is responsible for verifying the validity of the signature header.

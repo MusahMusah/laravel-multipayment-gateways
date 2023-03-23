@@ -34,7 +34,7 @@ trait ChargeTrait
     /**
      * Initiate a bank transfer payment.
      *
-     * @param  array  $formParams An associative array of tranfer data.
+     * @param  array  $formParams An associative array of transfer data.
      *
      * @throws GuzzleException|HttpMethodFoundException
      */
@@ -49,7 +49,7 @@ trait ChargeTrait
      * This method charges a Nigerian bank account using Flutterwave. It requires the bank numeric code, account number,
      * amount, email address and transaction reference to be provided in the request body.
      *
-     * @param  array  $formParams An associative array of tranfer data.
+     * @param  array  $formParams An associative array of transfer data.
      *
      * @throws GuzzleException|HttpMethodFoundException
      */
@@ -359,16 +359,15 @@ trait ChargeTrait
     /**
      * Capture the payment of a previously uncaptured PayPal charge
      *
-     * @param  string  $flwRef The data.flw_ref returned in the charge response.
      * @param  array  $formParams An associative array of charge validation data.
      *
      * @throws GuzzleException|HttpMethodFoundException
      */
-    public function capturePaypalCharge(string $flwRef, array $formParams): array
+    public function capturePaypalCharge(array $formParams): array
     {
         return $this->makeRequest(
             method: 'POST',
-            requestUrl: FlutterwaveConstant::CHARGE_ENDPOINT.$flwRef.'/paypal-capture',
+            requestUrl: FlutterwaveConstant::CHARGE_ENDPOINT.'/paypal-capture',
             formParams: $formParams,
             isJsonRequest: true
         );
@@ -377,15 +376,16 @@ trait ChargeTrait
     /**
      * Void a previously captured charge to release the hold on the funds.
      *
-     * @param  string  $flwRef The data.flw_ref returned in the charge response.
+     * @param  array  $formParams An associative array of charge validation data.
      *
      * @throws GuzzleException|HttpMethodFoundException
      */
-    public function voidPaypalCharge(string $flwRef): array
+    public function voidPaypalCharge(array $formParams): array
     {
         return $this->makeRequest(
             method: 'POST',
-            requestUrl: FlutterwaveConstant::CHARGE_ENDPOINT.$flwRef.'/void',
+            requestUrl: FlutterwaveConstant::CHARGE_ENDPOINT.'/void',
+            formParams: $formParams,
             isJsonRequest: true
         );
     }

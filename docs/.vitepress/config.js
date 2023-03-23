@@ -57,7 +57,17 @@ export default {
             text: "FLUTTERWAVE",
             collapsible: true,
             items: [
-                { text: "Installation", link: "/flutterwave/installation.html"}
+                { text: "Setup", link: "/flutterwave/setup.html"},
+                { text: "Banks", link: "/flutterwave/banks.html"},
+                { text: "Settlements", link: "/flutterwave/settlements.html"},
+                { text: "Subscriptions", link: "/flutterwave/subscriptions.html"},
+                { text: "Payment Plans", link: "/flutterwave/payment-plans.html"},
+                { text: "Beneficiaries", link: "/flutterwave/beneficiaries.html"},
+                { text: "Transfers", link: "/flutterwave/transfers.html"},
+                { text: "Transactions", link: "/flutterwave/transactions.html"},
+                { text: "OTPs", link: "/flutterwave/otps.html"},
+                { text: "Charge", link: "/flutterwave/charge.html"},
+                { text: "Preauthorization", link: "/flutterwave/preauthorization.html"},
             ],
         },
 
