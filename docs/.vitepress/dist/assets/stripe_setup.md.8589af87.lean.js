@@ -1,0 +1,1 @@
+import{_ as s,c as e,o as t,N as a}from"./chunks/framework.a618ffea.js";const C=JSON.parse('{"title":"Setup","description":"","frontmatter":{},"headers":[],"relativePath":"stripe/setup.md"}'),n={name:"stripe/setup.md"},o=a("",4),p=[o];function r(l,i,c,x,_,h){return t(),e("div",null,p)}const d=s(n,[["render",r]]);export{C as __pageData,d as default};

@@ -1,0 +1,1 @@
+import{_ as s,c as a,o as n,N as p}from"./chunks/framework.a618ffea.js";const i=JSON.parse('{"title":"OTP API","description":"","frontmatter":{},"headers":[],"relativePath":"flutterwave/otps.md"}'),l={name:"flutterwave/otps.md"},o=p("",7),e=[o];function t(D,r,c,F,y,C){return n(),a("div",null,e)}const d=s(l,[["render",t]]);export{i as __pageData,d as default};

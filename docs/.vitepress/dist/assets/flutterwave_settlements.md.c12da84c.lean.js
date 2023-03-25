@@ -1,0 +1,1 @@
+import{_ as s,c as a,o as n,N as l}from"./chunks/framework.a618ffea.js";const A=JSON.parse('{"title":"Settlement API","description":"","frontmatter":{},"headers":[],"relativePath":"flutterwave/settlements.md"}'),e={name:"flutterwave/settlements.md"},t=l("",7),p=[t];function o(c,r,D,F,y,C){return n(),a("div",null,p)}const m=s(e,[["render",o]]);export{A as __pageData,m as default};
