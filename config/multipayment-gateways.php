@@ -90,7 +90,7 @@ return [
             /*
              * This refers to the header that holds the signature.
              */
-            'signature_header_name' => 'Paystack-Signature',
+            'signature_header_name' => 'HTTP_X_PAYSTACK_SIGNATURE',
 
             /*
              *  This class is responsible for verifying the validity of the signature header.
