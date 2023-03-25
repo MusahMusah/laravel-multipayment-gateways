@@ -44,7 +44,6 @@ interface PaystackContract
      * Hit Paystack's API to resolve a bank account
      *
      *
-     * @param array $payload
      * @throws GuzzleException
      * @throws HttpMethodFoundException
      */
@@ -54,7 +53,6 @@ interface PaystackContract
      * Hit Paystack's API to create a Transfer Recipient
      *
      *
-     * @param array $payload
      * @throws GuzzleException
      * @throws HttpMethodFoundException
      */
@@ -73,7 +71,6 @@ interface PaystackContract
      * Hit Paystack's API to initiate a Transfer
      *
      *
-     * @param array $payload
      * @throws GuzzleException
      * @throws HttpMethodFoundException
      */
@@ -90,7 +87,6 @@ interface PaystackContract
 
     /**
      * Hit Paystack's API to finalize a Transfer
-     * @param array $payload
      */
     public function finalizeTransfer(array $payload): array;
 
