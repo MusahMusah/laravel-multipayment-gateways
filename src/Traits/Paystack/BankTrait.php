@@ -12,7 +12,7 @@ trait BankTrait
      * Hit Paystack's API to get all the Banks
      *
      *
-     * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException
+     * @throws GuzzleException|HttpMethodFoundException
      */
     public function getBanks(): array
     {
@@ -26,18 +26,16 @@ trait BankTrait
      * Hit Paystack's API to resolve a bank account
      *
      *
-     * @throws GuzzleException
-     * @throws HttpMethodFoundException
+     * @param array $payload
+     * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
-    public function resolveAccountNumber(string $accountNumber, string $bankCode): mixed
+    public function resolveAccountNumber(array $payload): array
     {
         return $this->makeRequest(
             method: 'GET',
             requestUrl: 'bank/resolve',
-            queryParams: [
-                'account_number' => $accountNumber,
-                'bank_code' => $bankCode,
-            ]
+            queryParams: $payload
         );
     }
 }

@@ -8,7 +8,7 @@ use MusahMusah\LaravelMultipaymentGateways\Exceptions\HttpMethodFoundException;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidConfigurationException;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\PaymentVerificationException;
 
-trait PaymentTrait
+trait TransactionTrait
 {
     /**
      * Hit Paystack's API to initiate the transaction and generate the authorization URL
@@ -117,6 +117,35 @@ trait PaymentTrait
         return $this->makeRequest(
             method: 'GET',
             requestUrl: "transaction/verify/{$reference}"
+        );
+    }
+
+    /**
+     * Hit Paystack's Api to get a transaction
+     * @param string $reference
+     * @throws GuzzleException|HttpMethodFoundException
+     *
+     * @return array
+     */
+    public function getTransaction(string $reference): array
+    {
+        return $this->makeRequest(
+            method: 'GET',
+            requestUrl: "transaction/{$reference}"
+        );
+    }
+
+    /**
+     * Hit Paystack's Api to get all transaction
+     *
+     * @return array
+     * @throws GuzzleException|HttpMethodFoundException
+     */
+    public function getAllTransactions(): array
+    {
+        return $this->makeRequest(
+            method: 'GET',
+            requestUrl: "transaction"
         );
     }
 }

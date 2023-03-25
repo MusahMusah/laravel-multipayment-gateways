@@ -41,7 +41,7 @@ export default {
             text: "STRIPE",
             collapsible: true,
             items: [
-                { text: "Installation", link: "/stripe/installation.html"},
+                { text: "Setup", link: "/stripe/setup.html"},
             ],
         },
 
@@ -49,7 +49,10 @@ export default {
             text: "PAYSTACK",
             collapsible: true,
             items: [
-                { text: "Installation", link: "/paystack/installation.html"}
+                { text: "Setup", link: "/paystack/setup.html"},
+                { text: "Banks", link: "/paystack/banks.html"},
+                { text: "Transfers", link: "/paystack/transfers.html"},
+                { text: "Transactions", link: "/paystack/transactions.html"},
             ],
         },
 

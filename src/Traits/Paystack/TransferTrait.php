@@ -12,21 +12,17 @@ trait TransferTrait
      * Hit Paystack's API to create a Transfer Recipient
      *
      *
+     * @param array $payload
+     * @return array
      * @throws GuzzleException
      * @throws HttpMethodFoundException
      */
-    public function createTransferRecipient(string $name, string $accountNumber, string $bankCode): mixed
+    public function createTransferRecipient(array $payload): array
     {
         return $this->makeRequest(
             method: 'POST',
             requestUrl: 'transferrecipient',
-            formParams: [
-                'type' => 'nuban',
-                'name' => $name,
-                'account_number' => $accountNumber,
-                'bank_code' => $bankCode,
-                'currency' => config('multipayment-gateways.paystack.currency') ?? 'NGN',
-            ],
+            formParams: $payload,
             isJsonRequest: true
         );
     }
@@ -38,7 +34,7 @@ trait TransferTrait
      * @throws GuzzleException
      * @throws HttpMethodFoundException
      */
-    public function createBulkTransferRecipients(array $recipients): mixed
+    public function createBulkTransferRecipients(array $recipients): array
     {
         return $this->makeRequest(
             method: 'POST',
@@ -53,23 +49,16 @@ trait TransferTrait
     /**
      * Hit Paystack's API to initiate a Transfer
      *
-     *
-     * @throws GuzzleException
-     * @throws HttpMethodFoundException
+     * @param array $payload
+     * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
-    public function initiateTransfer(int $amount, string $reference, string $recipient, string $reason): mixed
+    public function initiateTransfer(array $payload): array
     {
         return $this->makeRequest(
             method: 'POST',
             requestUrl: 'transfer',
-            formParams: [
-                'source' => 'balance',
-                'reason' => $reason,
-                'amount' => $amount,
-                'recipient' => $recipient,
-                'reference' => $reference,
-                'currency' => config('multipayment-gateways.paystack.currency') ?? 'NGN',
-            ],
+            formParams: $payload,
             isJsonRequest: true
         );
     }
@@ -77,20 +66,16 @@ trait TransferTrait
     /**
      * Hit Paystack's API to initiate a Bulk Transfer
      *
-     *
-     * @throws GuzzleException
-     * @throws HttpMethodFoundException
+     * @param array $transfers
+     * @return mixed
+     * @throws GuzzleException|HttpMethodFoundException
      */
     public function initiateBulkTransfer(array $transfers): mixed
     {
         return $this->makeRequest(
             method: 'POST',
             requestUrl: 'transfer/bulk',
-            formParams: [
-                'source' => 'balance',
-                'transfers' => $transfers,
-                'currency' => config('multipayment-gateways.paystack.currency') ?? 'NGN',
-            ],
+            formParams: $transfers,
             isJsonRequest: true
         );
     }
@@ -98,20 +83,16 @@ trait TransferTrait
     /**
      * Hit Paystack's API to finalize a Transfer
      *
-     *
-     * @throws GuzzleException
-     * @throws HttpMethodFoundException
-     * @throws InvalidConfigurationException
+     * @param array $payload
+     * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
-    public function finalizeTransfer(string $transferCode, string $otp): mixed
+    public function finalizeTransfer(array $payload): array
     {
         return $this->makeRequest(
             method: 'POST',
             requestUrl: 'transfer/finalize_transfer',
-            formParams: [
-                'transfer_code' => $transferCode,
-                'otp' => $otp,
-            ],
+            formParams: $payload,
             isJsonRequest: true
         );
     }
@@ -138,7 +119,7 @@ trait TransferTrait
      *
      * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException
      */
-    public function fetchTransfer(string $transferCode): array
+    public function getTransfer(string $transferCode): array
     {
         return $this->makeRequest(
             method: 'GET',
@@ -153,7 +134,7 @@ trait TransferTrait
      * @throws HttpMethodFoundException
      * @throws InvalidConfigurationException
      */
-    public function fetchTransfers(): array
+    public function getAllTransfers(): array
     {
         return $this->makeRequest(
             method: 'GET',

@@ -44,19 +44,21 @@ interface PaystackContract
      * Hit Paystack's API to resolve a bank account
      *
      *
+     * @param array $payload
      * @throws GuzzleException
      * @throws HttpMethodFoundException
      */
-    public function resolveAccountNumber(string $accountNumber, string $bankCode): mixed;
+    public function resolveAccountNumber(array $payload): array;
 
     /**
      * Hit Paystack's API to create a Transfer Recipient
      *
      *
+     * @param array $payload
      * @throws GuzzleException
      * @throws HttpMethodFoundException
      */
-    public function createTransferRecipient(string $name, string $accountNumber, string $bankCode): mixed;
+    public function createTransferRecipient(array $payload): array;
 
     /**
      * Hit Paystack's API to create bulk transfers recipients
@@ -65,16 +67,17 @@ interface PaystackContract
      * @throws GuzzleException
      * @throws HttpMethodFoundException
      */
-    public function createBulkTransferRecipients(array $recipients): mixed;
+    public function createBulkTransferRecipients(array $recipients): array;
 
     /**
      * Hit Paystack's API to initiate a Transfer
      *
      *
+     * @param array $payload
      * @throws GuzzleException
      * @throws HttpMethodFoundException
      */
-    public function initiateTransfer(int $amount, string $reference, string $recipient, string $reason): mixed;
+    public function initiateTransfer(array $payload): array;
 
     /**
      * Hit Paystack's API to initiate a Bulk Transfer
@@ -87,8 +90,9 @@ interface PaystackContract
 
     /**
      * Hit Paystack's API to finalize a Transfer
+     * @param array $payload
      */
-    public function finalizeTransfer(string $transferCode, string $otp): mixed;
+    public function finalizeTransfer(array $payload): array;
 
     /**
      * Hit Paystack's API to verify a Transfer
@@ -98,10 +102,14 @@ interface PaystackContract
     /**
      * Hit Paystack's API to fetch a Transfer
      */
-    public function fetchTransfer(string $transferCode): mixed;
+    public function getTransfer(string $transferCode): mixed;
 
     /**
      * Hit Paystack's API to fetch all Transfers
      */
-    public function fetchTransfers(): mixed;
+    public function getAllTransfers(): mixed;
+
+    public function getTransaction(string $reference): array;
+
+    public function getAllTransactions(): array;
 }

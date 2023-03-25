@@ -8,12 +8,12 @@ use MusahMusah\LaravelMultipaymentGateways\Abstracts\BaseGateWay;
 use MusahMusah\LaravelMultipaymentGateways\Contracts\PaystackContract;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidConfigurationException;
 use MusahMusah\LaravelMultipaymentGateways\Traits\Paystack\BankTrait;
-use MusahMusah\LaravelMultipaymentGateways\Traits\Paystack\PaymentTrait;
+use MusahMusah\LaravelMultipaymentGateways\Traits\Paystack\TransactionTrait;
 use MusahMusah\LaravelMultipaymentGateways\Traits\Paystack\TransferTrait;
 
 class PaystackService extends BaseGateWay implements PaystackContract
 {
-    use PaymentTrait,
+    use TransactionTrait,
         TransferTrait,
         BankTrait;
 
