@@ -113,7 +113,7 @@ export default {
 
       footer: {
         message: "Released under the MIT License.",
-        copyright: "Copyright © 2022-present Adocs",
+        copyright: "Copyright © 2023-present Adocs",
       },
 
       markdown: {
