@@ -85,7 +85,7 @@ return [
             /*
              * This secret key is used to validate the signature of the webhook call.
              */
-            'signing_secret' => '',
+            'signing_secret' => env('PAYSTACK_SECRET'),
 
             /*
              * This refers to the header that holds the signature.
@@ -146,7 +146,7 @@ return [
              *
             * It should implement the interface \MusahMusah\LaravelMultipaymentGateways\SignatureValidator\PaymentWebhookSignatureValidator.
              */
-            'signature_validator' => \MusahMusah\LaravelMultipaymentGateways\SignatureValidator\DefaultSignatureValidator::class,
+            'signature_validator' => \MusahMusah\LaravelMultipaymentGateways\SignatureValidator\FlutterwaveSignatureValidator::class,
 
             /**
              * The webhook handler option allows you to choose how webhook requests are handled in your application.

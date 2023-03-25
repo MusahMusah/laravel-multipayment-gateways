@@ -75,7 +75,9 @@ export default {
             text: "WEBHOOKS",
             collapsible: true,
             items: [
-                { text: "Installation", link: "/webhook/installation.html"},
+                { text: "Paystack", link: "/webhook/paystack.html"},
+                { text: "Flutterwave", link: "/webhook/flutterwave.html"},
+                { text: "Stripe", link: "/webhook/stripe.html"},
             ],
         },
 
