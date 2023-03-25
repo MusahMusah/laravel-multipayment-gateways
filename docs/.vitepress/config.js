@@ -42,6 +42,7 @@ export default {
             collapsible: true,
             items: [
                 { text: "Setup", link: "/stripe/setup.html"},
+                { text: "Transactions", link: "/stripe/transactions.html"},
             ],
         },
 
