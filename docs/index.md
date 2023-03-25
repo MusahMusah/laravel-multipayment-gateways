@@ -4,10 +4,10 @@ layout: home
 # Hero section
 hero:
   name: Laravel Multi Payment Gateways
-  text: Documentation for integrating the Laravel Terminal Africa Package.
+  text: Documentation for integrating the Laravel MultiPayment Gateways Package.
   image:
     src: /logo.png
-    alt: Terminal Africa
+    alt: Laravel MultiPayment Gateways
   actions:
     - theme: brand
       text: Get Started
