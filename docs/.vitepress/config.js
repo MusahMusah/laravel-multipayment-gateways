@@ -19,9 +19,9 @@ export default {
         {
           text: "API Documentation",
           items: [
-            { text: "Stripe", link: "https://docs.terminal.africa/tship/?utm_source=null" },
-            { text: "Paystack", link: "/other-apis.html" },
-            { text: "Flutterwave", link: "/other-apis.html" },
+            { text: "Stripe", link: "https://stripe.com/docs/api" },
+            { text: "Paystack", link: "https://paystack.com/docs/api" },
+            { text: "Flutterwave", link: "https://developer.flutterwave.com/reference/introduction" },
           ]
         },
         { text: "Github", link: "https://github.com/MusahMusah/laravel-multipayment-gateways" }
