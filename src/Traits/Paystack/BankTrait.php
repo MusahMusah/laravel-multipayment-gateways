@@ -4,7 +4,6 @@ namespace MusahMusah\LaravelMultipaymentGateways\Traits\Paystack;
 
 use GuzzleHttp\Exception\GuzzleException;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\HttpMethodFoundException;
-use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidConfigurationException;
 
 trait BankTrait
 {
@@ -26,8 +25,6 @@ trait BankTrait
      * Hit Paystack's API to resolve a bank account
      *
      *
-     * @param array $payload
-     * @return array
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function resolveAccountNumber(array $payload): array

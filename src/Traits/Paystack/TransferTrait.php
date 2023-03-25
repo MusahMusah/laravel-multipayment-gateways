@@ -12,8 +12,6 @@ trait TransferTrait
      * Hit Paystack's API to create a Transfer Recipient
      *
      *
-     * @param array $payload
-     * @return array
      * @throws GuzzleException
      * @throws HttpMethodFoundException
      */
@@ -49,8 +47,6 @@ trait TransferTrait
     /**
      * Hit Paystack's API to initiate a Transfer
      *
-     * @param array $payload
-     * @return array
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function initiateTransfer(array $payload): array
@@ -66,8 +62,6 @@ trait TransferTrait
     /**
      * Hit Paystack's API to initiate a Bulk Transfer
      *
-     * @param array $transfers
-     * @return mixed
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function initiateBulkTransfer(array $transfers): mixed
@@ -83,8 +77,6 @@ trait TransferTrait
     /**
      * Hit Paystack's API to finalize a Transfer
      *
-     * @param array $payload
-     * @return array
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function finalizeTransfer(array $payload): array

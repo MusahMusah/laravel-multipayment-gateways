@@ -122,10 +122,8 @@ trait TransactionTrait
 
     /**
      * Hit Paystack's Api to get a transaction
-     * @param string $reference
-     * @throws GuzzleException|HttpMethodFoundException
      *
-     * @return array
+     * @throws GuzzleException|HttpMethodFoundException
      */
     public function getTransaction(string $reference): array
     {
@@ -138,14 +136,13 @@ trait TransactionTrait
     /**
      * Hit Paystack's Api to get all transaction
      *
-     * @return array
      * @throws GuzzleException|HttpMethodFoundException
      */
     public function getAllTransactions(): array
     {
         return $this->makeRequest(
             method: 'GET',
-            requestUrl: "transaction"
+            requestUrl: 'transaction'
         );
     }
 }
