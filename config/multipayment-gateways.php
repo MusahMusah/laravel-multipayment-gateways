@@ -161,7 +161,7 @@ return [
              *
             * It should implement the interface \MusahMusah\LaravelMultipaymentGateways\SignatureValidator\PaymentWebhookSignatureValidator.
              */
-            'signature_validator' => \MusahMusah\LaravelMultipaymentGateways\SignatureValidator\FlutterwaveSignatureValidator::class,
+            'signature_validator' => \MusahMusah\LaravelMultipaymentGateways\SignatureValidator\DefaultSignatureValidator::class,
 
             /**
              * The webhook handler option allows you to choose how webhook requests are handled in your application.
