@@ -9,13 +9,19 @@ class DefaultSignatureValidator implements PaymentWebhookSignatureValidator
 {
     public function isValid(Request $request, PaymentWebhookConfig $config): bool
     {
-        if (! config(key: $config->verify_signature)) return true;
+        if (! config(key: $config->verify_signature)) {
+            return true;
+        }
 
-        if ((! $request->isMethod(method: 'post')) || ! $request->header(key: $config->signatureHeaderName)) return false;
+        if ((! $request->isMethod(method: 'post')) || ! $request->header(key: $config->signatureHeaderName)) {
+            return false;
+        }
 
         $signature = $this->validateSignature(gatewayName: $config->name, requestContent: $request->getContent(), signingSecret: $config->signingSecret);
 
-        if ($signature !== $request->header(key: $config->signatureHeaderName)) return false;
+        if ($signature !== $request->header(key: $config->signatureHeaderName)) {
+            return false;
+        }
 
         return hash_equals(known_string: $signature, user_string: $request->header(key: $config->signatureHeaderName));
     }

@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-multipayment-gateways` will be documented in this file.
 
+## 1.2.5 - 2023-03-26
+
+### What's Changed
+
+- New documentation page added by @cybernerdie
+- Add custom webhook signature validation by @MusahMusah
+- Additional transaction methods for Paystack Gateway
+
 ## 1.2.0 - 2023-02-20
 
 ### What's Changed
