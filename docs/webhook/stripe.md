@@ -12,6 +12,11 @@ Ensure that this setup is present inside the `multipayment-gateways.php` configu
      * This refers to the name of the payment gateway being used.
      */
     'name' => 'stripe',
+    
+    /**
+    * When set to false, the package will not verify the signature of the webhook call.
+    */
+    'verify_signature' => true,
 
     /*
      * This secret key is used to validate the signature of the webhook call.
@@ -28,7 +33,7 @@ Ensure that this setup is present inside the `multipayment-gateways.php` configu
      *
     * It should implement the interface \MusahMusah\LaravelMultipaymentGateways\SignatureValidator\PaymentWebhookSignatureValidator.
      */
-    'signature_validator' => \MusahMusah\LaravelMultipaymentGateways\SignatureValidator\StripeSignatureValidator::class,
+    'signature_validator' => \MusahMusah\LaravelMultipaymentGateways\SignatureValidator\DefaultSignatureValidator::class,
 
     /**
      * The webhook handler option allows you to choose how webhook requests are handled in your application.
@@ -58,10 +63,10 @@ Ensure that this setup is present inside the `multipayment-gateways.php` configu
 ```
 
 ## Stripe Signature Validator 
-The package ships with a signature validator for stripe which is used as shown below:
+The package ships with a default signature validator for stripe which is used as shown below:
 
 ```php
-'signature_validator' => \MusahMusah\LaravelMultipaymentGateways\SignatureValidator\StripeSignatureValidator::class,
+'signature_validator' => \MusahMusah\LaravelMultipaymentGateways\SignatureValidator\DefaultSignatureValidator::class,
 ```
 
 ## Custom Signature Validator 
@@ -72,11 +77,12 @@ To use a custom class for signature validation, create a class that implements t
 ```
 
 ## Disabling Signature Validation
-In case you opt not to validate stripe webhook events, you can use the default signature validation class as demonstrated below.
+In case you opt not to validate the webhook events, you can disable the signature validation by setting the `verify_signature` option to `false` as shown below:
 
 ```php
-'signature_validator' => \MusahMusah\LaravelMultipaymentGateways\SignatureValidator\DefaultSignatureValidator::class,
+'verify_signature' => false,
 ```
+The package will then not verify the signature of the webhook call.
 
 ## Webhook Handler
 

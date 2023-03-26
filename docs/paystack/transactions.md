@@ -176,19 +176,19 @@ Web Payment can be handled in the following ways:
       Route::get('/payment/callback', [PaystackPaymentController::class, 'handlePaymentResponse'])->name('payment.callback');
       ```
     - Create a controller to handle the payment response.
-       ```php
-       use Illuminate\Http\Request;
-       use MusahMusah\LaravelMultipaymentGateways\Contracts\PaystackContract;
+      ```php
+        use Illuminate\Http\Request;
+        use MusahMusah\LaravelMultipaymentGateways\Contracts\PaystackContract;
         
-       class PaystackPaymentController extends Controller
-       {
+        class PaystackPaymentController extends Controller
+        {
             public function handlePaymentResponse(Request $request, PaystackContract $paystack)
             {
                 $paymentResponse = $paystack->getPaymentData();
                 
                 // Handle payment response here
             }
-       }
+        }
       ```
 
 For an api based application where the client is served by a mobile app or on a separate domain, you can use this approach instead:
@@ -203,6 +203,7 @@ For an api based application where the client is served by a mobile app or on a 
     Route::post('/payment/verify', [PaystackPaymentController::class, 'verifyPayment'])->name('payment.verify');
     ```
    Your Controller should look like this:
+
     ```php
     use Illuminate\Http\Request;
     use MusahMusah\LaravelMultipaymentGateways\Contracts\PaystackContract;
@@ -219,3 +220,4 @@ For an api based application where the client is served by a mobile app or on a 
         }
     }
     ```
+   
