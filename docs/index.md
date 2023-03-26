@@ -29,5 +29,8 @@ head:
       content: https://linktr.ee/cybernerdie
   - - meta
     - name: title
-      content: cybernerdie
+      content: MusahMusah
+  - - meta
+    - property: og:url
+      content: https://linktr.ee/musahmusah
 ---
