@@ -13,7 +13,7 @@ The package offers an easy to use interface that abstracts the complexities of i
 It also provides a way to handle webhooks from the payment gateways.
 
 ## Documentation
-A comprehensive documentation is available to help you get started with the package <a href="https://laravel-multipayment-gateways.vercel.app/" target="_blank">here</a>.
+A comprehensive documentation is available to help you get started with the package [here](https://laravel-multipayment-gateways.vercel.app/)
 
 
 ## Testing
