@@ -22,6 +22,8 @@ class PaymentWebhookConfig
 
     public string $paymentWebhookHandler;
 
+    public string $verify_signature;
+
     public string|ProcessPaymentWebhookJob $paymentWebhookJobClass;
 
     public string|PaymentWebhookReceivedEvent $paymentWebhookEventClass;
@@ -32,6 +34,8 @@ class PaymentWebhookConfig
     public function __construct(array $properties)
     {
         $this->name = $properties['name'];
+
+        $this->verify_signature = $properties['verify_signature'];
 
         $this->signingSecret = $properties['signing_secret'] ?? '';
 

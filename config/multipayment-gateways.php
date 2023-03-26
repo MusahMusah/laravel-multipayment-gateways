@@ -33,6 +33,11 @@ return [
              */
             'name' => 'stripe',
 
+            /**
+             * When set to false, the package will not verify the signature of the webhook call.
+             */
+            'verify_signature' => true,
+
             /*
              * This secret key is used to validate the signature of the webhook call.
              */
@@ -82,6 +87,11 @@ return [
              */
             'name' => 'paystack',
 
+            /**
+             * When set to false, the package will not verify the signature of the webhook call.
+             */
+            'verify_signature' => true,
+
             /*
              * This secret key is used to validate the signature of the webhook call.
              */
@@ -130,6 +140,11 @@ return [
              * This refers to the name of the payment gateway being used.
              */
             'name' => 'flutterwave',
+
+            /**
+             * When set to false, the package will not verify the signature of the webhook call.
+             */
+            'verify_signature' => true,
 
             /*
              * This secret key is used to validate the signature of the webhook call.
