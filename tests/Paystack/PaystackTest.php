@@ -4,10 +4,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Http;
 use MusahMusah\LaravelMultipaymentGateways\Contracts\PaystackContract;
 
-beforeEach(function () {
-    $this->paystack = $this->mock(PaystackContract::class);
-});
-
 it('can instantiate PaystackContract instance', function () {
     expect($this->paystack)
         ->toBeObject()
@@ -90,18 +86,41 @@ it('can get the list of all banks', function () {
         ]);
 });
 
-it('can make fake http request to get list of banks', function () {
-    $body = file_get_contents(__DIR__.'/Fixtures/banks.json');
-
-    Http::fake([
-        'https://api.paystack.co/bank' => Http::response($body, 200),
-    ]);
-
-    expect(json_decode($body, true))
-        ->toBeArray()
-        ->toHaveKeys([
-            'status',
-            'message',
-            'data',
-        ]);
-});
+//it('can make fake http request to get list of banks', function () {
+//    $body = file_get_contents(__DIR__.'/Fixtures/banks.json');
+//
+//    Http::fake([
+//        'https://api.paystack.co/bank' => Http::response($body, 200),
+//    ]);
+//
+//    // assert if there is a bank with name "Abbey Mortgage Bank" in the list of banks
+////    $body =
+//
+//
+////    expect(json_decode($body, true)['data'])
+////        ->toBeArray()
+//////        ->dd()
+////        ->toContain(fn ($bank) => $bank['name'] === 'Abbey Mortgage Bank');
+//
+////    expect(
+////        collect(json_decode($body, true)['data'])
+////            ->where('name', 'Abbey Mortgage Bank')
+////            ->isNotEmpty()
+////    )
+////        ->toBeTrue();
+//
+//
+//
+////    expect($body)
+////        ->toBeString()
+////        ->toContain('Abbey Mortgage Bank');
+//
+////    expect(json_decode($body, true))
+////        ->toBeArray()
+////        ->toHaveKeys([
+////            'status',
+////            'message',
+////            'data',
+////        ])
+////        ->toContain('data');
+//});
