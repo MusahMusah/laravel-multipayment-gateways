@@ -10,7 +10,8 @@ class HttpClientWrapper implements HttpClientWrapperContract
     use ConsumesExternalServices;
 
     public function __construct(protected $baseUri)
-    {}
+    {
+    }
 
     /**
      * Send a GET request to the payment gateway
