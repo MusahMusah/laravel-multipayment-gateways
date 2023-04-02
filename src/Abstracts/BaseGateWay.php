@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MusahMusah\LaravelMultipaymentGateways\Abstracts;
 
 use MusahMusah\LaravelMultipaymentGateways\Contracts\GatewayContract;
+use MusahMusah\LaravelMultipaymentGateways\Services\HttpClientWrapper;
 use MusahMusah\LaravelMultipaymentGateways\Traits\ConsumesExternalServices;
 
 abstract class BaseGateWay implements GatewayContract
@@ -85,5 +86,13 @@ abstract class BaseGateWay implements GatewayContract
     public function getData(): array
     {
         return $this->getResponse()['data'];
+    }
+
+    /* Instantiate the http client wrapper class to make it available to the gateway classes
+     *
+     */
+    public function httpClient(): HttpClientWrapper
+    {
+        return new HttpClientWrapper(baseUri: $this->baseUri);
     }
 }
