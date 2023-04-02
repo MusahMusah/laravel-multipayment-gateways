@@ -10,7 +10,8 @@ class HttpClientWrapper implements HttpClientWrapperContract
     use ConsumesExternalServices;
 
     public function __construct(protected $baseUri)
-    {}
+    {
+    }
 
     /**
      * Send a GET request to the payment gateway
@@ -44,7 +45,7 @@ class HttpClientWrapper implements HttpClientWrapperContract
     /**
      * Send a PUT request to the payment gateway
      */
-    public function put(string $url, array $formParams = [], array $query = [],  array $headers = [], bool $isJsonRequest = true): mixed
+    public function put(string $url, array $formParams = [], array $query = [], array $headers = [], bool $isJsonRequest = true): mixed
     {
         return $this->makeRequest(
             method: 'PUT',
@@ -59,7 +60,7 @@ class HttpClientWrapper implements HttpClientWrapperContract
     /**
      * Send a PATCH request to the payment gateway
      */
-    public function patch(string $url, array $formParams = [], array $query = [],  array $headers = [], bool $isJsonRequest = true): mixed
+    public function patch(string $url, array $formParams = [], array $query = [], array $headers = [], bool $isJsonRequest = true): mixed
     {
         return $this->makeRequest(
             method: 'PATCH',

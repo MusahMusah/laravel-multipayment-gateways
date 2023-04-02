@@ -17,12 +17,12 @@ interface HttpClientWrapperContract
     /**
      * Send a PUT request to the payment gateway
      */
-    public function put(string $url, array $formParams = [], array $query = [],  array $headers = [], bool $isJsonRequest = true): mixed;
+    public function put(string $url, array $formParams = [], array $query = [], array $headers = [], bool $isJsonRequest = true): mixed;
 
     /**
      * Send a PATCH request to the payment gateway
      */
-    public function patch(string $url, array $formParams = [], array $query = [],  array $headers = [], bool $isJsonRequest = true): mixed;
+    public function patch(string $url, array $formParams = [], array $query = [], array $headers = [], bool $isJsonRequest = true): mixed;
 
     /**
      * Send a DELETE request to the payment gateway
