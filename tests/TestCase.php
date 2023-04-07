@@ -20,7 +20,6 @@ class TestCase extends Orchestra
             fn (string $modelName) => 'MusahMusah\\LaravelMultipaymentGateways\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
 
-
         $this->paystack = $this->instance('paystack', $this->mock(PaystackContract::class));
         $this->flutterwave = $this->instance('flutterwave', $this->mock(FlutterwaveContract::class));
         $this->stripe = $this->instance('stripe', $this->mock(StripeContract::class));
