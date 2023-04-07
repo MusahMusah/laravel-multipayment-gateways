@@ -9,7 +9,7 @@ class HttpClientWrapper implements HttpClientWrapperContract
 {
     use ConsumesExternalServices;
 
-    public function __construct(protected $baseUri)
+    public function __construct(protected $baseUri, protected $secret)
     {}
 
     /**
@@ -84,6 +84,11 @@ class HttpClientWrapper implements HttpClientWrapperContract
             queryParams: $query,
             headers: $headers
         );
+    }
+
+    private function resolveAuthorization(&$queryParams, &$formParams, &$headers): string
+    {
+        return $headers['Authorization'] = str_replace('"', '', "Bearer {$this->secret}");
     }
 
     public function decodeResponse(): array

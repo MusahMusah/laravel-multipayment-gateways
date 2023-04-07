@@ -93,6 +93,6 @@ abstract class BaseGateWay implements GatewayContract
      */
     public function httpClient(): HttpClientWrapper
     {
-        return new HttpClientWrapper(baseUri: $this->baseUri);
+        return new HttpClientWrapper(baseUri: $this->baseUri, secret: $this->secret);
     }
 }
