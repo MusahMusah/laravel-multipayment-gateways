@@ -11,7 +11,7 @@ use MusahMusah\LaravelMultipaymentGateways\Contracts\PaystackContract;
  * @method static array verifyTransaction(string $reference)
  * @method static array getBanks()
  * @method static array resolveAccountNumber(array $payload)
- * @method static array createTransferRecipient(string $name, string $accountNumber, string $bankCode)
+ * @method static array createTransferRecipient(array $payload)
  * @method static array createBulkTransferRecipients(array $recipients)
  * @method static array initiateTransfer(int $amount, string $reference, string $recipient, string $reason)
  * @method static array initiateBulkTransfer(array $transfers)

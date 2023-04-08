@@ -17,13 +17,8 @@ trait TransferTrait
      */
     public function createTransferRecipient(array $payload): array
     {
+        return paystack()->httpClient()->post(url:'transferrecipient',formParams: $payload);
 
-        return $this->makeRequest(
-            method: 'POST',
-            requestUrl: 'transferrecipient',
-            formParams: $payload,
-            isJsonRequest: true
-        );
     }
 
 
@@ -37,14 +32,10 @@ trait TransferTrait
      */
     public function createBulkTransferRecipients(array $recipients): array
     {
-        return $this->makeRequest(
-            method: 'POST',
-            requestUrl: 'transferrecipient/bulk',
-            formParams: [
-                'batch' => $recipients,
-            ],
-            isJsonRequest: true
-        );
+        return paystack()->httpClient()->post(url:'transferrecipient',formParams: [
+            'batch' => $recipients,
+        ]);
+
     }
 
     /**
@@ -54,12 +45,9 @@ trait TransferTrait
      */
     public function initiateTransfer(array $payload): array
     {
-        return $this->makeRequest(
-            method: 'POST',
-            requestUrl: 'transfer',
-            formParams: $payload,
-            isJsonRequest: true
-        );
+
+        return paystack()->httpClient()->post(url:'transfer',formParams: $payload);
+
     }
 
     /**
@@ -69,12 +57,8 @@ trait TransferTrait
      */
     public function initiateBulkTransfer(array $transfers): mixed
     {
-        return $this->makeRequest(
-            method: 'POST',
-            requestUrl: 'transfer/bulk',
-            formParams: $transfers,
-            isJsonRequest: true
-        );
+        return paystack()->httpClient()->post(url:'transfer/bulk',formParams: $transfers);
+
     }
 
     /**
@@ -84,12 +68,8 @@ trait TransferTrait
      */
     public function finalizeTransfer(array $payload): array
     {
-        return $this->makeRequest(
-            method: 'POST',
-            requestUrl: 'transfer/finalize_transfer',
-            formParams: $payload,
-            isJsonRequest: true
-        );
+        return paystack()->httpClient()->post(url:'transfer/finalize_transfer',formParams: $payload);
+
     }
 
     /**
@@ -102,10 +82,7 @@ trait TransferTrait
      */
     public function verifyTransfer(string $reference): mixed
     {
-        return $this->makeRequest(
-            method: 'GET',
-            requestUrl: "transfer/verify/{$reference}"
-        );
+        return paystack()->httpClient()->get(url:"transfer/verify/{$reference}");
     }
 
     /**
@@ -116,10 +93,8 @@ trait TransferTrait
      */
     public function getTransfer(string $transferCode): array
     {
-        return $this->makeRequest(
-            method: 'GET',
-            requestUrl: "transfer/{$transferCode}",
-        );
+
+        return paystack()->httpClient()->get(url:"transfer/{$transferCode}");
     }
 
     /**
@@ -131,10 +106,7 @@ trait TransferTrait
      */
     public function getAllTransfers(): array
     {
-        return $this->makeRequest(
-            method: 'GET',
-            requestUrl: 'transfer',
-        );
+        return paystack()->httpClient()->get(url:"transfer");
     }
 
 }
