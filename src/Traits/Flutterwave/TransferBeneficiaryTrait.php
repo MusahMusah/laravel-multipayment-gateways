@@ -17,11 +17,9 @@ trait TransferBeneficiaryTrait
      */
     public function createTransferBeneficiary(array $transferBeneficiaryDetails): mixed
     {
-        return $this->makeRequest(
-            method: 'POST',
-            requestUrl: FlutterwaveConstant::BENEFICIARY_ENDPOINT,
-            formParams: $transferBeneficiaryDetails,
-            isJsonRequest: true
+        return flutterwave()->httpClient()->get(
+            url:  FlutterwaveConstant::BENEFICIARY_ENDPOINT,
+            formParams: $transferBeneficiaryDetails
         );
     }
 
@@ -36,11 +34,9 @@ trait TransferBeneficiaryTrait
      */
     public function getAllTransferBeneficiaries(array $queryParams = []): array
     {
-        return $this->makeRequest(
-            method: 'GET',
-            requestUrl: FlutterwaveConstant::BENEFICIARY_ENDPOINT,
-            isJsonRequest: true,
-            queryParams: $queryParams
+        return flutterwave()->httpClient()->get(
+            url:  FlutterwaveConstant::BENEFICIARY_ENDPOINT,
+            query: $queryParams
         );
     }
 
@@ -53,10 +49,8 @@ trait TransferBeneficiaryTrait
      */
     public function getTransferBeneficiary(int $beneficiaryId): array
     {
-        return $this->makeRequest(
-            method: 'GET',
-            requestUrl: FlutterwaveConstant::BENEFICIARY_ENDPOINT.$beneficiaryId,
-            isJsonRequest: true
+        return flutterwave()->httpClient()->get(
+            url:  FlutterwaveConstant::BENEFICIARY_ENDPOINT.$beneficiaryId,
         );
     }
 
@@ -69,10 +63,8 @@ trait TransferBeneficiaryTrait
      */
     public function deleteTransferBeneficiary(int $beneficiaryId): array
     {
-        return $this->makeRequest(
-            method: 'DELETE',
-            requestUrl: FlutterwaveConstant::BENEFICIARY_ENDPOINT.$beneficiaryId,
-            isJsonRequest: true
+        return flutterwave()->httpClient()->delete(
+            url:  FlutterwaveConstant::BENEFICIARY_ENDPOINT.$beneficiaryId,
         );
     }
 }
