@@ -17,11 +17,10 @@ trait SettlementTrait
      */
     public function getSettlement(int $settlementId): array
     {
-        return $this->makeRequest(
-            method: 'GET',
-            requestUrl: FlutterwaveConstant::SETTLEMENT_ENDPOINT.$settlementId,
-            isJsonRequest: true
+        return flutterwave()->httpClient()->get(
+            url: FlutterwaveConstant::SETTLEMENT_ENDPOINT.$settlementId,
         );
+
     }
 
     /**
@@ -33,11 +32,10 @@ trait SettlementTrait
      */
     public function getAllSettlements(array $queryParams = []): array
     {
-        return $this->makeRequest(
-            method: 'GET',
-            requestUrl: FlutterwaveConstant::SETTLEMENT_ENDPOINT,
-            isJsonRequest: true,
-            queryParams: $queryParams
+        return flutterwave()->httpClient()->get(
+            url: FlutterwaveConstant::SETTLEMENT_ENDPOINT,
+            query: $queryParams
         );
+
     }
 }

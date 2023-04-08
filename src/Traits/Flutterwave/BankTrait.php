@@ -13,10 +13,9 @@ trait BankTrait
      */
     public function getBanks(string $countryCode): array
     {
-        $banks = $this->makeRequest(
-            method: 'GET',
-            requestUrl: FlutterwaveConstant::BANK_ENDPOINT.$countryCode,
-            isJsonRequest: true
+
+        $banks = flutterwave()->httpClient()->get(
+            url: FlutterwaveConstant::BANK_ENDPOINT.$countryCode,
         );
 
         // sort banks by name
@@ -34,10 +33,8 @@ trait BankTrait
      */
     public function getBankBranches(int $bankId): array
     {
-        return $this->makeRequest(
-            method: 'GET',
-            requestUrl: FlutterwaveConstant::BANK_ENDPOINT.$bankId.'/branches',
-            isJsonRequest: true
+        return flutterwave()->httpClient()->get(
+            url: FlutterwaveConstant::BANK_ENDPOINT.$bankId.'/branches',
         );
     }
 }

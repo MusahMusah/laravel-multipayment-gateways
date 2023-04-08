@@ -17,11 +17,9 @@ trait OtpTrait
      */
     public function createOtp(array $formParams): array
     {
-        return $this->makeRequest(
-            method: 'POST',
-            requestUrl: FlutterwaveConstant::OTP_ENDPOINT,
-            formParams: $formParams,
-            isJsonRequest: true
+        return flutterwave()->httpClient()->post(
+            url: FlutterwaveConstant::OTP_ENDPOINT,
+            formParams: $formParams
         );
     }
 
@@ -34,11 +32,10 @@ trait OtpTrait
      */
     public function verifyOtp(string $reference, array $formParams): array
     {
-        return $this->makeRequest(
-            method: 'POST',
-            requestUrl: FlutterwaveConstant::OTP_ENDPOINT.$reference.'/validate',
-            formParams: $formParams,
-            isJsonRequest: true
+        return flutterwave()->httpClient()->post(
+            url: FlutterwaveConstant::OTP_ENDPOINT.$reference.'/validate',
+            formParams: $formParams
         );
+
     }
 }
