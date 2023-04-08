@@ -10,7 +10,7 @@ it('can take url from any payment gateway in HttpClientWrapper', function () {
         'https://api.flutterwave.com',
     ])];
 
-    $httpClientWrapper = new HttpClientWrapper(baseUri: $baseUri);
+    $httpClientWrapper = new HttpClientWrapper(baseUri: $baseUri, secret: 'sk_test_123456789');
 
     expect($httpClientWrapper)
         ->toBeObject()
@@ -21,7 +21,7 @@ it('can use httpClient() method in paystack gateway class', function () {
     $this->paystack
         ->shouldReceive('httpClient')
         ->once()
-        ->andReturn(new HttpClientWrapper(baseUri: 'https://api.paystack.cosz'));
+        ->andReturn(new HttpClientWrapper(baseUri: 'https://api.paystack.cosz', secret: 'sk_test_123456789'));
 
     expect($this->paystack->httpClient())
         ->toBeObject()
@@ -32,7 +32,7 @@ it('can use httpClient() method in stripe gateway class', function () {
     $this->stripe
         ->shouldReceive('httpClient')
         ->once()
-        ->andReturn(new HttpClientWrapper(baseUri: 'https://api.stripe.com'));
+        ->andReturn(new HttpClientWrapper(baseUri: 'https://api.stripe.com', secret: 'sk_test_123456789'));
 
     expect($this->stripe->httpClient())
         ->toBeObject()
@@ -43,7 +43,7 @@ it('can use httpClient() method in flutterwave gateway class', function () {
     $this->flutterwave
         ->shouldReceive('httpClient')
         ->once()
-        ->andReturn(new HttpClientWrapper(baseUri: 'https://api.flutterwave.com'));
+        ->andReturn(new HttpClientWrapper(baseUri: 'https://api.flutterwave.com', secret: 'sk_test_123456789'));
 
     expect($this->flutterwave->httpClient())
         ->toBeObject()
