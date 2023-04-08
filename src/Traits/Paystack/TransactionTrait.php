@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\HttpMethodFoundException;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidConfigurationException;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\PaymentVerificationException;
+use MusahMusah\LaravelMultipaymentGateways\Jobs\ProcessPaymentWebhookJob;
 
 trait TransactionTrait
 {
@@ -18,6 +19,7 @@ trait TransactionTrait
      */
     private function generateCheckoutLink(): void
     {
+
         if (empty($this->payload)) {
             $this->payload = array_filter([
                 'amount' => (int) request()->amount,
@@ -73,6 +75,7 @@ trait TransactionTrait
      */
     public function redirectToCheckout(array $data = null): RedirectResponse
     {
+
         is_null($data) ?: $this->payload = $data;
 
         return $this->getAuthorizationUrl()->redirectRequest();

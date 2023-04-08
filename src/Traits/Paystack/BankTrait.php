@@ -4,6 +4,7 @@ namespace MusahMusah\LaravelMultipaymentGateways\Traits\Paystack;
 
 use GuzzleHttp\Exception\GuzzleException;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\HttpMethodFoundException;
+use MusahMusah\LaravelMultipaymentGateways\Services\HttpClientWrapper;
 
 trait BankTrait
 {
@@ -15,10 +16,7 @@ trait BankTrait
      */
     public function getBanks(): array
     {
-        return $this->makeRequest(
-            method: 'GET',
-            requestUrl: 'bank'
-        );
+        return paystack()->httpClient()->get('bank');
     }
 
     /**
@@ -29,10 +27,7 @@ trait BankTrait
      */
     public function resolveAccountNumber(array $payload): array
     {
-        return $this->makeRequest(
-            method: 'GET',
-            requestUrl: 'bank/resolve',
-            queryParams: $payload
-        );
+        return paystack()->httpClient()->get('bank/resolve', $payload);
+
     }
 }

@@ -28,8 +28,11 @@ trait ConsumesExternalServices
         ]);
 
         if (method_exists($this, 'resolveAuthorization') && ! $skipResolve) {
+
             $this->resolveAuthorization($queryParams, $formParams, $headers);
         }
+
+
 
         try {
             $response = $client->request($method, $requestUrl, [
@@ -38,9 +41,11 @@ trait ConsumesExternalServices
                     ...$headers,
                     'Content-Type' => $isJsonRequest ? 'application/json' : 'application/x-www-form-urlencoded',
                     'Accept' => 'application/json',
+
                 ],
                 'query' => $queryParams,
             ]);
+
         } catch (GuzzleException $e) {
             throw new HttpClientException($e->getMessage());
         }

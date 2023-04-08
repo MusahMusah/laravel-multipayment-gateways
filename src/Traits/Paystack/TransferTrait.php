@@ -17,6 +17,7 @@ trait TransferTrait
      */
     public function createTransferRecipient(array $payload): array
     {
+
         return $this->makeRequest(
             method: 'POST',
             requestUrl: 'transferrecipient',
@@ -24,6 +25,8 @@ trait TransferTrait
             isJsonRequest: true
         );
     }
+
+
 
     /**
      * Hit Paystack's API to create bulk transfers recipients
@@ -133,4 +136,5 @@ trait TransferTrait
             requestUrl: 'transfer',
         );
     }
+
 }
