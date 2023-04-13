@@ -39,7 +39,7 @@ trait TransactionTrait
             ]);
         }
 
-        paystack()->httpClient()->post(url:'transaction/initialize', formParams:$this->payload);
+        paystack()->httpClient()->post(url: 'transaction/initialize', formParams: $this->payload);
     }
 
     /**
@@ -110,7 +110,7 @@ trait TransactionTrait
      */
     public function verifyTransaction(string $reference): array
     {
-        return paystack()->httpClient()->get(url:"transaction/verify/{$reference}");
+        return paystack()->httpClient()->get(url: "transaction/verify/{$reference}");
     }
 
     /**
@@ -120,7 +120,7 @@ trait TransactionTrait
      */
     public function getTransaction(string $reference): array
     {
-        return paystack()->httpClient()->get(url:"transaction/{$reference}");
+        return paystack()->httpClient()->get(url: "transaction/{$reference}");
     }
 
     /**
@@ -130,6 +130,6 @@ trait TransactionTrait
      */
     public function getAllTransactions(): array
     {
-        return paystack()->httpClient()->get(url:'transaction');
+        return paystack()->httpClient()->get(url: 'transaction');
     }
 }

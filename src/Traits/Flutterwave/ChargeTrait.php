@@ -255,7 +255,7 @@ trait ChargeTrait
             'type' => $paymentMethod,
         ];
 
-        return  flutterwave()->httpClient()->post(
+        return flutterwave()->httpClient()->post(
             url: FlutterwaveConstant::CHARGE_ENDPOINT,
             formParams: $formParams,
             query: $queryParams
@@ -292,7 +292,7 @@ trait ChargeTrait
      */
     public function validateCharge(array $formParams): array
     {
-        return  flutterwave()->httpClient()->post(
+        return flutterwave()->httpClient()->post(
             url: FlutterwaveConstant::VALIDATE_CHARGE_ENDPOINT,
             formParams: $formParams,
         );

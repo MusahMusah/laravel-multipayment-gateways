@@ -17,7 +17,7 @@ trait TransferTrait
      */
     public function createTransferRecipient(array $payload): array
     {
-        return paystack()->httpClient()->post(url:'transferrecipient', formParams: $payload);
+        return paystack()->httpClient()->post(url: 'transferrecipient', formParams: $payload);
     }
 
     /**
@@ -29,7 +29,7 @@ trait TransferTrait
      */
     public function createBulkTransferRecipients(array $recipients): array
     {
-        return paystack()->httpClient()->post(url:'transferrecipient', formParams: [
+        return paystack()->httpClient()->post(url: 'transferrecipient', formParams: [
             'batch' => $recipients,
         ]);
     }
@@ -41,7 +41,7 @@ trait TransferTrait
      */
     public function initiateTransfer(array $payload): array
     {
-        return paystack()->httpClient()->post(url:'transfer', formParams: $payload);
+        return paystack()->httpClient()->post(url: 'transfer', formParams: $payload);
     }
 
     /**
@@ -51,7 +51,7 @@ trait TransferTrait
      */
     public function initiateBulkTransfer(array $transfers): mixed
     {
-        return paystack()->httpClient()->post(url:'transfer/bulk', formParams: $transfers);
+        return paystack()->httpClient()->post(url: 'transfer/bulk', formParams: $transfers);
     }
 
     /**
@@ -61,7 +61,7 @@ trait TransferTrait
      */
     public function finalizeTransfer(array $payload): array
     {
-        return paystack()->httpClient()->post(url:'transfer/finalize_transfer', formParams: $payload);
+        return paystack()->httpClient()->post(url: 'transfer/finalize_transfer', formParams: $payload);
     }
 
     /**
@@ -74,7 +74,7 @@ trait TransferTrait
      */
     public function verifyTransfer(string $reference): mixed
     {
-        return paystack()->httpClient()->get(url:"transfer/verify/{$reference}");
+        return paystack()->httpClient()->get(url: "transfer/verify/{$reference}");
     }
 
     /**
@@ -85,7 +85,7 @@ trait TransferTrait
      */
     public function getTransfer(string $transferCode): array
     {
-        return paystack()->httpClient()->get(url:"transfer/{$transferCode}");
+        return paystack()->httpClient()->get(url: "transfer/{$transferCode}");
     }
 
     /**
@@ -97,6 +97,6 @@ trait TransferTrait
      */
     public function getAllTransfers(): array
     {
-        return paystack()->httpClient()->get(url:'transfer');
+        return paystack()->httpClient()->get(url: 'transfer');
     }
 }

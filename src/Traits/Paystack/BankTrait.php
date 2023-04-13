@@ -15,7 +15,7 @@ trait BankTrait
      */
     public function getBanks(): array
     {
-        return paystack()->httpClient()->get(url:'bank');
+        return paystack()->httpClient()->get(url: 'bank');
     }
 
     /**
@@ -26,6 +26,6 @@ trait BankTrait
      */
     public function resolveAccountNumber(array $payload): array
     {
-        return paystack()->httpClient()->get(url:'bank/resolve', query: $payload);
+        return paystack()->httpClient()->get(url: 'bank/resolve', query: $payload);
     }
 }

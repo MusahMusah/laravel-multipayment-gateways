@@ -18,7 +18,7 @@ trait TransferBeneficiaryTrait
     public function createTransferBeneficiary(array $transferBeneficiaryDetails): mixed
     {
         return flutterwave()->httpClient()->get(
-            url:  FlutterwaveConstant::BENEFICIARY_ENDPOINT,
+            url: FlutterwaveConstant::BENEFICIARY_ENDPOINT,
             formParams: $transferBeneficiaryDetails
         );
     }
@@ -35,7 +35,7 @@ trait TransferBeneficiaryTrait
     public function getAllTransferBeneficiaries(array $queryParams = []): array
     {
         return flutterwave()->httpClient()->get(
-            url:  FlutterwaveConstant::BENEFICIARY_ENDPOINT,
+            url: FlutterwaveConstant::BENEFICIARY_ENDPOINT,
             query: $queryParams
         );
     }
@@ -50,7 +50,7 @@ trait TransferBeneficiaryTrait
     public function getTransferBeneficiary(int $beneficiaryId): array
     {
         return flutterwave()->httpClient()->get(
-            url:  FlutterwaveConstant::BENEFICIARY_ENDPOINT.$beneficiaryId,
+            url: FlutterwaveConstant::BENEFICIARY_ENDPOINT.$beneficiaryId,
         );
     }
 
@@ -64,7 +64,7 @@ trait TransferBeneficiaryTrait
     public function deleteTransferBeneficiary(int $beneficiaryId): array
     {
         return flutterwave()->httpClient()->delete(
-            url:  FlutterwaveConstant::BENEFICIARY_ENDPOINT.$beneficiaryId,
+            url: FlutterwaveConstant::BENEFICIARY_ENDPOINT.$beneficiaryId,
         );
     }
 }
