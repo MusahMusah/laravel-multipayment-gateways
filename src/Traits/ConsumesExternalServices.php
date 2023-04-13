@@ -38,6 +38,7 @@ trait ConsumesExternalServices
                     ...$headers,
                     'Content-Type' => $isJsonRequest ? 'application/json' : 'application/x-www-form-urlencoded',
                     'Accept' => 'application/json',
+
                 ],
                 'query' => $queryParams,
             ]);

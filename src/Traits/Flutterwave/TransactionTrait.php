@@ -20,10 +20,8 @@ trait TransactionTrait
      */
     public function verifyTransaction(string $transactionId): array
     {
-        return $this->makeRequest(
-            method: 'GET',
-            requestUrl: FlutterwaveConstant::TRANSACTION_ENDPOINT.$transactionId.'/verify',
-            isJsonRequest: true
+        return flutterwave()->httpClient()->get(
+            url: FlutterwaveConstant::TRANSACTION_ENDPOINT.$transactionId.'/verify'
         );
     }
 
@@ -37,11 +35,9 @@ trait TransactionTrait
      */
     public function createTransactionRefund(string $transactionId, array $formParams = []): array
     {
-        return $this->makeRequest(
-            method: 'POST',
-            requestUrl: FlutterwaveConstant::TRANSACTION_ENDPOINT.$transactionId.'/refund',
-            formParams: $formParams,
-            isJsonRequest: true
+        return flutterwave()->httpClient()->post(
+            url: FlutterwaveConstant::TRANSACTION_ENDPOINT.$transactionId.'/refund',
+            formParams: $formParams
         );
     }
 
@@ -54,11 +50,9 @@ trait TransactionTrait
      */
     public function getTransactions(array $queryParams = []): array
     {
-        return $this->makeRequest(
-            method: 'GET',
-            requestUrl: FlutterwaveConstant::TRANSACTION_ENDPOINT,
-            isJsonRequest: true,
-            queryParams: $queryParams
+        return flutterwave()->httpClient()->get(
+            url: FlutterwaveConstant::TRANSACTION_ENDPOINT,
+            query: $queryParams
         );
     }
 
@@ -71,11 +65,9 @@ trait TransactionTrait
      */
     public function getRefundTransactions(array $queryParams = []): array
     {
-        return $this->makeRequest(
-            method: 'GET',
-            requestUrl: FlutterwaveConstant::REFUND_ENDPOINT,
-            isJsonRequest: true,
-            queryParams: $queryParams
+        return flutterwave()->httpClient()->get(
+            url: FlutterwaveConstant::REFUND_ENDPOINT,
+            query: $queryParams
         );
     }
 
@@ -88,10 +80,8 @@ trait TransactionTrait
      */
     public function getRefundDetails(string $refundId): array
     {
-        return $this->makeRequest(
-            method: 'GET',
-            requestUrl: FlutterwaveConstant::REFUND_ENDPOINT.$refundId,
-            isJsonRequest: true
+        return flutterwave()->httpClient()->get(
+            url: FlutterwaveConstant::REFUND_ENDPOINT.$refundId
         );
     }
 
@@ -104,11 +94,9 @@ trait TransactionTrait
      */
     public function getTransactionFee(array $queryParams): array
     {
-        return $this->makeRequest(
-            method: 'GET',
-            requestUrl: FlutterwaveConstant::TRANSACTION_ENDPOINT.'fee',
-            isJsonRequest: true,
-            queryParams: $queryParams
+        return flutterwave()->httpClient()->get(
+            url: FlutterwaveConstant::TRANSACTION_ENDPOINT.'fee',
+            query: $queryParams
         );
     }
 
@@ -122,11 +110,9 @@ trait TransactionTrait
      */
     public function resendFailedWebhook(string $transactionId, array $formParams = []): array
     {
-        return $this->makeRequest(
-            method: 'POST',
-            requestUrl: FlutterwaveConstant::TRANSACTION_ENDPOINT.$transactionId.'/resend-hook',
-            formParams: $formParams,
-            isJsonRequest: true
+        return flutterwave()->httpClient()->post(
+            url: FlutterwaveConstant::TRANSACTION_ENDPOINT.$transactionId.'/resend-hook',
+            formParams: $formParams
         );
     }
 
@@ -139,10 +125,8 @@ trait TransactionTrait
      */
     public function viewTransactionTimeline(string $transactionId): array
     {
-        return $this->makeRequest(
-            method: 'GET',
-            requestUrl: FlutterwaveConstant::TRANSACTION_ENDPOINT.$transactionId.'/events',
-            isJsonRequest: true
+        return flutterwave()->httpClient()->get(
+            url: FlutterwaveConstant::TRANSACTION_ENDPOINT.$transactionId.'/timeline'
         );
     }
 }

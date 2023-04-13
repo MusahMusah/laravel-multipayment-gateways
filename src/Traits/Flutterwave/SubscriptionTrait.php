@@ -15,11 +15,9 @@ trait SubscriptionTrait
      */
     public function getAllSubscriptions(array $queryParams = []): array
     {
-        return $this->makeRequest(
-            method: 'GET',
-            requestUrl: FlutterwaveConstant::SUBSCRIPTION_ENDPOINT,
-            isJsonRequest: true,
-            queryParams: $queryParams
+        return flutterwave()->httpClient()->get(
+            url: FlutterwaveConstant::SUBSCRIPTION_ENDPOINT,
+            query: $queryParams
         );
     }
 
@@ -30,10 +28,8 @@ trait SubscriptionTrait
      */
     public function activateSubscription(int $subscriptionId): array
     {
-        return $this->makeRequest(
-            method: 'PUT',
-            requestUrl: FlutterwaveConstant::SUBSCRIPTION_ENDPOINT.$subscriptionId.'/activate',
-            isJsonRequest: true
+        return flutterwave()->httpClient()->put(
+            url: FlutterwaveConstant::SUBSCRIPTION_ENDPOINT.$subscriptionId.'/activate',
         );
     }
 
@@ -44,10 +40,8 @@ trait SubscriptionTrait
      */
     public function deactivateSubscription(int $subscriptionId): array
     {
-        return $this->makeRequest(
-            method: 'PUT',
-            requestUrl: FlutterwaveConstant::SUBSCRIPTION_ENDPOINT.$subscriptionId.'/cancel',
-            isJsonRequest: true
+        return flutterwave()->httpClient()->put(
+            url: FlutterwaveConstant::SUBSCRIPTION_ENDPOINT.$subscriptionId.'/cancel',
         );
     }
 }

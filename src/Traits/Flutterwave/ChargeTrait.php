@@ -22,12 +22,10 @@ trait ChargeTrait
             'type' => FlutterwaveConstant::CARD_PAYMENT_CHARGE_TYPE,
         ];
 
-        return $this->makeRequest(
-            method: 'POST',
-            requestUrl: FlutterwaveConstant::CHARGE_ENDPOINT,
+        return flutterwave()->httpClient()->post(
+            url: FlutterwaveConstant::CHARGE_ENDPOINT,
             formParams: $this->encryptPayload($formParams),
-            isJsonRequest: true,
-            queryParams: $queryParams
+            query: $queryParams
         );
     }
 
@@ -257,12 +255,10 @@ trait ChargeTrait
             'type' => $paymentMethod,
         ];
 
-        return $this->makeRequest(
-            method: 'POST',
-            requestUrl: FlutterwaveConstant::CHARGE_ENDPOINT,
+        return  flutterwave()->httpClient()->post(
+            url: FlutterwaveConstant::CHARGE_ENDPOINT,
             formParams: $formParams,
-            isJsonRequest: true,
-            queryParams: $queryParams
+            query: $queryParams
         );
     }
 
@@ -296,11 +292,9 @@ trait ChargeTrait
      */
     public function validateCharge(array $formParams): array
     {
-        return $this->makeRequest(
-            method: 'POST',
-            requestUrl: FlutterwaveConstant::VALIDATE_CHARGE_ENDPOINT,
+        return  flutterwave()->httpClient()->post(
+            url: FlutterwaveConstant::VALIDATE_CHARGE_ENDPOINT,
             formParams: $formParams,
-            isJsonRequest: true
         );
     }
 
@@ -314,11 +308,9 @@ trait ChargeTrait
      */
     public function captureCharge(string $flwRef, array $formParams): array
     {
-        return $this->makeRequest(
-            method: 'POST',
-            requestUrl: FlutterwaveConstant::CHARGE_ENDPOINT.$flwRef.'/capture',
-            formParams: $formParams,
-            isJsonRequest: true
+        return flutterwave()->httpClient()->post(
+            url: FlutterwaveConstant::CHARGE_ENDPOINT.$flwRef.'/capture',
+            formParams: $formParams
         );
     }
 
@@ -331,10 +323,8 @@ trait ChargeTrait
      */
     public function voidCharge(string $flwRef): array
     {
-        return $this->makeRequest(
-            method: 'POST',
-            requestUrl: FlutterwaveConstant::CHARGE_ENDPOINT.$flwRef.'/void',
-            isJsonRequest: true
+        return flutterwave()->httpClient()->post(
+            url: FlutterwaveConstant::CHARGE_ENDPOINT.$flwRef.'/void',
         );
     }
 
@@ -348,11 +338,9 @@ trait ChargeTrait
      */
     public function createRefund(string $flwRef, array $formParams): array
     {
-        return $this->makeRequest(
-            method: 'POST',
-            requestUrl: FlutterwaveConstant::CHARGE_ENDPOINT.$flwRef.'/refund',
+        return flutterwave()->httpClient()->post(
+            url: FlutterwaveConstant::CHARGE_ENDPOINT.$flwRef.'/refund',
             formParams: $formParams,
-            isJsonRequest: true
         );
     }
 
@@ -365,11 +353,9 @@ trait ChargeTrait
      */
     public function capturePaypalCharge(array $formParams): array
     {
-        return $this->makeRequest(
-            method: 'POST',
-            requestUrl: FlutterwaveConstant::CHARGE_ENDPOINT.'/paypal-capture',
+        return flutterwave()->httpClient()->post(
+            url: FlutterwaveConstant::CHARGE_ENDPOINT.'/paypal-capture',
             formParams: $formParams,
-            isJsonRequest: true
         );
     }
 
@@ -382,11 +368,9 @@ trait ChargeTrait
      */
     public function voidPaypalCharge(array $formParams): array
     {
-        return $this->makeRequest(
-            method: 'POST',
-            requestUrl: FlutterwaveConstant::CHARGE_ENDPOINT.'/void',
+        return flutterwave()->httpClient()->post(
+            url: FlutterwaveConstant::CHARGE_ENDPOINT.'/void',
             formParams: $formParams,
-            isJsonRequest: true
         );
     }
 }
