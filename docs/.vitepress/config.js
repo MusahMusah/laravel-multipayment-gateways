@@ -45,6 +45,7 @@ export default {
                     {text: "Banks", link: "/paystack/banks.html"},
                     {text: "Transfers", link: "/paystack/transfers.html"},
                     {text: "Transactions", link: "/paystack/transactions.html"},
+                    {text: "Other Endpoints", link: "/paystack/other-endpoints.html"},
                 ],
             },
 
@@ -63,6 +64,7 @@ export default {
                     {text: "OTPs", link: "/flutterwave/otps.html"},
                     {text: "Charge", link: "/flutterwave/charge.html"},
                     {text: "Preauthorization", link: "/flutterwave/preauthorization.html"},
+                    {text: "Other Endpoints", link: "/flutterwave/other-endpoints.html"},
                 ],
             },
 
@@ -72,6 +74,7 @@ export default {
                 items: [
                     {text: "Setup", link: "/stripe/setup.html"},
                     {text: "Transactions", link: "/stripe/transactions.html"},
+                    {text: "Other Endpoints", link: "/stripe/other-endpoints.html"},
                 ],
             },
 
