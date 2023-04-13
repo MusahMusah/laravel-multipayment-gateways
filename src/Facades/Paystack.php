@@ -14,7 +14,6 @@ use MusahMusah\LaravelMultipaymentGateways\Services\HttpClientWrapper;
  * @method static HttpClientWrapper put(string $url, array $formParams = [], array $query = [], array $headers = [])
  * @method static HttpClientWrapper delete(string $url, array $formParams = [], array $query = [], array $headers = [])
  * @method static HttpClientWrapper patch(string $url, array $formParams = [], array $query = [], array $headers = [])
- *
  * @method static array getTransaction(string $reference)
  * @method static array getAllTransactions(array $payload)
  * @method static array verifyTransaction(string $reference)
