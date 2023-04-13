@@ -36,6 +36,5 @@ trait OtpTrait
             url: FlutterwaveConstant::OTP_ENDPOINT.$reference.'/validate',
             formParams: $formParams
         );
-
     }
 }

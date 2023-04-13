@@ -18,8 +18,6 @@ class HttpClientWrapper implements HttpClientWrapperContract
      */
     public function get(string $url, array $query = [], array $headers = []): mixed
     {
-
-
         return $this->makeRequest(
             method: 'GET',
             requestUrl: $url,

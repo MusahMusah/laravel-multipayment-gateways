@@ -24,7 +24,6 @@ trait PaymentPlanTrait
             formParams: $planDetails,
             isJsonRequest: true
         );
-
     }
 
     /**
@@ -77,7 +76,6 @@ trait PaymentPlanTrait
         return flutterwave()->httpClient()->get(
             url: FlutterwaveConstant::PAYMENT_PLAN_ENDPOINT.$paymentPlanId,
         );
-
     }
 
     /**
@@ -94,6 +92,5 @@ trait PaymentPlanTrait
         return flutterwave()->httpClient()->put(
             url: FlutterwaveConstant::PAYMENT_PLAN_ENDPOINT.$paymentPlanId.'/cancel',
         );
-
     }
 }

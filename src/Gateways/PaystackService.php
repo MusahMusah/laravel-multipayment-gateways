@@ -17,8 +17,6 @@ class PaystackService extends BaseGateWay implements PaystackContract
         TransferTrait,
         BankTrait;
 
-
-
     /**
      * The payload to initiate the transaction
      */

@@ -20,7 +20,6 @@ trait SettlementTrait
         return flutterwave()->httpClient()->get(
             url: FlutterwaveConstant::SETTLEMENT_ENDPOINT.$settlementId,
         );
-
     }
 
     /**
@@ -36,6 +35,5 @@ trait SettlementTrait
             url: FlutterwaveConstant::SETTLEMENT_ENDPOINT,
             query: $queryParams
         );
-
     }
 }

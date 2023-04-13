@@ -28,11 +28,8 @@ trait ConsumesExternalServices
         ]);
 
         if (method_exists($this, 'resolveAuthorization') && ! $skipResolve) {
-
             $this->resolveAuthorization($queryParams, $formParams, $headers);
         }
-
-
 
         try {
             $response = $client->request($method, $requestUrl, [
@@ -45,7 +42,6 @@ trait ConsumesExternalServices
                 ],
                 'query' => $queryParams,
             ]);
-
         } catch (GuzzleException $e) {
             throw new HttpClientException($e->getMessage());
         }

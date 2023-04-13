@@ -7,7 +7,6 @@ use Illuminate\Http\RedirectResponse;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\HttpMethodFoundException;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidConfigurationException;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\PaymentVerificationException;
-use MusahMusah\LaravelMultipaymentGateways\Jobs\ProcessPaymentWebhookJob;
 
 trait TransactionTrait
 {
@@ -19,7 +18,6 @@ trait TransactionTrait
      */
     private function generateCheckoutLink(): void
     {
-
         if (empty($this->payload)) {
             $this->payload = array_filter([
                 'amount' => (int) request()->amount,
@@ -41,8 +39,7 @@ trait TransactionTrait
             ]);
         }
 
-         paystack()->httpClient()->post(url:'transaction/initialize', formParams:$this->payload);
-
+        paystack()->httpClient()->post(url:'transaction/initialize', formParams:$this->payload);
     }
 
     /**
@@ -72,7 +69,6 @@ trait TransactionTrait
      */
     public function redirectToCheckout(array $data = null): RedirectResponse
     {
-
         is_null($data) ?: $this->payload = $data;
 
         return $this->getAuthorizationUrl()->redirectRequest();
@@ -115,7 +111,6 @@ trait TransactionTrait
     public function verifyTransaction(string $reference): array
     {
         return paystack()->httpClient()->get(url:"transaction/verify/{$reference}");
-
     }
 
     /**
@@ -126,7 +121,6 @@ trait TransactionTrait
     public function getTransaction(string $reference): array
     {
         return paystack()->httpClient()->get(url:"transaction/{$reference}");
-
     }
 
     /**
@@ -136,7 +130,6 @@ trait TransactionTrait
      */
     public function getAllTransactions(): array
     {
-        return paystack()->httpClient()->get(url:"transaction");
-
+        return paystack()->httpClient()->get(url:'transaction');
     }
 }

@@ -21,7 +21,6 @@ trait TransferTrait
             url: FlutterwaveConstant::TRANSFER_ENDPOINT,
             formParams: $formParams
         );
-
     }
 
     /**
@@ -37,7 +36,6 @@ trait TransferTrait
             url: FlutterwaveConstant::TRANSFER_ENDPOINT,
             query: $queryParams
         );
-
     }
 
     /**
@@ -53,7 +51,6 @@ trait TransferTrait
             url: FlutterwaveConstant::TRANSFER_ENDPOINT.'fee',
             query: $queryParams
         );
-
     }
 
     /**
@@ -79,7 +76,6 @@ trait TransferTrait
             url: FlutterwaveConstant::BULK_TRANSFER_ENDPOINT,
             formParams: $requestPayload
         );
-
     }
 
     /**
@@ -96,7 +92,6 @@ trait TransferTrait
         return flutterwave()->httpClient()->get(
             url:  FlutterwaveConstant::TRANSFER_ENDPOINT.$transferId,
         );
-
     }
 
     /**
@@ -112,7 +107,6 @@ trait TransferTrait
             url:  FlutterwaveConstant::TRANSFER_ENDPOINT.'rates',
             query: $queryParams
         );
-
     }
 
     /**
@@ -160,6 +154,5 @@ trait TransferTrait
             url:  FlutterwaveConstant::BULK_TRANSFER_ENDPOINT,
             query: $queryParams
         );
-
     }
 }

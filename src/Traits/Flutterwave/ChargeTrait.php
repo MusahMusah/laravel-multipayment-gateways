@@ -27,7 +27,6 @@ trait ChargeTrait
             formParams: $this->encryptPayload($formParams),
             query: $queryParams
         );
-
     }
 
     /**
@@ -257,10 +256,10 @@ trait ChargeTrait
         ];
 
         return  flutterwave()->httpClient()->post(
-                url: FlutterwaveConstant::CHARGE_ENDPOINT,
-                formParams: $formParams,
-                query: $queryParams
-            );
+            url: FlutterwaveConstant::CHARGE_ENDPOINT,
+            formParams: $formParams,
+            query: $queryParams
+        );
     }
 
     /**
@@ -297,7 +296,6 @@ trait ChargeTrait
             url: FlutterwaveConstant::VALIDATE_CHARGE_ENDPOINT,
             formParams: $formParams,
         );
-
     }
 
     /**
@@ -314,7 +312,6 @@ trait ChargeTrait
             url: FlutterwaveConstant::CHARGE_ENDPOINT.$flwRef.'/capture',
             formParams: $formParams
         );
-
     }
 
     /**
@@ -329,7 +326,6 @@ trait ChargeTrait
         return flutterwave()->httpClient()->post(
             url: FlutterwaveConstant::CHARGE_ENDPOINT.$flwRef.'/void',
         );
-
     }
 
     /**
@@ -346,7 +342,6 @@ trait ChargeTrait
             url: FlutterwaveConstant::CHARGE_ENDPOINT.$flwRef.'/refund',
             formParams: $formParams,
         );
-
     }
 
     /**
@@ -377,6 +372,5 @@ trait ChargeTrait
             url: FlutterwaveConstant::CHARGE_ENDPOINT.'/void',
             formParams: $formParams,
         );
-
     }
 }

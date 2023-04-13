@@ -19,7 +19,6 @@ trait SubscriptionTrait
             url: FlutterwaveConstant::SUBSCRIPTION_ENDPOINT,
             query: $queryParams
         );
-
     }
 
     /**
@@ -32,7 +31,6 @@ trait SubscriptionTrait
         return flutterwave()->httpClient()->put(
             url: FlutterwaveConstant::SUBSCRIPTION_ENDPOINT.$subscriptionId.'/activate',
         );
-
     }
 
     /**
@@ -45,6 +43,5 @@ trait SubscriptionTrait
         return flutterwave()->httpClient()->put(
             url: FlutterwaveConstant::SUBSCRIPTION_ENDPOINT.$subscriptionId.'/cancel',
         );
-
     }
 }

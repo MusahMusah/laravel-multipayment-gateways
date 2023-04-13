@@ -13,7 +13,6 @@ trait BankTrait
      */
     public function getBanks(string $countryCode): array
     {
-
         $banks = flutterwave()->httpClient()->get(
             url: FlutterwaveConstant::BANK_ENDPOINT.$countryCode,
         );

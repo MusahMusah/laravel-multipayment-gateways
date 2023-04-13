@@ -23,7 +23,6 @@ trait TransactionTrait
         return flutterwave()->httpClient()->get(
             url: FlutterwaveConstant::TRANSACTION_ENDPOINT.$transactionId.'/verify'
         );
-
     }
 
     /**
@@ -40,7 +39,6 @@ trait TransactionTrait
             url: FlutterwaveConstant::TRANSACTION_ENDPOINT.$transactionId.'/refund',
             formParams: $formParams
         );
-
     }
 
     /**
@@ -56,7 +54,6 @@ trait TransactionTrait
             url: FlutterwaveConstant::TRANSACTION_ENDPOINT,
             query: $queryParams
         );
-
     }
 
     /**
@@ -72,7 +69,6 @@ trait TransactionTrait
             url: FlutterwaveConstant::REFUND_ENDPOINT,
             query: $queryParams
         );
-
     }
 
     /**
@@ -118,7 +114,6 @@ trait TransactionTrait
             url: FlutterwaveConstant::TRANSACTION_ENDPOINT.$transactionId.'/resend-hook',
             formParams: $formParams
         );
-
     }
 
     /**
@@ -133,6 +128,5 @@ trait TransactionTrait
         return flutterwave()->httpClient()->get(
             url: FlutterwaveConstant::TRANSACTION_ENDPOINT.$transactionId.'/timeline'
         );
-
     }
 }
