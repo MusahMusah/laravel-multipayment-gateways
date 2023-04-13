@@ -2,6 +2,13 @@
 
 All notable changes to `laravel-multipayment-gateways` will be documented in this file.
 
+## 1.6.3 - 2023-04-13
+
+### What's Changed
+
+- Updated documentation on how to use the newly added `HttpClientWrapper` with any of the Payment Gateways.
+- Added all httpClient methods to individual Payment Gateways Service, this will help IDEs better understand the underlying method signature and structure.
+
 ## 1.6.0 - 2023-04-02
 
 ### What's Changed
@@ -10,6 +17,7 @@ All notable changes to `laravel-multipayment-gateways` will be documented in thi
 
 ```php
  flutterwave->anymethod();
+
 
 ```
 - Optimized codebase with significant refactor
@@ -38,6 +46,7 @@ In addition, the `HttpClientWrapper` is available via `helpers`, `dependency inj
  // all payment gateways provided by the package can use the httpClient
  Flutterwave::httpClient()->get('/banks/056');
  stripe()->httpClient()->get('v1/customers/cus_4QFOF3xrvBT2nU');
+
 
 ```
 ## 1.2.5 - 2023-03-26
