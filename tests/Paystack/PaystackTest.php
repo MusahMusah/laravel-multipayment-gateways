@@ -40,8 +40,8 @@ it('can redirect to checkout for payment using passed arguments', function () {
         'reference' => '123456789',
         'callback_url' => 'https://example.com',
     ]))
-    ->toBeObject()
-    ->toBeInstanceOf(RedirectResponse::class);
+        ->toBeObject()
+        ->toBeInstanceOf(RedirectResponse::class);
 });
 
 it('can redirect to checkout for payment using request() arguments', function () {

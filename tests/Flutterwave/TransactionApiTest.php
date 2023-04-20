@@ -187,7 +187,7 @@ it('can get transactions fee', function () {
 
     $payload = [
         'amount' => 20000,
-        'currency' => 'NGN'
+        'currency' => 'NGN',
     ];
 
     $this->flutterwave

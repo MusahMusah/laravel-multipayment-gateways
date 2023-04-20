@@ -15,21 +15,21 @@ it('can instantiate FlutterwaveContract instance', function () {
 it('can create a preauth charge', function () {
 
     $payload = [
-        "card_number" => "*****",
-        "cvv" => "157",
-        "expiry_month" => "5",
-        "expiry_year" => "22",
-        "amount" => "20000",
-        "fullname" => "Flutterwave Developers",
-        "tx_ref" => "sample-ref",
-        "currency" => "NGN",
-        "country" => "NG",
-        "email" => "developers@flutterwavego.com",
-        "redirect_url" => "https://www.flutterwave.com/ng/",
-        "preauthorize" => true,
-        "meta" => [
-            "customer_id" => "200"
-        ]
+        'card_number' => '*****',
+        'cvv' => '157',
+        'expiry_month' => '5',
+        'expiry_year' => '22',
+        'amount' => '20000',
+        'fullname' => 'Flutterwave Developers',
+        'tx_ref' => 'sample-ref',
+        'currency' => 'NGN',
+        'country' => 'NG',
+        'email' => 'developers@flutterwavego.com',
+        'redirect_url' => 'https://www.flutterwave.com/ng/',
+        'preauthorize' => true,
+        'meta' => [
+            'customer_id' => '200',
+        ],
     ];
 
     $this->flutterwave
@@ -55,7 +55,7 @@ it('can capture a charge', function () {
 
     $transactionRef = 'FLW-MOCK-PREAUTH-72544a3c7659bcd74cc3a3110fe95101';
     $payload = [
-        "amount" => "100",
+        'amount' => '100',
     ];
 
     $this->flutterwave
@@ -104,7 +104,7 @@ it('can create a refund for a charge', function () {
 
     $transactionRef = 'FLW-MOCK-PREAUTH-72544a3c7659bcd74cc3a3110fe95101';
     $payload = [
-        "amount" => "100",
+        'amount' => '100',
     ];
 
     $this->flutterwave
@@ -129,7 +129,7 @@ it('can create a refund for a charge', function () {
 it('can capture a paypal charge', function () {
 
     $payload = [
-        "flw_ref" => "FLW-MOCK-PREAUTH-72544a3c7659bcd74cc3a3110fe95101",
+        'flw_ref' => 'FLW-MOCK-PREAUTH-72544a3c7659bcd74cc3a3110fe95101',
     ];
 
     $this->flutterwave
@@ -154,7 +154,7 @@ it('can capture a paypal charge', function () {
 it('can void a paypal charge', function () {
 
     $payload = [
-        "flw_ref" => "FLW-MOCK-PREAUTH-72544a3c7659bcd74cc3a3110fe95101",
+        'flw_ref' => 'FLW-MOCK-PREAUTH-72544a3c7659bcd74cc3a3110fe95101',
     ];
 
     $this->flutterwave
@@ -175,4 +175,3 @@ it('can void a paypal charge', function () {
             'data' => ['*'],
         ]);
 });
-

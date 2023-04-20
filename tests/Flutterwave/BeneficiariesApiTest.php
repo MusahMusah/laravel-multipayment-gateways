@@ -19,7 +19,7 @@ it('can create a transfer beneficiary', function () {
         'account_number' => '0690000032',
         'beneficiary_name' => 'Flutterwave Developers',
         'currency' => 'NGN',
-        'bank_name' => 'Beneficiary Bank'
+        'bank_name' => 'Beneficiary Bank',
     ];
 
     $this->flutterwave
