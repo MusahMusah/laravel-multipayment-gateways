@@ -5,23 +5,23 @@
 Create a preauth charge.
 
 ```php
-$payload = [
-    "card_number": "*****",
-    "cvv": "157",
-    "expiry_month": "5",
-    "expiry_year": "22",
-    "amount": "20000",
-    "fullname": "Flutterwave Developers",
-    "tx_ref": "sample-ref",
-    "currency": "NGN",
-    "country": "NG",
-    "email": "developers@flutterwavego.com",
-    "redirect_url":"https://www.flutterwave.com/ng/",
-    "preauthorize": true
-    "meta":{
-        "customer_id":"200"
-    }
-];
+    $payload = [
+        "card_number" => "*****",
+        "cvv" => "157",
+        "expiry_month" => "5",
+        "expiry_year" => "22",
+        "amount" => "20000",
+        "fullname" => "Flutterwave Developers",
+        "tx_ref" => "sample-ref",
+        "currency" => "NGN",
+        "country" => "NG",
+        "email" => "developers@flutterwavego.com",
+        "redirect_url" => "https://www.flutterwave.com/ng/",
+        "preauthorize" => true,
+        "meta" => [
+            "customer_id" => "200"
+        ]
+    ];
 
 $transaction = Flutterwave::initiateCardCharge($payload);
 ```
@@ -44,7 +44,7 @@ Voids the payment of a captured charge.
 
 ```php
 $transactionRef = 'FLW-MOCK-PREAUTH-72544a3c7659bcd74cc3a3110fe95101';
-$transaction = Flutterwave::captureCharge($transactionRef);
+$transaction = Flutterwave::voidCharge($transactionRef);
 ```
 
 ## Create a Refund
@@ -56,7 +56,7 @@ $transactionRef = 'FLW-MOCK-PREAUTH-72544a3c7659bcd74cc3a3110fe95101';
 $payload = [
     "amount" => "100",
 ];
-$transaction = Flutterwave::captureCharge($transactionRef, $payload);
+$transaction = Flutterwave::createRefund($transactionRef, $payload);
 ```
 
 ## Capture a Paypal Charge
