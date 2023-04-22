@@ -2,6 +2,17 @@
 
 All notable changes to `laravel-multipayment-gateways` will be documented in this file.
 
+## 1.6.5 - 2023-04-22
+
+### What's Changed
+
+- Fixed issues with static analysis failing by @MusahMusah
+- Added automated tests for flutterwave service endpoints by @cybernerdie in #10
+
+### New Contributor
+
+- @Adams-Ijachi  made their first contribution to the package in #9 which added better coverage to the httpClient Wrapper
+
 ## 1.6.3 - 2023-04-13
 
 ### What's Changed
@@ -17,6 +28,7 @@ All notable changes to `laravel-multipayment-gateways` will be documented in thi
 
 ```php
  flutterwave->anymethod();
+
 
 
 ```
@@ -46,6 +58,7 @@ In addition, the `HttpClientWrapper` is available via `helpers`, `dependency inj
  // all payment gateways provided by the package can use the httpClient
  Flutterwave::httpClient()->get('/banks/056');
  stripe()->httpClient()->get('v1/customers/cus_4QFOF3xrvBT2nU');
+
 
 
 ```
