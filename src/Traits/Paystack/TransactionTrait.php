@@ -2,19 +2,13 @@
 
 namespace MusahMusah\LaravelMultipaymentGateways\Traits\Paystack;
 
-use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\RedirectResponse;
-use MusahMusah\LaravelMultipaymentGateways\Exceptions\HttpMethodFoundException;
-use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidConfigurationException;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\PaymentVerificationException;
 
 trait TransactionTrait
 {
     /**
      * Hit Paystack's API to initiate the transaction and generate the authorization URL
-     *
-     *
-     * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException
      */
     private function generateCheckoutLink(): void
     {
@@ -39,14 +33,11 @@ trait TransactionTrait
             ]);
         }
 
-        paystack()->httpClient()->post(url: 'transaction/initialize', formParams: $this->payload);
+        $this->httpClient()->post(url: 'transaction/initialize', formParams: $this->payload);
     }
 
     /**
      * Get the authorization URL from Paystack's API
-     *
-     *
-     * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException
      */
     private function getAuthorizationUrl(): self
     {
@@ -63,9 +54,6 @@ trait TransactionTrait
 
     /**
      * Redirect the user to Paystack's payment checkout page
-     *
-     *
-     * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException
      */
     public function redirectToCheckout(array $data = null): RedirectResponse
     {
@@ -78,7 +66,7 @@ trait TransactionTrait
      * Hit Paystack's verify endpoint to validate the payment and get the payment details
      *
      *
-     * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException|PaymentVerificationException
+     * @throws PaymentVerificationException
      */
     public function getPaymentData(): array
     {
@@ -91,7 +79,7 @@ trait TransactionTrait
      * Hit Paystack's verify endpoint to validate the payment
      *
      *
-     * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException|PaymentVerificationException
+     * @throws PaymentVerificationException
      */
     private function validateTransaction(): void
     {
@@ -104,32 +92,25 @@ trait TransactionTrait
 
     /**
      * Hit Paystack's API to Verify that the transaction is valid
-     *
-     *
-     * @throws GuzzleException|HttpMethodFoundException|InvalidConfigurationException
      */
     public function verifyTransaction(string $reference): array
     {
-        return paystack()->httpClient()->get(url: "transaction/verify/{$reference}");
+        return $this->httpClient()->get(url: "transaction/verify/{$reference}");
     }
 
     /**
      * Hit Paystack's Api to get a transaction
-     *
-     * @throws GuzzleException|HttpMethodFoundException
      */
     public function getTransaction(string $reference): array
     {
-        return paystack()->httpClient()->get(url: "transaction/{$reference}");
+        return $this->httpClient()->get(url: "transaction/{$reference}");
     }
 
     /**
      * Hit Paystack's Api to get all transaction
-     *
-     * @throws GuzzleException|HttpMethodFoundException
      */
     public function getAllTransactions(): array
     {
-        return paystack()->httpClient()->get(url: 'transaction');
+        return $this->httpClient()->get(url: 'transaction');
     }
 }

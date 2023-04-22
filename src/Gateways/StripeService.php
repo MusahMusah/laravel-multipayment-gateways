@@ -2,10 +2,8 @@
 
 namespace MusahMusah\LaravelMultipaymentGateways\Gateways;
 
-use GuzzleHttp\Exception\GuzzleException;
 use MusahMusah\LaravelMultipaymentGateways\Abstracts\BaseGateWay;
 use MusahMusah\LaravelMultipaymentGateways\Contracts\StripeContract;
-use MusahMusah\LaravelMultipaymentGateways\Exceptions\HttpMethodFoundException;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidConfigurationException;
 
 class StripeService extends BaseGateWay implements StripeContract
@@ -61,32 +59,22 @@ class StripeService extends BaseGateWay implements StripeContract
 
     /**
      * Create a new payment intent
-     *
-     *
-     * @throws GuzzleException
-     * @throws HttpMethodFoundException
      */
     public function createIntent(array $data): array
     {
-        return $this->makeRequest(
-            'POST',
-            '/v1/payment_intents',
-            $data,
+        return $this->httpClient()->post(
+            url: '/v1/payment_intents',
+            formParams: $data,
         );
     }
 
     /**
      * Confirm a payment intent
-     *
-     *
-     * @throws GuzzleException
-     * @throws HttpMethodFoundException
      */
     public function confirmIntent(string $paymentIntentId): array
     {
-        return $this->makeRequest(
-            'POST',
-            "/v1/payment_intents/{$paymentIntentId}/confirm",
+        return $this->httpClient()->post(
+            url: "/v1/payment_intents/{$paymentIntentId}/confirm",
         );
     }
 }
