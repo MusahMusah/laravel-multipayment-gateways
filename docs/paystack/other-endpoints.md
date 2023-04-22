@@ -3,9 +3,8 @@ Given that our `Paystack` service only provide access to the most common endpoin
 we have not added to the service by using the `HttpClientWrapper` class. This class is a wrapper around the `GuzzleHttp\Client`
 class and it provides a simple way to make request to any endpoint. The `HttpClientWrapper` class is available through the 
 `Paystack` facade, `paystack()` helper or through dependency injection using the `PaystackContract` interface.
-The `HttpClientWrapper` class, is designed to extract some of the configurations from the `Paystack` service such as the `secret_key`
-and the `base_url` of the payment gateway. This means you don't have to pass the `secret_key` and the `base_url` when using the
-`HttpClientWrapper` as it will be automatically be extracted from the `Paystack` service.
+The `HttpClientWrapper` class, is designed to extract some of the configurations from the `Paystack` service so you 
+that you don't have to pass them when making request to other endpoints.
 
 # You can use the `HttpClientWrapper` class in any of the following ways:
 ## Using Facade
@@ -20,7 +19,9 @@ use MusahMusah\LaravelMultipaymentGateways\Facades\Paystack;
     "phone" => "+2348123456789"
  ];
  
+ // this will make a post request to https://api.paystack.co/customer as get request
 $response = Paystack::httpClient()->post('customer', $fields);
+dd($response);
 
 ```
 
@@ -34,7 +35,9 @@ $response = Paystack::httpClient()->post('customer', $fields);
     "phone" => "+2348123456789"
  ];
 
+// this will make a post request to https://api.paystack.co/customer as post request
  $response = paystack()->httpClient()->post('customer', $fields);
+ dd()
 
 ```
 
@@ -53,7 +56,7 @@ class PaystackPaymentController extends Controller
              "last_name" => "Sum",
             "phone" => "+2348123456789"
         ];
-
+        // this will make a post request to https://api.paystack.co/customer as post request
         $response = $paystack->httpClient()->post('customer', $fields);
     }
 }

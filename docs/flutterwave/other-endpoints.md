@@ -3,9 +3,8 @@ Given that our `Flutterwave` service only provide access to the most common endp
 we have not added to the service by using the `HttpClientWrapper` class. This class is a wrapper around the `GuzzleHttp\Client`
 class and it provides a simple way to make request to any endpoint. The `HttpClientWrapper` class is available through the 
 `Flutterwave` facade, `flutterwave()` helper or through dependency injection using the `FlutterwaveContract` interface.
-The `HttpClientWrapper` class, is designed to extract some of the configurations from the `Flutterwave` service such as the `secret_key`
-and the `base_url` of the payment gateway. This means you don't have to pass the `secret_key` and the `base_url` when using the
-`HttpClientWrapper` as it will be automatically be extracted from the `Flutterwave` service.
+The `HttpClientWrapper` class, is designed to extract some of the configurations from the `Flutterwave` service so you
+that you don't have to pass them when making request to other endpoints.
 
 # You can use the `HttpClientWrapper` class in any of the following ways:
 ## Using Facade
@@ -21,7 +20,7 @@ dd($response);
 ## Using Helper
 ```php
 
- // all payment gateways provided by the package can use the httpClient
+ // this will make a get request to the endpoint https://api.flutterwave.com/banks/056
  $response = flutterwave()->httpClient()->get('/banks/056');
  dd($response);
 
@@ -35,6 +34,7 @@ class FlutterwavePaymentController extends Controller
 {
     public function initiatePayment(Request $request, FlutterwaveContract $flutterwave)
     {
+        // this will make a get request to the endpoint https://api.flutterwave.com/banks/056
         $response = $flutterwave->httpClient()->get('/banks/056');
         dd($response);
     }
