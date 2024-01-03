@@ -33,7 +33,11 @@ trait TransactionTrait
             ]);
         }
 
-        $this->httpClient()->post(url: 'transaction/initialize', formParams: $this->payload);
+        $this->makeRequest(
+            method: 'POST',
+            requestUrl: 'transaction/initialize',
+            formParams: $this->payload,
+        );
     }
 
     /**
