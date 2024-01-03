@@ -20,16 +20,16 @@ use MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave\TransferTrait;
 
 class FlutterwaveService extends BaseGateWay implements FlutterwaveContract
 {
-    use ConsumesExternalServices,
-        BankTrait,
+    use BankTrait,
+        ChargeTrait,
+        ConsumesExternalServices,
+        OtpTrait,
+        PaymentPlanTrait,
         SettlementTrait,
         SubscriptionTrait,
-        PaymentPlanTrait,
+        TransactionTrait,
         TransferBeneficiaryTrait,
-        TransferTrait,
-        OtpTrait,
-        ChargeTrait,
-        TransactionTrait;
+        TransferTrait;
 
     /**
      * The redirect url to consume the Flutterwave's service

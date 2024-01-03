@@ -13,9 +13,9 @@ use MusahMusah\LaravelMultipaymentGateways\Traits\Paystack\TransferTrait;
 
 class PaystackService extends BaseGateWay implements PaystackContract
 {
-    use TransactionTrait,
-        TransferTrait,
-        BankTrait;
+    use BankTrait,
+        TransactionTrait,
+        TransferTrait;
 
     /**
      * The payload to initiate the transaction

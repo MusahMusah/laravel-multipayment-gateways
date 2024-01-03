@@ -33,8 +33,8 @@ class PaymentWebhookHandler
     const WEBHOOK_RESPONSE_STATUS = 200;
 
     public function __construct(
-         Request $request,
-         PaymentWebhookConfig $webhookConfig
+        Request $request,
+        PaymentWebhookConfig $webhookConfig
     ) {
         $this->request = $request;
         $this->webhookConfig = $webhookConfig;
@@ -143,7 +143,7 @@ class PaymentWebhookHandler
      *
      * @throws InvalidPaymentWebhookConfig|InvalidPaymentWebhookHandler
      */
-    protected function processPaymentWebhook(PaymentWebhookLog $webhookLog = null): void
+    protected function processPaymentWebhook(?PaymentWebhookLog $webhookLog = null): void
     {
         try {
             $paymentWebhookHandler = $this->webhookConfig->paymentWebhookHandler ?? self::WEBHOOK_HANDLER_JOB;

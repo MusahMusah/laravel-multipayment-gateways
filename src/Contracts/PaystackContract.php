@@ -13,7 +13,7 @@ interface PaystackContract
     /**
      * Redirect the user to Paystack's payment page
      */
-    public function redirectToCheckout(array $data = null): RedirectResponse;
+    public function redirectToCheckout(?array $data = null): RedirectResponse;
 
     /**
      * Hit Paystack's verify endpoint to validate the payment and get the payment details

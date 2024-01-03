@@ -59,7 +59,7 @@ trait TransactionTrait
     /**
      * Redirect the user to Paystack's payment checkout page
      */
-    public function redirectToCheckout(array $data = null): RedirectResponse
+    public function redirectToCheckout(?array $data = null): RedirectResponse
     {
         is_null($data) ?: $this->payload = $data;
 
