@@ -2,6 +2,13 @@
 
 All notable changes to `laravel-multipayment-gateways` will be documented in this file.
 
+## 1.6.7 - 2024-02-08
+
+### What's Changed
+
+- Fixed issue with paystack's response **typed** when redirecting user to the specified callback_url by @MusahMusah
+- Fixed code styling
+
 ## 1.6.6 - 2024-01-03
 
 ### What's Changed
@@ -39,6 +46,7 @@ All notable changes to `laravel-multipayment-gateways` will be documented in thi
 
 
 
+
 ```
 - Optimized codebase with significant refactor
 
@@ -66,6 +74,7 @@ In addition, the `HttpClientWrapper` is available via `helpers`, `dependency inj
  // all payment gateways provided by the package can use the httpClient
  Flutterwave::httpClient()->get('/banks/056');
  stripe()->httpClient()->get('v1/customers/cus_4QFOF3xrvBT2nU');
+
 
 
 
