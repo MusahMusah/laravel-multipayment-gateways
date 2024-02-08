@@ -76,7 +76,7 @@ trait TransactionTrait
     {
         $this->validateTransaction();
 
-        return $this->getData();
+        return $this->getResponse();
     }
 
     /**
@@ -99,7 +99,10 @@ trait TransactionTrait
      */
     public function verifyTransaction(string $reference): array
     {
-        return $this->httpClient()->get(url: "transaction/verify/{$reference}");
+        return $this->makeRequest(
+            method: 'GET',
+            requestUrl: "transaction/verify/{$reference}",
+        );
     }
 
     /**
@@ -107,7 +110,10 @@ trait TransactionTrait
      */
     public function getTransaction(string $reference): array
     {
-        return $this->httpClient()->get(url: "transaction/{$reference}");
+        return $this->makeRequest(
+            method: 'GET',
+            requestUrl: "transaction/{$reference}",
+        );
     }
 
     /**
@@ -115,6 +121,9 @@ trait TransactionTrait
      */
     public function getAllTransactions(): array
     {
-        return $this->httpClient()->get(url: 'transaction');
+        return $this->makeRequest(
+            method: 'GET',
+            requestUrl: "transactions",
+        );
     }
 }
