@@ -2,6 +2,13 @@
 
 All notable changes to `laravel-multipayment-gateways` will be documented in this file.
 
+## 1.6.6 - 2024-01-03
+
+### What's Changed
+
+- Fixed issue with paystack's `redirectToCheckout` when carrying out transaction method by @MusahMusah
+- Fixed code styling
+
 ## 1.6.5 - 2023-04-22
 
 ### What's Changed
@@ -28,6 +35,7 @@ All notable changes to `laravel-multipayment-gateways` will be documented in thi
 
 ```php
  flutterwave->anymethod();
+
 
 
 
@@ -58,6 +66,7 @@ In addition, the `HttpClientWrapper` is available via `helpers`, `dependency inj
  // all payment gateways provided by the package can use the httpClient
  Flutterwave::httpClient()->get('/banks/056');
  stripe()->httpClient()->get('v1/customers/cus_4QFOF3xrvBT2nU');
+
 
 
 
