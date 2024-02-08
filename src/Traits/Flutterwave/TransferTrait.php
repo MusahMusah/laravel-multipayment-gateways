@@ -53,7 +53,7 @@ trait TransferTrait
      *
      * @optional
      *
-     * @param  string  $title This is the title of the bulk transfer attempt.
+     * @param  string  $title  This is the title of the bulk transfer attempt.
      */
     public function createBulkTransfer(array $bulkTransferData, string $title = ''): array
     {
@@ -73,7 +73,7 @@ trait TransferTrait
      *
      * This method helps you fetch the details of a transfer.
      *
-     * @param  int  $transferId - The unique ID of the transfer you want to retrieve
+     * @param  int  $transferId  - The unique ID of the transfer you want to retrieve
      */
     public function getTransfer(int $transferId): array
     {
@@ -100,7 +100,7 @@ trait TransferTrait
      *
      * This method allows you to retry a previously failed transfer.
      *
-     * @param  int  $transferId - The unique ID of the transfer you want to retry
+     * @param  int  $transferId  - The unique ID of the transfer you want to retry
      */
     public function retryTransfer(int $transferId): array
     {
@@ -114,7 +114,7 @@ trait TransferTrait
      *
      * This method allows you to fetch the details of a transfer retry.
      *
-     * @param  int  $transferId - The unique ID of the transfer you want to retry
+     * @param  int  $transferId  - The unique ID of the transfer you want to retry
      */
     public function getTransferRetry(int $transferId): array
     {

@@ -28,7 +28,7 @@ final class InvalidPaymentWebhookConfig extends Exception
     /**
      * An exception thrown an invalid webhook job class is provided
      *
-     * @param  string  $processWebhookJob the invalid class name
+     * @param  string  $processWebhookJob  the invalid class name
      */
     public static function invalidWebhookJob(string $processWebhookJob): self
     {
@@ -40,7 +40,7 @@ final class InvalidPaymentWebhookConfig extends Exception
     /**
      * An exception thrown when an invalid webhook event class is provided
      *
-     * @param  string  $processWebhookEvent the invalid class name
+     * @param  string  $processWebhookEvent  the invalid class name
      */
     public static function invalidWebhookEvent(string $processWebhookEvent): self
     {
@@ -52,7 +52,7 @@ final class InvalidPaymentWebhookConfig extends Exception
     /**
      * An exception thrown when an invalid signature validator event class is provided
      *
-     * @param  string  $processSignatureValidator the invalid class name
+     * @param  string  $processSignatureValidator  the invalid class name
      */
     public static function invalidSignatureValidator(string $processSignatureValidator): self
     {

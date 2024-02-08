@@ -123,7 +123,7 @@ trait TransactionTrait
     {
         return $this->makeRequest(
             method: 'GET',
-            requestUrl: "transactions",
+            requestUrl: 'transactions',
         );
     }
 }

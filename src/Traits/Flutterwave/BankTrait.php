@@ -24,7 +24,7 @@ trait BankTrait
     /**
      * Get all branches of a bank
      *
-     * @param  int  $bankId The ID of the bank for which to retrieve branches
+     * @param  int  $bankId  The ID of the bank for which to retrieve branches
      */
     public function getBankBranches(int $bankId): array
     {

@@ -122,7 +122,7 @@ class PaymentWebhookHandler
     /**
      * Handle the webhook response by returning a JSON response
      *
-     * @param  string  $webhookResponse The message to be returned in the response
+     * @param  string  $webhookResponse  The message to be returned in the response
      */
     protected function handleWebhookResponse(string $webhookResponse = self::WEBHOOK_RESPONSE_MESSAGE): JsonResponse
     {
@@ -179,7 +179,7 @@ class PaymentWebhookHandler
     /**
      * Create the webhook job
      *
-     *  @throws InvalidPaymentWebhookConfig
+     * @throws InvalidPaymentWebhookConfig
      */
     protected function createWebhookJob()
     {

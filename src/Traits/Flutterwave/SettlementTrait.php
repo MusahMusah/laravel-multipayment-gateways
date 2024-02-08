@@ -9,7 +9,7 @@ trait SettlementTrait
     /**
      * Get the settlement information for a given settlement ID
      *
-     * @param  int  $settlementId The settlement ID to get information for.
+     * @param  int  $settlementId  The settlement ID to get information for.
      */
     public function getSettlement(int $settlementId): array
     {

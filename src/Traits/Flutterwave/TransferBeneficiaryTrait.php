@@ -24,7 +24,7 @@ trait TransferBeneficiaryTrait
      *
      * This function retrieves all transfer beneficiaries on the account
      *
-     * @param  array  $queryParams [optional]
+     * @param  array  $queryParams  [optional]
      */
     public function getAllTransferBeneficiaries(array $queryParams = []): array
     {
