@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-multipayment-gateways` will be documented in this file.
 
+## 1.7.2 - 2024-03-30
+
+### What's Changed
+
+* Bump dependabot/fetch-metadata from 1.6.0 to 2.0.0 by @dependabot in https://github.com/MusahMusah/laravel-multipayment-gateways/pull/21
+
+**Full Changelog**: https://github.com/MusahMusah/laravel-multipayment-gateways/compare/1.7.1...1.7.2
+
 ## 1.7.1 - 2024-03-30
 
 ### What's Changed
@@ -63,6 +71,7 @@ All notable changes to `laravel-multipayment-gateways` will be documented in thi
 
 
 
+
 ```
 - Optimized codebase with significant refactor
 
@@ -90,6 +99,7 @@ In addition, the `HttpClientWrapper` is available via `helpers`, `dependency inj
  // all payment gateways provided by the package can use the httpClient
  Flutterwave::httpClient()->get('/banks/056');
  stripe()->httpClient()->get('v1/customers/cus_4QFOF3xrvBT2nU');
+
 
 
 
