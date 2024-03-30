@@ -16,12 +16,12 @@ class HttpClientWrapper implements HttpClientWrapperContract
     /**
      * Send a GET request to the payment gateway
      */
-    public function get(string $url, array $query = [], array $headers = []): mixed
+    public function get(string $url, array $query = [], array $headers = [], bool $isJsonRequest = true): mixed
     {
         return $this->makeRequest(
             method: 'GET',
             requestUrl: $url,
-            isJsonRequest: true,
+            isJsonRequest: $isJsonRequest,
             queryParams: $query,
             headers: $headers
         );
@@ -30,13 +30,13 @@ class HttpClientWrapper implements HttpClientWrapperContract
     /**
      * Send a POST request to the payment gateway
      */
-    public function post(string $url, array $formParams = [], array $query = [], array $headers = []): mixed
+    public function post(string $url, array $formParams = [], array $query = [], array $headers = [], bool $isJsonRequest = true): mixed
     {
         return $this->makeRequest(
             method: 'POST',
             requestUrl: $url,
             formParams: $formParams,
-            isJsonRequest: true,
+            isJsonRequest: $isJsonRequest,
             queryParams: $query,
             headers: $headers
         );
@@ -45,13 +45,13 @@ class HttpClientWrapper implements HttpClientWrapperContract
     /**
      * Send a PUT request to the payment gateway
      */
-    public function put(string $url, array $formParams = [], array $query = [], array $headers = []): mixed
+    public function put(string $url, array $formParams = [], array $query = [], array $headers = [], bool $isJsonRequest = true): mixed
     {
         return $this->makeRequest(
             method: 'PUT',
             requestUrl: $url,
             formParams: $formParams,
-            isJsonRequest: true,
+            isJsonRequest: $isJsonRequest,
             queryParams: $query,
             headers: $headers
         );
@@ -60,13 +60,13 @@ class HttpClientWrapper implements HttpClientWrapperContract
     /**
      * Send a PATCH request to the payment gateway
      */
-    public function patch(string $url, array $formParams = [], array $query = [], array $headers = []): mixed
+    public function patch(string $url, array $formParams = [], array $query = [], array $headers = [], bool $isJsonRequest = true): mixed
     {
         return $this->makeRequest(
             method: 'PATCH',
             requestUrl: $url,
             formParams: $formParams,
-            isJsonRequest: true,
+            isJsonRequest: $isJsonRequest,
             queryParams: $query,
             headers: $headers
         );
@@ -75,13 +75,13 @@ class HttpClientWrapper implements HttpClientWrapperContract
     /**
      * Send a DELETE request to the payment gateway
      */
-    public function delete(string $url, array $formParams = [], array $query = [], array $headers = []): mixed
+    public function delete(string $url, array $formParams = [], array $query = [], array $headers = [], bool $isJsonRequest = true): mixed
     {
         return $this->makeRequest(
             method: 'DELETE',
             requestUrl: $url,
             formParams: $formParams,
-            isJsonRequest: true,
+            isJsonRequest: $isJsonRequest,
             queryParams: $query,
             headers: $headers
         );
