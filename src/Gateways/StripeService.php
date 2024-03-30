@@ -65,6 +65,7 @@ class StripeService extends BaseGateWay implements StripeContract
         return $this->httpClient()->post(
             url: '/v1/payment_intents',
             formParams: $data,
+            isJsonRequest: false,
         );
     }
 
@@ -75,6 +76,7 @@ class StripeService extends BaseGateWay implements StripeContract
     {
         return $this->httpClient()->post(
             url: "/v1/payment_intents/{$paymentIntentId}/confirm",
+            isJsonRequest: false,
         );
     }
 }
