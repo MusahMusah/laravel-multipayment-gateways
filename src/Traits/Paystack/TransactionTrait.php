@@ -90,7 +90,7 @@ trait TransactionTrait
         $this->verifyTransaction(reference: request()->reference ?? request()->trxref);
 
         if ($this->getData()['status'] !== 'success') {
-            throw new PaymentVerificationException();
+            throw new PaymentVerificationException;
         }
     }
 
