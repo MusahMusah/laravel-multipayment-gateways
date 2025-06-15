@@ -85,7 +85,7 @@ abstract class BaseGateWay implements GatewayContract
      */
     public function getData(): array
     {
-        return $this->getResponse();
+        return $this->getResponse()['data'];
     }
 
     /* Instantiate the http client wrapper class to make it available to the gateway classes
