@@ -4,7 +4,7 @@ build
 composer.lock
 coverage
 phpunit.xml
-phpstan.neon
+phpstan.neon.dist
 testbench.yaml
 vendor
 node_modules
