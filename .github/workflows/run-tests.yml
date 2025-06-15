@@ -22,16 +22,12 @@ jobs:
         include:
           - laravel: 8.*
             testbench: ^6.23
-            carbon: ^2.63
           - laravel: 9.*
             testbench: ^7.0
-            carbon: ^2.63
           - laravel: 10.*
             testbench: ^8.0
-            carbon: ^2.63
           - laravel: 11.*
             testbench: ^9.0
-            carbon: ^2.63
           - laravel: 12.*
             testbench: 10.*
         exclude:
@@ -68,7 +64,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" "nesbot/carbon:${{ matrix.carbon }}" --no-interaction --no-update
+          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" "nesbot/carbon:>=2.72" --dev --no-interaction --no-update
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
       - name: List Installed Dependencies
