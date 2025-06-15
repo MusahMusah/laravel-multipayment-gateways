@@ -3,7 +3,7 @@ name: PHPStan
 on:
   push:
     paths:
-      - '**.php'
+#      - '**.php'
       - '../../phpstan.neon'
 
 jobs:
