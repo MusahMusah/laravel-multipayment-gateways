@@ -15,6 +15,10 @@ class PaymentWebhookLog extends Model
         'request_headers' => 'array',
         'request_body' => 'array',
         'request_exception' => 'array',
+
+
+
+        'created_at' => 'datetime',
     ];
 
     public static function storePaymentWebhook(PaymentWebhookConfig $config, Request $request, $requestHash): PaymentWebhookLog
