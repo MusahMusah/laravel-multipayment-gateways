@@ -19,7 +19,6 @@ class PaymentWebhookLog extends Model
 
     public static function storePaymentWebhook(PaymentWebhookConfig $config, Request $request, $requestHash): PaymentWebhookLog
     {
-        // @phpstan-ignore-next-line
         return self::create([
             'payment_gateway' => $config->name,
             'request_hash' => $requestHash,

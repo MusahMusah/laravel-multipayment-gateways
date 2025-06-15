@@ -9,9 +9,7 @@ class HttpClientWrapper implements HttpClientWrapperContract
 {
     use ConsumesExternalServices;
 
-    public function __construct(protected $baseUri, protected $secret)
-    {
-    }
+    public function __construct(protected $baseUri, protected $secret) {}
 
     /**
      * Send a GET request to the payment gateway
