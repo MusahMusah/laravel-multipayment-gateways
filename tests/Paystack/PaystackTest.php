@@ -87,7 +87,7 @@ it('can get the list of all banks', function () {
 });
 
 it('can make fake http request to get list of banks', function () {
-    $body = file_get_contents(__DIR__ . '/../Fixtures/banks.json');
+    $body = file_get_contents(__DIR__.'/../Fixtures/banks.json');
 
     Http::fake([
         'https://api.paystack.co/bank' => Http::response($body),
