@@ -17,7 +17,5 @@ class ProcessPaymentWebhookJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(public $webhookPayload)
-    {
-    }
+    public function __construct(public $webhookPayload) {}
 }

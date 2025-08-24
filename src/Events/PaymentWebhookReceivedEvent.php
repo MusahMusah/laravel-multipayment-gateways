@@ -16,9 +16,7 @@ class PaymentWebhookReceivedEvent
      *
      * @return void
      */
-    public function __construct(public $webhookPayload)
-    {
-    }
+    public function __construct(public $webhookPayload) {}
 
     /**
      * Get the channels the event should broadcast on.
