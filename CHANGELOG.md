@@ -2,6 +2,22 @@
 
 All notable changes to `laravel-multipayment-gateways` will be documented in this file.
 
+## Laravel 12 - 2026-03-01
+
+### What's Changed
+
+* Bump aglipanci/laravel-pint-action from 2.3.1 to 2.4 by @dependabot[bot] in https://github.com/MusahMusah/laravel-multipayment-gateways/pull/22
+* Bump dependabot/fetch-metadata from 2.0.0 to 2.1.0 by @dependabot[bot] in https://github.com/MusahMusah/laravel-multipayment-gateways/pull/23
+* Bump dependabot/fetch-metadata from 2.1.0 to 2.2.0 by @dependabot[bot] in https://github.com/MusahMusah/laravel-multipayment-gateways/pull/24
+* Bump dependabot/fetch-metadata from 2.2.0 to 2.3.0 by @dependabot[bot] in https://github.com/MusahMusah/laravel-multipayment-gateways/pull/26
+* Bump aglipanci/laravel-pint-action from 2.4 to 2.5 by @dependabot[bot] in https://github.com/MusahMusah/laravel-multipayment-gateways/pull/27
+* Bump dependabot/fetch-metadata from 2.3.0 to 2.4.0 by @dependabot[bot] in https://github.com/MusahMusah/laravel-multipayment-gateways/pull/28
+* Bump aglipanci/laravel-pint-action from 2.5 to 2.6 by @dependabot[bot] in https://github.com/MusahMusah/laravel-multipayment-gateways/pull/31
+* Laravel 12 by @MusahMusah in https://github.com/MusahMusah/laravel-multipayment-gateways/pull/29
+* build(deps): bump dependabot/fetch-metadata from 2.4.0 to 2.5.0 by @dependabot[bot] in https://github.com/MusahMusah/laravel-multipayment-gateways/pull/35
+
+**Full Changelog**: https://github.com/MusahMusah/laravel-multipayment-gateways/compare/1.7.2...1.8.0
+
 ## 1.7.2 - 2024-03-30
 
 ### What's Changed
@@ -72,6 +88,7 @@ All notable changes to `laravel-multipayment-gateways` will be documented in thi
 
 
 
+
 ```
 - Optimized codebase with significant refactor
 
@@ -99,6 +116,7 @@ In addition, the `HttpClientWrapper` is available via `helpers`, `dependency inj
  // all payment gateways provided by the package can use the httpClient
  Flutterwave::httpClient()->get('/banks/056');
  stripe()->httpClient()->get('v1/customers/cus_4QFOF3xrvBT2nU');
+
 
 
 
