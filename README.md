@@ -2,15 +2,25 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/musahmusah/laravel-multipayment-gateways.svg?style=flat-square)](https://packagist.org/packages/musahmusah/laravel-multipayment-gateways)
 <a href="https://packagist.org/packages/musahmusah/laravel-multipayment-gateways"><img src="https://img.shields.io/packagist/php-v/musahmusah/laravel-multipayment-gateways.svg?style=flat-square" alt="PHP from Packagist"></a>
-<a href="https://packagist.org/packages/musahmusah/laravel-multipayment-gateways"><img src="https://img.shields.io/badge/Laravel-8.x,%209.x,%2010.x,%2011.x-brightgreen.svg?style=flat-square" alt="Laravel Version"></a>
+<a href="https://packagist.org/packages/musahmusah/laravel-multipayment-gateways"><img src="https://img.shields.io/badge/Laravel-10.x,%2011.x,%2012.x-brightgreen.svg?style=flat-square" alt="Laravel Version"></a>
 ![Test Status](https://img.shields.io/github/actions/workflow/status/musahmusah/laravel-multipayment-gateways/run-tests.yml?branch=main&label=Tests)
 ![Code Style Status](https://img.shields.io/github/actions/workflow/status/musahmusah/laravel-multipayment-gateways/phpstan.yml?branch=main&label=Code%20Style)
 [![Total Downloads](https://img.shields.io/packagist/dt/musahmusah/laravel-multipayment-gateways.svg?style=flat-square)](https://packagist.org/packages/musahmusah/laravel-multipayment-gateways)
 
-The `laravel-multipayment-gateways` package provides a convenient way to handle payments through multiple payment gateways in a **Laravel 8, 9 and 10 application**.
+The `laravel-multipayment-gateways` package provides a convenient way to handle payments through multiple payment gateways in a **Laravel 10, 11 and 12 application**.
 The package currently supports multiple gateways such as **Paystack**, **Flutterwave** and **Stripe**.
 The package offers an easy to use interface that abstracts the complexities of integrating with these payment gateways.
 It also provides a way to handle webhooks from the payment gateways.
+
+## Version Compatibility
+
+| Package | Laravel | PHP  |
+|---------|---------|------|
+| 1.x     | 8–12    | 8.0+ |
+| 2.x     | 10–12   | 8.2+ |
+
+> If you are on Laravel 8 or 9, install the previous major version:
+> `composer require musahmusah/laravel-multipayment-gateways:^1.0`
 
 ## Documentation
 A comprehensive documentation is available to help you get started with the package [here](https://laravel-multipayment-gateways-xi.vercel.app)
