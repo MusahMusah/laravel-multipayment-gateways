@@ -32,7 +32,7 @@ class PaystackService extends BaseGateWay implements PaystackContract
      */
     public function setBaseUri(): void
     {
-        $baseUri = config('multipayment-gateways.paystack.base_uri');
+        $baseUri = $this->runtimeConfig['base_uri'] ?? config('multipayment-gateways.paystack.base_uri');
 
         if (! $baseUri) {
             throw new InvalidConfigurationException("The Base URI for `{$this->paymentGateway}` is missing. Please ensure that the `base_uri` config key for `{$this->paymentGateway}` is set correctly.");
@@ -46,7 +46,7 @@ class PaystackService extends BaseGateWay implements PaystackContract
      */
     public function setSecret(): void
     {
-        $secret = config('multipayment-gateways.paystack.secret');
+        $secret = $this->runtimeConfig['secret'] ?? config('multipayment-gateways.paystack.secret');
 
         if (! $secret) {
             throw new InvalidConfigurationException("The secret key for `{$this->paymentGateway}` is missing. Please ensure that the `secret` config key for `{$this->paymentGateway}` is set correctly.");

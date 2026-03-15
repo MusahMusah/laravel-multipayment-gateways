@@ -8,5 +8,5 @@ use Exception;
 
 class PaymentVerificationException extends Exception
 {
-    protected string $message = 'Payment verification failed, please check the payment reference and try again';
+    protected $message = 'Payment verification failed, please check the payment reference and try again';
 }

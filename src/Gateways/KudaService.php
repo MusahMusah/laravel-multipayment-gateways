@@ -21,7 +21,7 @@ class KudaService extends BaseGateWay
      */
     public function setBaseUri(): void
     {
-        $baseUri = config('multipaymentgateways.kuda.base_uri');
+        $baseUri = $this->runtimeConfig['base_uri'] ?? config('multipaymentgateways.kuda.base_uri');
 
         if (! $baseUri) {
             throw new InvalidConfigurationException("The Base URI for `{$this->paymentGateway}` is missing. Please ensure that the `base_uri` config key for `{$this->paymentGateway}` is set correctly.");
@@ -35,14 +35,14 @@ class KudaService extends BaseGateWay
      */
     public function setSecret(): void
     {
-        $secret = config('multipaymentgateways.kuda.secret');
+        $secret = $this->runtimeConfig['secret'] ?? config('multipaymentgateways.kuda.secret');
 
         if (! $secret) {
             throw new InvalidConfigurationException("The Secret for `{$this->paymentGateway}` is missing. Please ensure that the `secret` config key for `{$this->paymentGateway}` is set correctly.");
         }
 
         $this->secret = $secret;
-        $this->email = config('multipaymentgateways.kuda.email');
+        $this->email = $this->runtimeConfig['email'] ?? config('multipaymentgateways.kuda.email');
     }
 
     public function resolveAuthorization(array &$queryParams, array|string &$formParams, array &$headers): void

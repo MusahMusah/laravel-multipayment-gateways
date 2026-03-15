@@ -3,11 +3,6 @@
 declare(strict_types=1);
 
 use MusahMusah\LaravelMultipaymentGateways\Contracts\FlutterwaveContract;
-
-beforeEach(function () {
-    $this->flutterwave = $this->mock(FlutterwaveContract::class);
-});
-
 it('can instantiate FlutterwaveContract instance', function () {
     expect($this->flutterwave)
         ->toBeObject()
@@ -70,7 +65,7 @@ it('can get information for multiple refunds', function () {
 
 it('can get information for single refund', function () {
 
-    $refundId = 200;
+    $refundId = '200';
 
     $this->flutterwave
         ->shouldReceive('getRefundDetails')
@@ -93,7 +88,7 @@ it('can get information for single refund', function () {
 
 it('can get verify a transaction', function () {
 
-    $transactionId = 200;
+    $transactionId = '200';
 
     $this->flutterwave
         ->shouldReceive('verifyTransaction')
@@ -116,7 +111,7 @@ it('can get verify a transaction', function () {
 
 it('can create a transaction refund', function () {
 
-    $transactionId = 200;
+    $transactionId = '200';
 
     $this->flutterwave
         ->shouldReceive('createTransactionRefund')
@@ -139,7 +134,7 @@ it('can create a transaction refund', function () {
 
 it('can view a transaction timeline', function () {
 
-    $transactionId = 200;
+    $transactionId = '200';
 
     $this->flutterwave
         ->shouldReceive('viewTransactionTimeline')
@@ -162,7 +157,7 @@ it('can view a transaction timeline', function () {
 
 it('can resend failed webhook', function () {
 
-    $transactionId = 200;
+    $transactionId = '200';
     $optionalPayload = [
         'wait' => 1,
     ];

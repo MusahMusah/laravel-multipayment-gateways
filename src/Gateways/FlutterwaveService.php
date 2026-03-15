@@ -37,36 +37,11 @@ class FlutterwaveService extends BaseGateWay implements FlutterwaveContract
     protected array $payload;
 
     /**
-     * The encryption key to encrypt payload for direct card charge
-     */
-    protected string $encryptionKey;
-
-    public function __construct()
-    {
-        parent::__construct();
-        $this->setEncryptionKey();
-    }
-
-    /**
      * Set the payment gateway for the class
      */
     public function setPaymentGateway(): void
     {
         $this->paymentGateway = 'flutterwave';
-    }
-
-    /**
-     * Set the encryption key for the class
-     */
-    public function setEncryptionKey(): void
-    {
-        $encryptionKey = config('multipayment-gateways.flutterwave.encryption_key');
-
-        if (! $encryptionKey) {
-            return;
-        }
-
-        $this->encryptionKey = $encryptionKey;
     }
 
     /**
@@ -76,7 +51,7 @@ class FlutterwaveService extends BaseGateWay implements FlutterwaveContract
      */
     public function setBaseUri(): void
     {
-        $baseUri = config('multipayment-gateways.flutterwave.base_uri');
+        $baseUri = $this->runtimeConfig['base_uri'] ?? config('multipayment-gateways.flutterwave.base_uri');
 
         if (! $baseUri) {
             throw new InvalidConfigurationException("The Base URI for `{$this->paymentGateway}` is missing. Please ensure that the `base_uri` config key for `{$this->paymentGateway}` is set correctly.");
@@ -92,7 +67,7 @@ class FlutterwaveService extends BaseGateWay implements FlutterwaveContract
      */
     public function setSecret(): void
     {
-        $secret = config('multipayment-gateways.flutterwave.secret');
+        $secret = $this->runtimeConfig['secret'] ?? config('multipayment-gateways.flutterwave.secret');
 
         if (! $secret) {
             throw new InvalidConfigurationException("The secret key for `{$this->paymentGateway}` is missing. Please ensure that the `secret` config key for `{$this->paymentGateway}` is set correctly.");

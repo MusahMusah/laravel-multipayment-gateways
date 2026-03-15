@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave;
 
 use MusahMusah\LaravelMultipaymentGateways\Enums\FlutterwaveChargeType;
-use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidConfigurationException;
 
 trait ChargeTrait
 {
@@ -13,20 +12,10 @@ trait ChargeTrait
      * Initiate a debit or credit card payment.
      *
      * @param  array  $formParams  An associative array of payment data.
-     *
-     * @throws InvalidConfigurationException
      */
     public function initiateCardCharge(array $formParams): array
     {
-        $queryParams = [
-            'type' => FlutterwaveChargeType::CARD->value,
-        ];
-
-        return $this->httpClient()->post(
-            url: '/charges/',
-            formParams: $this->encryptPayload($formParams),
-            query: $queryParams
-        );
+        return $this->chargePayment(FlutterwaveChargeType::CARD, $formParams);
     }
 
     /**
@@ -227,27 +216,6 @@ trait ChargeTrait
             formParams: $formParams,
             query: $queryParams
         );
-    }
-
-    /**
-     *   Encrypts an array payload using 3DES-24 encryption.
-     *
-     * @param  array  $payload  The payload to be encrypted.
-     * @return string The encrypted payload in base64 encoded format.
-     *
-     * @throws InvalidConfigurationException If the encryption key is missing.
-     */
-    private function encryptPayload(array $payload): string
-    {
-        $encryptionKey = $this->encryptionKey;
-
-        if (! $encryptionKey) {
-            throw new InvalidConfigurationException("The encryption key for `{$this->paymentGateway}` is missing. Please ensure that the `encryption_key` config key for `{$this->paymentGateway}` is set correctly.");
-        }
-
-        $encrypted = openssl_encrypt(json_encode($payload), 'DES-EDE3', $encryptionKey, OPENSSL_RAW_DATA);
-
-        return base64_encode($encrypted);
     }
 
     /**

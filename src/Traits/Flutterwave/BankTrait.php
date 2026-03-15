@@ -17,7 +17,8 @@ trait BankTrait
         );
 
         // sort banks by name
-        array_multisort(array_column($banks['data'], 'name'), SORT_ASC, $banks['data']);
+        $names = array_column($banks['data'], 'name');
+        array_multisort($names, SORT_ASC, $banks['data']);
 
         return $banks;
     }

@@ -4,37 +4,47 @@ declare(strict_types=1);
 
 namespace MusahMusah\LaravelMultipaymentGateways\Tests;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use MusahMusah\LaravelMultipaymentGateways\Contracts\FlutterwaveContract;
 use MusahMusah\LaravelMultipaymentGateways\Contracts\PaystackContract;
 use MusahMusah\LaravelMultipaymentGateways\Contracts\StripeContract;
 use MusahMusah\LaravelMultipaymentGateways\LaravelMultipaymentGatewaysServiceProvider;
 use MusahMusah\LaravelMultipaymentGateways\Services\HttpClientWrapper;
+use Mockery\MockInterface;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {
-    protected PaystackContract $paystack;
+    protected PaystackContract&MockInterface $paystack;
 
-    protected FlutterwaveContract $flutterwave;
+    protected FlutterwaveContract&MockInterface $flutterwave;
 
-    protected StripeContract $stripe;
+    protected StripeContract&MockInterface $stripe;
 
-    protected HttpClientWrapper $httpClientWrapper;
+    protected HttpClientWrapper&MockInterface $httpClientWrapper;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'MusahMusah\\LaravelMultipaymentGateways\\Database\\Factories\\'.class_basename($modelName).'Factory'
-        );
+        /** @var PaystackContract&MockInterface $paystack */
+        $paystack = $this->mock(PaystackContract::class);
+        $this->paystack = $paystack;
+        $this->instance('paystack', $paystack);
 
-        $this->paystack = $this->instance('paystack', $this->mock(PaystackContract::class));
-        $this->flutterwave = $this->instance('flutterwave', $this->mock(FlutterwaveContract::class));
-        $this->stripe = $this->instance('stripe', $this->mock(StripeContract::class));
+        /** @var FlutterwaveContract&MockInterface $flutterwave */
+        $flutterwave = $this->mock(FlutterwaveContract::class);
+        $this->flutterwave = $flutterwave;
+        $this->instance('flutterwave', $flutterwave);
 
-        $this->httpClientWrapper = $this->instance('httpClientWrapper', $this->mock(HttpClientWrapper::class));
+        /** @var StripeContract&MockInterface $stripe */
+        $stripe = $this->mock(StripeContract::class);
+        $this->stripe = $stripe;
+        $this->instance('stripe', $stripe);
+
+        /** @var HttpClientWrapper&MockInterface $httpClientWrapper */
+        $httpClientWrapper = $this->mock(HttpClientWrapper::class);
+        $this->httpClientWrapper = $httpClientWrapper;
+        $this->instance('httpClientWrapper', $httpClientWrapper);
     }
 
     protected function getPackageProviders($app): array

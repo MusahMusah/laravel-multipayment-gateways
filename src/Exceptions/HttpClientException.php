@@ -8,5 +8,5 @@ use Exception;
 
 class HttpClientException extends Exception
 {
-    protected string $message = 'An error occurred while sending the request to the payment gateway';
+    protected $message = 'An error occurred while sending the request to the payment gateway';
 }

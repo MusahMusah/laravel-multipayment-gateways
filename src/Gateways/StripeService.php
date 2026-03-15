@@ -20,7 +20,7 @@ class StripeService extends BaseGateWay implements StripeContract
      */
     public function setBaseUri(): void
     {
-        $baseUri = config('multipayment-gateways.stripe.base_uri');
+        $baseUri = $this->runtimeConfig['base_uri'] ?? config('multipayment-gateways.stripe.base_uri');
 
         if (! $baseUri) {
             throw new InvalidConfigurationException("The Base URI for `{$this->paymentGateway}` is missing. Please ensure that the `base_uri` config key for `{$this->paymentGateway}` is set correctly.");
@@ -34,7 +34,7 @@ class StripeService extends BaseGateWay implements StripeContract
      */
     public function setSecret(): void
     {
-        $secret = config('multipayment-gateways.stripe.secret');
+        $secret = $this->runtimeConfig['secret'] ?? config('multipayment-gateways.stripe.secret');
 
         if (! $secret) {
             throw new InvalidConfigurationException("The secret key for `{$this->paymentGateway}` is missing. Please ensure that the `secret` config key for `{$this->paymentGateway}` is set correctly.");

@@ -32,11 +32,26 @@ abstract class BaseGateWay implements GatewayContract
      */
     protected string $paymentGateway;
 
-    public function __construct()
+    /**
+     * Runtime config overrides passed at instantiation time
+     */
+    protected array $runtimeConfig = [];
+
+    public function __construct(array $runtimeConfig = [])
     {
+        $this->runtimeConfig = $runtimeConfig;
         $this->setPaymentGateway();
         $this->setBaseUri();
         $this->setSecret();
+    }
+
+    /**
+     * Return a new instance of the concrete gateway with the given runtime config.
+     * Credentials supplied here take precedence over environment / config values.
+     */
+    public function withConfig(array $config): static
+    {
+        return new static($config);
     }
 
     /**

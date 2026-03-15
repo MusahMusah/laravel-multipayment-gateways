@@ -27,13 +27,13 @@ class PaymentWebhookHandler
 
     protected string $databaseTable;
 
-    public const string WEBHOOK_HANDLER_JOB = 'job';
+    public const WEBHOOK_HANDLER_JOB = 'job';
 
-    public const string WEBHOOK_HANDLER_EVENT = 'event';
+    public const WEBHOOK_HANDLER_EVENT = 'event';
 
-    public const string WEBHOOK_RESPONSE_MESSAGE = 'successful';
+    public const WEBHOOK_RESPONSE_MESSAGE = 'successful';
 
-    public const int WEBHOOK_RESPONSE_STATUS = 200;
+    public const WEBHOOK_RESPONSE_STATUS = 200;
 
     public function __construct(
         Request $request,
@@ -110,7 +110,7 @@ class PaymentWebhookHandler
      */
     protected function hasWebhookBeenProcessed(string $hash): bool
     {
-        return $this->webhookConfig->paymentWebhookModel::where('request_hash', $hash)->exists();
+        return $this->webhookConfig->paymentWebhookModel->where('request_hash', $hash)->exists();
     }
 
     /**
