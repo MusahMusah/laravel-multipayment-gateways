@@ -5,127 +5,92 @@ declare(strict_types=1);
 namespace MusahMusah\LaravelMultipaymentGateways\Traits\Paystack;
 
 use Illuminate\Http\RedirectResponse;
+use MusahMusah\LaravelMultipaymentGateways\Data\PaymentResponse;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\PaymentVerificationException;
 
 trait TransactionTrait
 {
     /**
-     * Hit Paystack's API to initiate the transaction and generate the authorization URL
+     * Initialize a Paystack transaction and return the DTO.
      */
-    private function generateCheckoutLink(): void
+    public function initializeTransaction(array $data): PaymentResponse
     {
-        if (empty($this->payload)) {
-            $this->payload = array_filter([
-                'amount' => (int) request()->amount,
-                'email' => request()->email,
-                'first_name' => request()->first_name,
-                'last_name' => request()->last_name,
-                'plan' => request()->plan,
-                'currency' => request()->currency ?? config('multipayment-gateways.paystack.currency') ?? 'NGN',
-                'metadata' => request()->metadata,
+        $payload = array_filter([
+            'amount' => (int) ($data['amount'] ?? 0),
+            'email' => $data['email'] ?? null,
+            'first_name' => $data['first_name'] ?? null,
+            'last_name' => $data['last_name'] ?? null,
+            'plan' => $data['plan'] ?? null,
+            'currency' => $data['currency'] ?? config('multipayment-gateways.paystack.currency', 'NGN'),
+            'metadata' => $data['metadata'] ?? null,
+            'subaccount' => $data['subaccount'] ?? null,
+            'transaction_charge' => $data['transaction_charge'] ?? null,
+            'split_code' => $data['split_code'] ?? null,
+            'split' => $data['split'] ?? null,
+            'reference' => $data['reference'] ?? null,
+            'callback_url' => $data['callback_url'] ?? null,
+        ]);
 
-                'subaccount' => request()->subaccount,
-                'transaction_charge' => request()->transaction_charge,
-
-                'split_code' => request()->split_code,
-                'split' => request()->split,
-
-                'reference' => request()->reference,
-                'callback_url' => request()->callback_url,
-            ]);
-        }
-
-        $this->makeRequest(
-            method: 'POST',
-            requestUrl: 'transaction/initialize',
-            formParams: $this->payload,
+        return PaymentResponse::fromArray(
+            $this->httpClient()->post('transaction/initialize', $payload)
         );
     }
 
     /**
-     * Get the authorization URL from Paystack's API
+     * Redirect the user to Paystack's payment checkout page.
+     * Requires explicit data - no fallback to request().
      */
-    private function getAuthorizationUrl(): self
+    public function redirectToCheckout(array $data): RedirectResponse
     {
-        $this->generateCheckoutLink();
-        $this->redirectUrl = $this->getData()['authorization_url'];
+        $response = $this->initializeTransaction($data);
 
-        return $this;
-    }
-
-    private function redirectRequest(): RedirectResponse
-    {
-        return redirect($this->redirectUrl);
+        return redirect($response->get('authorization_url'));
     }
 
     /**
-     * Redirect the user to Paystack's payment checkout page
-     */
-    public function redirectToCheckout(?array $data = null): RedirectResponse
-    {
-        is_null($data) ?: $this->payload = $data;
-
-        return $this->getAuthorizationUrl()->redirectRequest();
-    }
-
-    /**
-     * Hit Paystack's verify endpoint to validate the payment and get the payment details
-     *
+     * Hit Paystack's verify endpoint to validate the payment and get the payment details.
+     * Explicit reference required.
      *
      * @throws PaymentVerificationException
      */
-    public function getPaymentData(): array
+    public function getPaymentData(string $reference): PaymentResponse
     {
-        $this->validateTransaction();
+        $result = $this->verifyTransaction($reference);
 
-        return $this->getResponse();
-    }
-
-    /**
-     * Hit Paystack's verify endpoint to validate the payment
-     *
-     *
-     * @throws PaymentVerificationException
-     */
-    private function validateTransaction(): void
-    {
-        $this->verifyTransaction(reference: request()->reference ?? request()->trxref);
-
-        if ($this->getData()['status'] !== 'success') {
+        if ($result->get('status') !== 'success') {
             throw new PaymentVerificationException;
         }
+
+        return $result;
     }
 
     /**
      * Hit Paystack's API to Verify that the transaction is valid
      */
-    public function verifyTransaction(string $reference): array
+    public function verifyTransaction(string $reference): PaymentResponse
     {
-        return $this->makeRequest(
-            method: 'GET',
-            requestUrl: "transaction/verify/{$reference}",
+        return PaymentResponse::fromArray(
+            $this->httpClient()->get("transaction/verify/{$reference}")
         );
     }
 
     /**
-     * Hit Paystack's Api to get a transaction
+     * Hit Paystack's API to get a transaction
      */
-    public function getTransaction(string $reference): array
+    public function getTransaction(string $reference): PaymentResponse
     {
-        return $this->makeRequest(
-            method: 'GET',
-            requestUrl: "transaction/{$reference}",
+        return PaymentResponse::fromArray(
+            $this->httpClient()->get("transaction/{$reference}")
         );
     }
 
     /**
-     * Hit Paystack's Api to get all transaction
+     * Hit Paystack's API to get all transactions
      */
-    public function getAllTransactions(): array
+    public function getAllTransactions(): PaymentResponse
     {
-        return $this->makeRequest(
-            method: 'GET',
-            requestUrl: 'transactions',
+        return PaymentResponse::fromArray(
+            $this->httpClient()->get('transaction')
         );
     }
 }

@@ -13,15 +13,6 @@ class PaymentWebhookLog extends Model
 {
     protected $guarded = [];
 
-    protected function casts(): array
-    {
-        return [
-            'request_headers' => 'array',
-            'request_body' => 'array',
-            'request_exception' => 'array',
-        ];
-    }
-
     public static function storePaymentWebhook(PaymentWebhookConfig $config, Request $request, string $requestHash): self
     {
         return self::create([
@@ -45,5 +36,14 @@ class PaymentWebhookLog extends Model
         $this->save();
 
         return $this;
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'request_headers' => 'array',
+            'request_body' => 'array',
+            'request_exception' => 'array',
+        ];
     }
 }

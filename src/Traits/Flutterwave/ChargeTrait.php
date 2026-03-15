@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave;
 
+use MusahMusah\LaravelMultipaymentGateways\Data\PaymentResponse;
 use MusahMusah\LaravelMultipaymentGateways\Enums\FlutterwaveChargeType;
 
 trait ChargeTrait
@@ -13,7 +14,7 @@ trait ChargeTrait
      *
      * @param  array  $formParams  An associative array of payment data.
      */
-    public function initiateCardCharge(array $formParams): array
+    public function initiateCardCharge(array $formParams): PaymentResponse
     {
         return $this->chargePayment(FlutterwaveChargeType::CARD, $formParams);
     }
@@ -23,7 +24,7 @@ trait ChargeTrait
      *
      * @param  array  $formParams  An associative array of transfer data.
      */
-    public function initiateBankTransfer(array $formParams): array
+    public function initiateBankTransfer(array $formParams): PaymentResponse
     {
         return $this->chargePayment(FlutterwaveChargeType::BANK_TRANSFER, $formParams);
     }
@@ -36,7 +37,7 @@ trait ChargeTrait
      *
      * @param  array  $formParams  An associative array of transfer data.
      */
-    public function chargeNigerianBankAccount(array $formParams): array
+    public function chargeNigerianBankAccount(array $formParams): PaymentResponse
     {
         return $this->chargePayment(FlutterwaveChargeType::NG_ACCOUNT_DEBIT, $formParams);
     }
@@ -49,7 +50,7 @@ trait ChargeTrait
      *
      * @param  array  $formParams  An associative array of charge data.
      */
-    public function chargeUkBankAccount(array $formParams): array
+    public function chargeUkBankAccount(array $formParams): PaymentResponse
     {
         return $this->chargePayment(FlutterwaveChargeType::UK_ACCOUNT_DEBIT, $formParams);
     }
@@ -61,7 +62,7 @@ trait ChargeTrait
      *
      * @param  array  $formParams  An associative array of charge data.
      */
-    public function chargeAchPayment(array $formParams): array
+    public function chargeAchPayment(array $formParams): PaymentResponse
     {
         return $this->chargePayment(FlutterwaveChargeType::ACH_PAYMENT, $formParams);
     }
@@ -74,7 +75,7 @@ trait ChargeTrait
      *
      * @param  array  $formParams  An associative array of charge data.
      */
-    public function chargeApplePay(array $formParams): array
+    public function chargeApplePay(array $formParams): PaymentResponse
     {
         return $this->chargePayment(FlutterwaveChargeType::APPLE_PAY, $formParams);
     }
@@ -87,7 +88,7 @@ trait ChargeTrait
      *
      * @param  array  $formParams  An associative array of charge data.
      */
-    public function chargeGooglePay(array $formParams): array
+    public function chargeGooglePay(array $formParams): PaymentResponse
     {
         return $this->chargePayment(FlutterwaveChargeType::GOOGLE_PAY, $formParams);
     }
@@ -99,7 +100,7 @@ trait ChargeTrait
      *
      * @param  array  $formParams  An associative array of charge data.
      */
-    public function chargeFawryPay(array $formParams): array
+    public function chargeFawryPay(array $formParams): PaymentResponse
     {
         return $this->chargePayment(FlutterwaveChargeType::FAWRY_PAY, $formParams);
     }
@@ -111,7 +112,7 @@ trait ChargeTrait
      *
      * @param  array  $formParams  An associative array of charge data.
      */
-    public function chargePaypal(array $formParams): array
+    public function chargePaypal(array $formParams): PaymentResponse
     {
         return $this->chargePayment(FlutterwaveChargeType::PAYPAL, $formParams);
     }
@@ -123,7 +124,7 @@ trait ChargeTrait
      *
      * @param  array  $formParams  An associative array of charge data.
      */
-    public function chargeMpesa(array $formParams): array
+    public function chargeMpesa(array $formParams): PaymentResponse
     {
         return $this->chargePayment(FlutterwaveChargeType::MPESA, $formParams);
     }
@@ -135,7 +136,7 @@ trait ChargeTrait
      *
      * @param  array  $formParams  An associative array of charge data.
      */
-    public function chargeGhanaMobileMoney(array $formParams): array
+    public function chargeGhanaMobileMoney(array $formParams): PaymentResponse
     {
         return $this->chargePayment(FlutterwaveChargeType::GHANA_MOBILE_MONEY, $formParams);
     }
@@ -147,7 +148,7 @@ trait ChargeTrait
      *
      * @param  array  $formParams  An associative array of charge data.
      */
-    public function chargeUgandaMobileMoney(array $formParams): array
+    public function chargeUgandaMobileMoney(array $formParams): PaymentResponse
     {
         return $this->chargePayment(FlutterwaveChargeType::UGANDA_MOBILE_MONEY, $formParams);
     }
@@ -159,7 +160,7 @@ trait ChargeTrait
      *
      * @param  array  $formParams  An associative array of charge data.
      */
-    public function chargeMobileMoneyFranco(array $formParams): array
+    public function chargeMobileMoneyFranco(array $formParams): PaymentResponse
     {
         return $this->chargePayment(FlutterwaveChargeType::FRANCOPHONE_MOBILE_MONEY, $formParams);
     }
@@ -171,7 +172,7 @@ trait ChargeTrait
      *
      * @param  array  $formParams  An associative array of charge data.
      */
-    public function chargeMobileMoneyRwanda(array $formParams): array
+    public function chargeMobileMoneyRwanda(array $formParams): PaymentResponse
     {
         return $this->chargePayment(FlutterwaveChargeType::RWANDA_MOBILE_MONEY, $formParams);
     }
@@ -183,7 +184,7 @@ trait ChargeTrait
      *
      * @param  array  $formParams  An associative array of charge data.
      */
-    public function chargeZambiaMobileMoney(array $formParams): array
+    public function chargeZambiaMobileMoney(array $formParams): PaymentResponse
     {
         return $this->chargePayment(FlutterwaveChargeType::ZAMBIA_MOBILE_MONEY, $formParams);
     }
@@ -195,27 +196,9 @@ trait ChargeTrait
      *
      * @param  array  $formParams  An associative array of charge data.
      */
-    public function chargeUssd(array $formParams): array
+    public function chargeUssd(array $formParams): PaymentResponse
     {
         return $this->chargePayment(FlutterwaveChargeType::USSD, $formParams);
-    }
-
-    /**
-     * Charge a customer's payment using the specified payment method.
-     *
-     * @param  array  $formParams  An associative array of charge data.
-     */
-    private function chargePayment(FlutterwaveChargeType $chargeType, array $formParams): array
-    {
-        $queryParams = [
-            'type' => $chargeType->value,
-        ];
-
-        return $this->httpClient()->post(
-            url: '/charges/',
-            formParams: $formParams,
-            query: $queryParams
-        );
     }
 
     /**
@@ -223,11 +206,13 @@ trait ChargeTrait
      *
      * @param  array  $formParams  An associative array of charge validation data.
      */
-    public function validateCharge(array $formParams): array
+    public function validateCharge(array $formParams): PaymentResponse
     {
-        return $this->httpClient()->post(
-            url: '/validate-charge',
-            formParams: $formParams,
+        return PaymentResponse::fromArray(
+            $this->httpClient()->post(
+                url: '/validate-charge',
+                data: $formParams,
+            )
         );
     }
 
@@ -237,11 +222,13 @@ trait ChargeTrait
      * @param  string  $flwRef  The data.flw_ref returned in the charge response.
      * @param  array  $formParams  An associative array of charge validation data.
      */
-    public function captureCharge(string $flwRef, array $formParams): array
+    public function captureCharge(string $flwRef, array $formParams): PaymentResponse
     {
-        return $this->httpClient()->post(
-            url: '/charges/'.$flwRef.'/capture',
-            formParams: $formParams
+        return PaymentResponse::fromArray(
+            $this->httpClient()->post(
+                url: '/charges/'.$flwRef.'/capture',
+                data: $formParams
+            )
         );
     }
 
@@ -250,10 +237,12 @@ trait ChargeTrait
      *
      * @param  string  $flwRef  The data.flw_ref returned in the charge response.
      */
-    public function voidCharge(string $flwRef): array
+    public function voidCharge(string $flwRef): PaymentResponse
     {
-        return $this->httpClient()->post(
-            url: '/charges/'.$flwRef.'/void',
+        return PaymentResponse::fromArray(
+            $this->httpClient()->post(
+                url: '/charges/'.$flwRef.'/void',
+            )
         );
     }
 
@@ -263,11 +252,13 @@ trait ChargeTrait
      * @param  string  $flwRef  The data.flw_ref returned in the charge response.
      * @param  array  $formParams  An associative array of charge validation data.
      */
-    public function createRefund(string $flwRef, array $formParams): array
+    public function createRefund(string $flwRef, array $formParams): PaymentResponse
     {
-        return $this->httpClient()->post(
-            url: '/charges/'.$flwRef.'/refund',
-            formParams: $formParams,
+        return PaymentResponse::fromArray(
+            $this->httpClient()->post(
+                url: '/charges/'.$flwRef.'/refund',
+                data: $formParams,
+            )
         );
     }
 
@@ -276,11 +267,13 @@ trait ChargeTrait
      *
      * @param  array  $formParams  An associative array of charge validation data.
      */
-    public function capturePaypalCharge(array $formParams): array
+    public function capturePaypalCharge(array $formParams): PaymentResponse
     {
-        return $this->httpClient()->post(
-            url: '/charges/'.'/paypal-capture',
-            formParams: $formParams,
+        return PaymentResponse::fromArray(
+            $this->httpClient()->post(
+                url: '/charges/'.'/paypal-capture',
+                data: $formParams,
+            )
         );
     }
 
@@ -289,11 +282,33 @@ trait ChargeTrait
      *
      * @param  array  $formParams  An associative array of charge validation data.
      */
-    public function voidPaypalCharge(array $formParams): array
+    public function voidPaypalCharge(array $formParams): PaymentResponse
     {
-        return $this->httpClient()->post(
-            url: '/charges/'.'/void',
-            formParams: $formParams,
+        return PaymentResponse::fromArray(
+            $this->httpClient()->post(
+                url: '/charges/'.'/void',
+                data: $formParams,
+            )
+        );
+    }
+
+    /**
+     * Charge a customer's payment using the specified payment method.
+     *
+     * @param  array  $formParams  An associative array of charge data.
+     */
+    private function chargePayment(FlutterwaveChargeType $chargeType, array $formParams): PaymentResponse
+    {
+        $queryParams = [
+            'type' => $chargeType->value,
+        ];
+
+        return PaymentResponse::fromArray(
+            $this->httpClient()->post(
+                url: '/charges/',
+                data: $formParams,
+                query: $queryParams
+            )
         );
     }
 }

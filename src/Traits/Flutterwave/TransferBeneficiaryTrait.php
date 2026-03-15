@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave;
 
+use MusahMusah\LaravelMultipaymentGateways\Data\PaymentResponse;
 
 trait TransferBeneficiaryTrait
 {
@@ -12,11 +13,13 @@ trait TransferBeneficiaryTrait
      *
      * This method allows you to create beneficiaries for Transfers.
      */
-    public function createTransferBeneficiary(array $transferBeneficiaryDetails): array
+    public function createTransferBeneficiary(array $transferBeneficiaryDetails): PaymentResponse
     {
-        return $this->httpClient()->post(
-            url: '/beneficiaries/',
-            formParams: $transferBeneficiaryDetails
+        return PaymentResponse::fromArray(
+            $this->httpClient()->post(
+                url: '/beneficiaries/',
+                data: $transferBeneficiaryDetails
+            )
         );
     }
 
@@ -27,11 +30,13 @@ trait TransferBeneficiaryTrait
      *
      * @param  array  $queryParams  [optional]
      */
-    public function getAllTransferBeneficiaries(array $queryParams = []): array
+    public function getAllTransferBeneficiaries(array $queryParams = []): PaymentResponse
     {
-        return $this->httpClient()->get(
-            url: '/beneficiaries/',
-            query: $queryParams
+        return PaymentResponse::fromArray(
+            $this->httpClient()->get(
+                url: '/beneficiaries/',
+                query: $queryParams
+            )
         );
     }
 
@@ -40,10 +45,12 @@ trait TransferBeneficiaryTrait
      *
      * This method allows you to retrieve a single transfer beneficiary.
      */
-    public function getTransferBeneficiary(int $beneficiaryId): array
+    public function getTransferBeneficiary(int $beneficiaryId): PaymentResponse
     {
-        return $this->httpClient()->get(
-            url: '/beneficiaries/'.$beneficiaryId,
+        return PaymentResponse::fromArray(
+            $this->httpClient()->get(
+                url: '/beneficiaries/'.$beneficiaryId,
+            )
         );
     }
 
@@ -52,10 +59,12 @@ trait TransferBeneficiaryTrait
      *
      * This endpoint allows you to delete a transfer beneficiary
      */
-    public function deleteTransferBeneficiary(int $beneficiaryId): array
+    public function deleteTransferBeneficiary(int $beneficiaryId): PaymentResponse
     {
-        return $this->httpClient()->delete(
-            url: '/beneficiaries/'.$beneficiaryId,
+        return PaymentResponse::fromArray(
+            $this->httpClient()->delete(
+                url: '/beneficiaries/'.$beneficiaryId,
+            )
         );
     }
 }

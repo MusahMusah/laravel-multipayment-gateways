@@ -5,81 +5,68 @@ declare(strict_types=1);
 namespace MusahMusah\LaravelMultipaymentGateways\Gateways;
 
 use MusahMusah\LaravelMultipaymentGateways\Abstracts\BaseGateWay;
+use MusahMusah\LaravelMultipaymentGateways\Contracts\KudaContract;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidConfigurationException;
+use MusahMusah\LaravelMultipaymentGateways\Services\HttpClientWrapper;
 
-class KudaService extends BaseGateWay
+class KudaService extends BaseGateWay implements KudaContract
 {
-    public ?string $email;
-
-    public function setPaymentGateway(): void
-    {
-        $this->paymentGateway = 'kuda';
-    }
+    public ?string $email = null;
 
     /**
-     * @throws InvalidConfigurationException
+     * Kuda uses a token-refresh flow: obtain a JWT via /account/gettoken,
+     * then use it as the Bearer token for subsequent requests.
      */
-    public function setBaseUri(): void
-    {
-        $baseUri = $this->runtimeConfig['base_uri'] ?? config('multipaymentgateways.kuda.base_uri');
-
-        if (! $baseUri) {
-            throw new InvalidConfigurationException("The Base URI for `{$this->paymentGateway}` is missing. Please ensure that the `base_uri` config key for `{$this->paymentGateway}` is set correctly.");
-        }
-
-        $this->baseUri = $baseUri;
-    }
-
-    /**
-     * @throws InvalidConfigurationException
-     */
-    public function setSecret(): void
-    {
-        $secret = $this->runtimeConfig['secret'] ?? config('multipaymentgateways.kuda.secret');
-
-        if (! $secret) {
-            throw new InvalidConfigurationException("The Secret for `{$this->paymentGateway}` is missing. Please ensure that the `secret` config key for `{$this->paymentGateway}` is set correctly.");
-        }
-
-        $this->secret = $secret;
-        $this->email = $this->runtimeConfig['email'] ?? config('multipaymentgateways.kuda.email');
-    }
-
-    public function resolveAuthorization(array &$queryParams, array|string &$formParams, array &$headers): void
-    {
-        // extend the base class method to add the authorization header
-        parent::resolveAuthorization($queryParams, $formParams, $headers);
-
-        // add the authorization header
-        $headers['apiKey'] = $this->secret;
-        $headers['email'] = $this->email;
-    }
-
     public function resolveAccessToken(): string
     {
-        return "Bearer {$this->retrieveApiToken()}";
+        return (string) $this->retrieveApiToken();
     }
 
     public function retrieveApiToken(): mixed
     {
         return cache()->remember('kuda_token', now()->addMinutes(20), function () {
-            return $this->makeRequest(
-                'POST',
-                $this->baseUri.'/account/gettoken',
-                [
+            $response = $this->httpClientForAuth()->post(
+                url: '/account/gettoken',
+                data: [
                     'email' => $this->email,
                     'apiKey' => $this->secret,
                 ],
-                true
             );
+
+            return $response['data'] ?? $response;
         });
     }
 
-    /**
-     * Decode the response
-     */
-    public function decodeResponse(): array
+    protected function gatewayName(): string
     {
-        return json_decode($this->response, true);
+        return 'kuda';
+    }
+
+    /**
+     * Override setSecret to also capture the email credential.
+     *
+     * @throws InvalidConfigurationException
+     */
+    protected function setSecret(): void
+    {
+        $secret = $this->runtimeConfig['secret'] ?? config('multipayment-gateways.kuda.secret');
+
+        if (! $secret) {
+            throw new InvalidConfigurationException("The secret key for `{$this->paymentGateway}` is missing. Please ensure that the `secret` config key for `{$this->paymentGateway}` is set correctly.");
+        }
+
+        $this->secret = $secret;
+        $this->email = $this->runtimeConfig['email'] ?? config('multipayment-gateways.kuda.email');
+    }
+
+    /**
+     * Build a temporary HTTP client without a bearer token for the token-fetch request.
+     */
+    protected function httpClientForAuth(): HttpClientWrapper
+    {
+        return new HttpClientWrapper(
+            baseUri: $this->baseUri,
+            secret: '',
+        );
     }
 }

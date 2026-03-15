@@ -4,71 +4,89 @@ declare(strict_types=1);
 
 namespace MusahMusah\LaravelMultipaymentGateways\Traits\Paystack;
 
+use MusahMusah\LaravelMultipaymentGateways\Data\PaymentResponse;
+
 trait TransferTrait
 {
     /**
      * Hit Paystack's API to create a Transfer Recipient
      */
-    public function createTransferRecipient(array $payload): array
+    public function createTransferRecipient(array $payload): PaymentResponse
     {
-        return $this->httpClient()->post(url: 'transferrecipient', formParams: $payload);
+        return PaymentResponse::fromArray(
+            $this->httpClient()->post(url: 'transferrecipient', data: $payload)
+        );
     }
 
     /**
      * Hit Paystack's API to create bulk transfers recipients
      */
-    public function createBulkTransferRecipients(array $recipients): array
+    public function createBulkTransferRecipients(array $recipients): PaymentResponse
     {
-        return $this->httpClient()->post(url: 'transferrecipient', formParams: [
-            'batch' => $recipients,
-        ]);
+        return PaymentResponse::fromArray(
+            $this->httpClient()->post(url: 'transferrecipient', data: [
+                'batch' => $recipients,
+            ])
+        );
     }
 
     /**
      * Hit Paystack's API to initiate a Transfer
      */
-    public function initiateTransfer(array $payload): array
+    public function initiateTransfer(array $payload): PaymentResponse
     {
-        return $this->httpClient()->post(url: 'transfer', formParams: $payload);
+        return PaymentResponse::fromArray(
+            $this->httpClient()->post(url: 'transfer', data: $payload)
+        );
     }
 
     /**
      * Hit Paystack's API to initiate a Bulk Transfer
      */
-    public function initiateBulkTransfer(array $transfers): array
+    public function initiateBulkTransfer(array $transfers): PaymentResponse
     {
-        return $this->httpClient()->post(url: 'transfer/bulk', formParams: $transfers);
+        return PaymentResponse::fromArray(
+            $this->httpClient()->post(url: 'transfer/bulk', data: $transfers)
+        );
     }
 
     /**
      * Hit Paystack's API to finalize a Transfer
      */
-    public function finalizeTransfer(array $payload): array
+    public function finalizeTransfer(array $payload): PaymentResponse
     {
-        return $this->httpClient()->post(url: 'transfer/finalize_transfer', formParams: $payload);
+        return PaymentResponse::fromArray(
+            $this->httpClient()->post(url: 'transfer/finalize_transfer', data: $payload)
+        );
     }
 
     /**
      * Hit Paystack's API to verify a Transfer
      */
-    public function verifyTransfer(string $reference): array
+    public function verifyTransfer(string $reference): PaymentResponse
     {
-        return $this->httpClient()->get(url: "transfer/verify/{$reference}");
+        return PaymentResponse::fromArray(
+            $this->httpClient()->get(url: "transfer/verify/{$reference}")
+        );
     }
 
     /**
      * Hit Paystack's API to fetch a Transfer
      */
-    public function getTransfer(string $transferCode): array
+    public function getTransfer(string $transferCode): PaymentResponse
     {
-        return $this->httpClient()->get(url: "transfer/{$transferCode}");
+        return PaymentResponse::fromArray(
+            $this->httpClient()->get(url: "transfer/{$transferCode}")
+        );
     }
 
     /**
      * Hit Paystack's API to fetch all Transfers
      */
-    public function getAllTransfers(): array
+    public function getAllTransfers(): PaymentResponse
     {
-        return $this->httpClient()->get(url: 'transfer');
+        return PaymentResponse::fromArray(
+            $this->httpClient()->get(url: 'transfer')
+        );
     }
 }

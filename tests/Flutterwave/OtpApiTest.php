@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use MusahMusah\LaravelMultipaymentGateways\Contracts\FlutterwaveContract;
+use MusahMusah\LaravelMultipaymentGateways\Data\PaymentResponse;
 
 beforeEach(function () {
     $this->flutterwave = $this->mock(FlutterwaveContract::class);
@@ -15,7 +16,6 @@ it('can instantiate FlutterwaveContract instance', function () {
 });
 
 it('can create an OTP', function () {
-
     $formParams = [
         'amount' => 100,
         'email' => 'test@example.com',
@@ -25,23 +25,16 @@ it('can create an OTP', function () {
         ->shouldReceive('createOtp')
         ->once()
         ->withArgs([$formParams])
-        ->andReturn([
-            'status' => true,
-            'message' => 'OTP created',
-            'data' => ['*'],
-        ]);
+        ->andReturn(new PaymentResponse(true, 'OTP created', ['*']));
 
-    expect($this->flutterwave->createOtp($formParams))
-        ->toBeArray()
-        ->toBe([
-            'status' => true,
-            'message' => 'OTP created',
-            'data' => ['*'],
-        ]);
+    $result = $this->flutterwave->createOtp($formParams);
+
+    expect($result)->toBeInstanceOf(PaymentResponse::class)
+        ->and($result->successful)->toBeTrue()
+        ->and($result->message)->toBe('OTP created');
 });
 
 it('can verify an OTP', function () {
-
     $reference = 'FLW-MOCK-REFERENCE';
     $formParams = [
         'otp' => '123456',
@@ -55,17 +48,11 @@ it('can verify an OTP', function () {
             $reference,
             $formParams,
         ])
-        ->andReturn([
-            'status' => true,
-            'message' => 'OTP validated',
-            'data' => ['*'],
-        ]);
+        ->andReturn(new PaymentResponse(true, 'OTP validated', ['*']));
 
-    expect($this->flutterwave->verifyOtp($reference, $formParams))
-        ->toBeArray()
-        ->toBe([
-            'status' => true,
-            'message' => 'OTP validated',
-            'data' => ['*'],
-        ]);
+    $result = $this->flutterwave->verifyOtp($reference, $formParams);
+
+    expect($result)->toBeInstanceOf(PaymentResponse::class)
+        ->and($result->successful)->toBeTrue()
+        ->and($result->message)->toBe('OTP validated');
 });

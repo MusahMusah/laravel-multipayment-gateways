@@ -3,41 +3,11 @@ parameters:
 		-
 			message: '#^Called ''env'' outside of the config directory which returns null when the config is cached, use ''config''\.$#'
 			identifier: larastan.noEnvCallsOutsideOfConfig
-			count: 15
+			count: 19
 			path: config/multipayment-gateways.php
 
 		-
-			message: '#^Call to function method_exists\(\) with \$this\(MusahMusah\\LaravelMultipaymentGateways\\Abstracts\\BaseGateWay\) and ''decodeResponse'' will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
+			message: '#^Unsafe usage of new static\(\)\.$#'
+			identifier: new.static
 			count: 1
 			path: src/Abstracts/BaseGateWay.php
-
-		-
-			message: '#^Call to function method_exists\(\) with \$this\(MusahMusah\\LaravelMultipaymentGateways\\Abstracts\\BaseGateWay\) and ''resolveAuthorization'' will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: src/Abstracts/BaseGateWay.php
-
-		-
-			message: '#^Call to function method_exists\(\) with \$this\(MusahMusah\\LaravelMultipaymentGateways\\Gateways\\FlutterwaveService\) and ''decodeResponse'' will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: src/Gateways/FlutterwaveService.php
-
-		-
-			message: '#^Call to function method_exists\(\) with \$this\(MusahMusah\\LaravelMultipaymentGateways\\Gateways\\FlutterwaveService\) and ''resolveAuthorization'' will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: src/Gateways/FlutterwaveService.php
-
-		-
-			message: '#^Call to function method_exists\(\) with \$this\(MusahMusah\\LaravelMultipaymentGateways\\Services\\HttpClientWrapper\) and ''decodeResponse'' will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: src/Services/HttpClientWrapper.php
-
-		-
-			message: '#^Call to function method_exists\(\) with \$this\(MusahMusah\\LaravelMultipaymentGateways\\Services\\HttpClientWrapper\) and ''resolveAuthorization'' will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: src/Services/HttpClientWrapper.php

@@ -4,29 +4,17 @@ declare(strict_types=1);
 
 namespace MusahMusah\LaravelMultipaymentGateways\Contracts;
 
-use GuzzleHttp\Exception\GuzzleException;
-use MusahMusah\LaravelMultipaymentGateways\Exceptions\HttpMethodFoundException;
-use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidConfigurationException;
+use MusahMusah\LaravelMultipaymentGateways\Data\PaymentResponse;
 
-interface StripeContract
+interface StripeContract extends GatewayContract
 {
     /**
      * Create a new payment intent
-     *
-     *
-     * @throws GuzzleException
-     * @throws HttpMethodFoundException
-     * @throws InvalidConfigurationException
      */
-    public function createIntent(array $data): array;
+    public function createIntent(array $data): PaymentResponse;
 
     /**
      * Confirm a payment intent
-     *
-     *
-     * @throws GuzzleException
-     * @throws HttpMethodFoundException
-     * @throws InvalidConfigurationException
      */
-    public function confirmIntent(string $paymentIntentId): array;
+    public function confirmIntent(string $paymentIntentId): PaymentResponse;
 }

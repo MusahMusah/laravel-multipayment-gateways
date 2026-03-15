@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave;
 
+use MusahMusah\LaravelMultipaymentGateways\Data\PaymentResponse;
 
 trait PaymentPlanTrait
 {
@@ -14,11 +15,13 @@ trait PaymentPlanTrait
      *
      * @param  array  $planDetails  The details of the plan.
      */
-    public function createPaymentPlan(array $planDetails): array
+    public function createPaymentPlan(array $planDetails): PaymentResponse
     {
-        return $this->httpClient()->post(
-            url: '/payment-plans/',
-            formParams: $planDetails,
+        return PaymentResponse::fromArray(
+            $this->httpClient()->post(
+                url: '/payment-plans/',
+                data: $planDetails,
+            )
         );
     }
 
@@ -30,11 +33,13 @@ trait PaymentPlanTrait
      * @param  int  $paymentPlanId  The ID of the payment plan to update.
      * @param  array  $planDetails  The updated details of the plan.
      */
-    public function updatePaymentPlan(int $paymentPlanId, array $planDetails): array
+    public function updatePaymentPlan(int $paymentPlanId, array $planDetails): PaymentResponse
     {
-        return $this->httpClient()->put(
-            url: '/payment-plans/'.$paymentPlanId,
-            formParams: $planDetails,
+        return PaymentResponse::fromArray(
+            $this->httpClient()->put(
+                url: '/payment-plans/'.$paymentPlanId,
+                data: $planDetails,
+            )
         );
     }
 
@@ -45,11 +50,13 @@ trait PaymentPlanTrait
      *
      * @param  array  $queryParams  [optional] The query parameters array.
      */
-    public function getAllPaymentPlans(array $queryParams = []): array
+    public function getAllPaymentPlans(array $queryParams = []): PaymentResponse
     {
-        return $this->httpClient()->get(
-            url: '/payment-plans/',
-            query: $queryParams
+        return PaymentResponse::fromArray(
+            $this->httpClient()->get(
+                url: '/payment-plans/',
+                query: $queryParams
+            )
         );
     }
 
@@ -60,10 +67,12 @@ trait PaymentPlanTrait
      *
      * @param  int  $paymentPlanId  The ID of the payment plan to retrieve.
      */
-    public function getPaymentPlan(int $paymentPlanId): array
+    public function getPaymentPlan(int $paymentPlanId): PaymentResponse
     {
-        return $this->httpClient()->get(
-            url: '/payment-plans/'.$paymentPlanId,
+        return PaymentResponse::fromArray(
+            $this->httpClient()->get(
+                url: '/payment-plans/'.$paymentPlanId,
+            )
         );
     }
 
@@ -74,10 +83,12 @@ trait PaymentPlanTrait
      *
      * @param  int  $paymentPlanId  - The unique ID of the payment plan you want to cancel
      */
-    public function cancelPaymentPlan(int $paymentPlanId): array
+    public function cancelPaymentPlan(int $paymentPlanId): PaymentResponse
     {
-        return $this->httpClient()->put(
-            url: '/payment-plans/'.$paymentPlanId.'/cancel',
+        return PaymentResponse::fromArray(
+            $this->httpClient()->put(
+                url: '/payment-plans/'.$paymentPlanId.'/cancel',
+            )
         );
     }
 }

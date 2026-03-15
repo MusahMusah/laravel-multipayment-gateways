@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use MusahMusah\LaravelMultipaymentGateways\Contracts\FlutterwaveContract;
+use MusahMusah\LaravelMultipaymentGateways\Data\PaymentResponse;
 
 beforeEach(function () {
     $this->flutterwave = $this->mock(FlutterwaveContract::class);
@@ -18,21 +19,15 @@ it('can get the list of all banks by country code', function () {
     $this->flutterwave
         ->shouldReceive('getBanks')
         ->once()
-        ->andReturn([
-            'status' => true,
-            'message' => 'Banks retrieved',
-            'data' => ['*'],
-        ]);
+        ->andReturn(new PaymentResponse(true, 'Banks retrieved', ['*']));
 
     $location = 'NG';
 
-    expect($this->flutterwave->getBanks($location))
-        ->toBeArray()
-        ->toBe([
-            'status' => true,
-            'message' => 'Banks retrieved',
-            'data' => ['*'],
-        ]);
+    $result = $this->flutterwave->getBanks($location);
+
+    expect($result)->toBeInstanceOf(PaymentResponse::class)
+        ->and($result->successful)->toBeTrue()
+        ->and($result->message)->toBe('Banks retrieved');
 });
 
 it('can retrieve all bank branches for a given bank ID', function () {
@@ -41,18 +36,12 @@ it('can retrieve all bank branches for a given bank ID', function () {
     $this->flutterwave
         ->shouldReceive('getBankBranches')
         ->once()
-        ->withArgs([$bankID]) // pass in the bank ID
-        ->andReturn([
-            'status' => true,
-            'message' => 'Bank branches retrieved',
-            'data' => ['*'],
-        ]);
+        ->withArgs([$bankID])
+        ->andReturn(new PaymentResponse(true, 'Bank branches retrieved', ['*']));
 
-    expect($this->flutterwave->getBankBranches($bankID))
-        ->toBeArray()
-        ->toBe([
-            'status' => true,
-            'message' => 'Bank branches retrieved',
-            'data' => ['*'],
-        ]);
+    $result = $this->flutterwave->getBankBranches($bankID);
+
+    expect($result)->toBeInstanceOf(PaymentResponse::class)
+        ->and($result->successful)->toBeTrue()
+        ->and($result->message)->toBe('Bank branches retrieved');
 });

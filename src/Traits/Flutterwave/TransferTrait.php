@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave;
 
+use MusahMusah\LaravelMultipaymentGateways\Data\PaymentResponse;
 
 trait TransferTrait
 {
@@ -12,11 +13,13 @@ trait TransferTrait
      *
      * This method allows you to Initate a transfer with Flutterwave
      */
-    public function initiateTransfer(array $formParams): array
+    public function initiateTransfer(array $formParams): PaymentResponse
     {
-        return $this->httpClient()->post(
-            url: '/transfers/',
-            formParams: $formParams
+        return PaymentResponse::fromArray(
+            $this->httpClient()->post(
+                url: '/transfers/',
+                data: $formParams
+            )
         );
     }
 
@@ -25,11 +28,13 @@ trait TransferTrait
      *
      * This method allows the developer/merchant to retrieve all their transfers.
      */
-    public function getAllTransfers(array $queryParams = []): array
+    public function getAllTransfers(array $queryParams = []): PaymentResponse
     {
-        return $this->httpClient()->get(
-            url: '/transfers/',
-            query: $queryParams
+        return PaymentResponse::fromArray(
+            $this->httpClient()->get(
+                url: '/transfers/',
+                query: $queryParams
+            )
         );
     }
 
@@ -38,11 +43,13 @@ trait TransferTrait
      *
      * This method allows the merchant/developer query the fee for the transfer being made.
      */
-    public function getTransferFees(array $queryParams = []): array
+    public function getTransferFees(array $queryParams = []): PaymentResponse
     {
-        return $this->httpClient()->get(
-            url: '/transfers/fee',
-            query: $queryParams
+        return PaymentResponse::fromArray(
+            $this->httpClient()->get(
+                url: '/transfers/fee',
+                query: $queryParams
+            )
         );
     }
 
@@ -56,16 +63,18 @@ trait TransferTrait
      *
      * @param  string  $title  This is the title of the bulk transfer attempt.
      */
-    public function createBulkTransfer(array $bulkTransferData, string $title = ''): array
+    public function createBulkTransfer(array $bulkTransferData, string $title = ''): PaymentResponse
     {
         $requestPayload = [
             'title' => $title,
             'bulk_data' => $bulkTransferData,
         ];
 
-        return $this->httpClient()->post(
-            url: '/bulk-transfers/',
-            formParams: $requestPayload
+        return PaymentResponse::fromArray(
+            $this->httpClient()->post(
+                url: '/bulk-transfers/',
+                data: $requestPayload
+            )
         );
     }
 
@@ -76,10 +85,12 @@ trait TransferTrait
      *
      * @param  int  $transferId  - The unique ID of the transfer you want to retrieve
      */
-    public function getTransfer(int $transferId): array
+    public function getTransfer(int $transferId): PaymentResponse
     {
-        return $this->httpClient()->get(
-            url: '/transfers/'.$transferId,
+        return PaymentResponse::fromArray(
+            $this->httpClient()->get(
+                url: '/transfers/'.$transferId,
+            )
         );
     }
 
@@ -88,11 +99,13 @@ trait TransferTrait
      *
      * This method allows you to query the transfer rate for international transfers.
      */
-    public function getTransferRates(array $queryParams): array
+    public function getTransferRates(array $queryParams): PaymentResponse
     {
-        return $this->httpClient()->get(
-            url: '/transfers/rates',
-            query: $queryParams
+        return PaymentResponse::fromArray(
+            $this->httpClient()->get(
+                url: '/transfers/rates',
+                query: $queryParams
+            )
         );
     }
 
@@ -103,10 +116,12 @@ trait TransferTrait
      *
      * @param  int  $transferId  - The unique ID of the transfer you want to retry
      */
-    public function retryTransfer(int $transferId): array
+    public function retryTransfer(int $transferId): PaymentResponse
     {
-        return $this->httpClient()->post(
-            url: '/transfers/'.$transferId.'/retries',
+        return PaymentResponse::fromArray(
+            $this->httpClient()->post(
+                url: '/transfers/'.$transferId.'/retries',
+            )
         );
     }
 
@@ -117,10 +132,12 @@ trait TransferTrait
      *
      * @param  int  $transferId  - The unique ID of the transfer you want to retry
      */
-    public function getTransferRetry(int $transferId): array
+    public function getTransferRetry(int $transferId): PaymentResponse
     {
-        return $this->httpClient()->get(
-            url: '/transfers/'.$transferId.'/retries',
+        return PaymentResponse::fromArray(
+            $this->httpClient()->get(
+                url: '/transfers/'.$transferId.'/retries',
+            )
         );
     }
 
@@ -129,11 +146,13 @@ trait TransferTrait
      *
      * This method allows you to get the status and details of a bulk transfer.
      */
-    public function fetchBulkTransfer(array $queryParams): array
+    public function fetchBulkTransfer(array $queryParams): PaymentResponse
     {
-        return $this->httpClient()->get(
-            url: '/bulk-transfers/',
-            query: $queryParams
+        return PaymentResponse::fromArray(
+            $this->httpClient()->get(
+                url: '/bulk-transfers/',
+                query: $queryParams
+            )
         );
     }
 }

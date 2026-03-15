@@ -1,7 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
+use MusahMusah\LaravelMultipaymentGateways\SignatureValidator\DefaultSignatureValidator;
+
 // config for MusahMusah/LaravelMultipaymentGateways
 return [
+    /*
+     * The default payment gateway driver to use.
+     * Supported: "paystack", "flutterwave", "stripe", "kuda"
+     */
+    'default' => env('PAYMENT_GATEWAY', 'paystack'),
+
     'paystack' => [
         'base_uri' => env('PAYSTACK_BASE_URI'),
         'secret' => env('PAYSTACK_SECRET'),
@@ -24,6 +34,12 @@ return [
         'secret' => env('FLUTTERWAVE_SECRET'),
         'currency' => env('FLUTTERWAVE_CURRENCY'),
         'encryption_key' => env('FLUTTERWAVE_ENCRYPTION_KEY'),
+    ],
+
+    'kuda' => [
+        'base_uri' => env('KUDA_BASE_URI'),
+        'secret' => env('KUDA_API_KEY'),
+        'email' => env('KUDA_EMAIL'),
     ],
 
     'webhooks' => [
@@ -53,7 +69,7 @@ return [
              *
              * It should implement the interface \MusahMusah\LaravelMultipaymentGateways\SignatureValidator\PaymentWebhookSignatureValidator.
              */
-            'signature_validator' => \MusahMusah\LaravelMultipaymentGateways\SignatureValidator\DefaultSignatureValidator::class,
+            'signature_validator' => DefaultSignatureValidator::class,
 
             /**
              * The webhook handler option allows you to choose how webhook requests are handled in your application.
@@ -107,7 +123,7 @@ return [
              *
             * It should implement the interface \MusahMusah\LaravelMultipaymentGateways\SignatureValidator\PaymentWebhookSignatureValidator.
              */
-            'signature_validator' => \MusahMusah\LaravelMultipaymentGateways\SignatureValidator\DefaultSignatureValidator::class,
+            'signature_validator' => DefaultSignatureValidator::class,
 
             /**
              * The webhook handler option allows you to choose how webhook requests are handled in your application.
@@ -161,7 +177,7 @@ return [
              *
             * It should implement the interface \MusahMusah\LaravelMultipaymentGateways\SignatureValidator\PaymentWebhookSignatureValidator.
              */
-            'signature_validator' => \MusahMusah\LaravelMultipaymentGateways\SignatureValidator\DefaultSignatureValidator::class,
+            'signature_validator' => DefaultSignatureValidator::class,
 
             /**
              * The webhook handler option allows you to choose how webhook requests are handled in your application.

@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace MusahMusah\LaravelMultipaymentGateways\SignatureValidator;
 
 use Illuminate\Http\Request;
+use MusahMusah\LaravelMultipaymentGateways\Enums\PaymentGateway;
 use MusahMusah\LaravelMultipaymentGateways\Services\PaymentWebhookConfig;
+use SensitiveParameter;
 
 class DefaultSignatureValidator implements PaymentWebhookSignatureValidator
 {
@@ -19,7 +21,11 @@ class DefaultSignatureValidator implements PaymentWebhookSignatureValidator
             return false;
         }
 
-        $signature = $this->validateSignature(gatewayName: $config->name, requestContent: $request->getContent(), signingSecret: $config->signingSecret);
+        $signature = $this->validateSignature(
+            gateway: PaymentGateway::from($config->name),
+            requestContent: $request->getContent(),
+            signingSecret: $config->signingSecret,
+        );
 
         if ($signature !== $request->header(key: $config->signatureHeaderName)) {
             return false;
@@ -28,12 +34,8 @@ class DefaultSignatureValidator implements PaymentWebhookSignatureValidator
         return hash_equals(known_string: $signature, user_string: $request->header(key: $config->signatureHeaderName));
     }
 
-    private function validateSignature(string $gatewayName, string $requestContent, #[\SensitiveParameter] string $signingSecret): string
+    private function validateSignature(PaymentGateway $gateway, string $requestContent, #[SensitiveParameter] string $signingSecret): string
     {
-        // @phpstan-ignore-next-line
-        return match ($gatewayName) {
-            'paystack' => hash_hmac(algo: 'sha512', data: $requestContent, key: $signingSecret),
-            'stripe', 'flutterwave' => hash_hmac(algo: 'sha256', data: $requestContent, key: $signingSecret),
-        };
+        return hash_hmac(algo: $gateway->hmacAlgorithm(), data: $requestContent, key: $signingSecret);
     }
 }

@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace MusahMusah\LaravelMultipaymentGateways\Services;
 
+use MusahMusah\LaravelMultipaymentGateways\Events\PaymentWebhookReceivedEvent;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidPaymentWebhookConfig;
+use MusahMusah\LaravelMultipaymentGateways\Jobs\ProcessPaymentWebhookJob;
 use MusahMusah\LaravelMultipaymentGateways\Models\PaymentWebhookLog;
 use MusahMusah\LaravelMultipaymentGateways\SignatureValidator\PaymentWebhookSignatureValidator;
 
@@ -51,13 +53,13 @@ readonly class PaymentWebhookConfig
 
         $this->signatureValidator = app($properties['signature_validator']);
 
-        if (! empty($properties['payment_webhook_job']) && ! is_subclass_of($properties['payment_webhook_job'], \MusahMusah\LaravelMultipaymentGateways\Jobs\ProcessPaymentWebhookJob::class)) {
+        if (! empty($properties['payment_webhook_job']) && ! is_subclass_of($properties['payment_webhook_job'], ProcessPaymentWebhookJob::class)) {
             throw InvalidPaymentWebhookConfig::invalidWebhookJob($properties['payment_webhook_job']);
         }
 
         $this->paymentWebhookJobClass = $properties['payment_webhook_job'] ?? null;
 
-        if (! empty($properties['payment_webhook_event']) && ! is_subclass_of($properties['payment_webhook_event'], \MusahMusah\LaravelMultipaymentGateways\Events\PaymentWebhookReceivedEvent::class)) {
+        if (! empty($properties['payment_webhook_event']) && ! is_subclass_of($properties['payment_webhook_event'], PaymentWebhookReceivedEvent::class)) {
             throw InvalidPaymentWebhookConfig::invalidWebhookEvent($properties['payment_webhook_event']);
         }
 

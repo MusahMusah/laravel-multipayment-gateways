@@ -5,13 +5,11 @@ declare(strict_types=1);
 namespace MusahMusah\LaravelMultipaymentGateways\Abstracts;
 
 use MusahMusah\LaravelMultipaymentGateways\Contracts\GatewayContract;
+use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidConfigurationException;
 use MusahMusah\LaravelMultipaymentGateways\Services\HttpClientWrapper;
-use MusahMusah\LaravelMultipaymentGateways\Traits\ConsumesExternalServices;
 
 abstract class BaseGateWay implements GatewayContract
 {
-    use ConsumesExternalServices;
-
     /**
      * The base uri to consume the payment gateway's service
      */
@@ -21,11 +19,6 @@ abstract class BaseGateWay implements GatewayContract
      * The secret to consume the payment gateway's service
      */
     protected string $secret;
-
-    /**
-     * The redirect url to consume the payment gateway's service
-     */
-    protected string $redirectUrl;
 
     /**
      * The payment gateway name
@@ -46,10 +39,15 @@ abstract class BaseGateWay implements GatewayContract
     }
 
     /**
+     * Return the gateway name string used as config key
+     */
+    abstract protected function gatewayName(): string;
+
+    /**
      * Return a new instance of the concrete gateway with the given runtime config.
      * Credentials supplied here take precedence over environment / config values.
      */
-    public function withConfig(array $config): static
+    final public function withConfig(array $config): static
     {
         return new static($config);
     }
@@ -57,57 +55,58 @@ abstract class BaseGateWay implements GatewayContract
     /**
      * Set the payment gateway name
      */
-    abstract public function setPaymentGateway(): void;
+    final public function setPaymentGateway(): void
+    {
+        $this->paymentGateway = $this->gatewayName();
+    }
+
+    /**
+     * Instantiate the http client wrapper class to make it available to the gateway classes.
+     * Uses resolveAccessToken() so the wrapper's withToken() call works correctly.
+     */
+    final public function httpClient(): HttpClientWrapper
+    {
+        return new HttpClientWrapper(baseUri: $this->baseUri, secret: $this->resolveAccessToken());
+    }
+
+    /**
+     * Resolve the access token - defaults to Bearer token.
+     * Override in gateway subclasses that use a different auth flow.
+     */
+    protected function resolveAccessToken(): string
+    {
+        return $this->secret;
+    }
 
     /**
      * Set the base uri to consume the payment gateway's service
+     *
+     * @throws InvalidConfigurationException
      */
-    abstract public function setBaseUri(): void;
+    protected function setBaseUri(): void
+    {
+        $baseUri = $this->runtimeConfig['base_uri'] ?? config("multipayment-gateways.{$this->gatewayName()}.base_uri");
+
+        if (! $baseUri) {
+            throw new InvalidConfigurationException("The Base URI for `{$this->paymentGateway}` is missing. Please ensure that the `base_uri` config key for `{$this->paymentGateway}` is set correctly.");
+        }
+
+        $this->baseUri = $baseUri;
+    }
 
     /**
      * Set the secret to consume the payment gateway's service
-     */
-    abstract public function setSecret(): void;
-
-    /**
-     * Resolve the access token
-     */
-    abstract public function resolveAccessToken(): string;
-
-    /**
-     * Decode the response
-     */
-    abstract public function decodeResponse(): array|string;
-
-    /**
-     * Resolve the authorization URL / Endpoint
-     */
-    public function resolveAuthorization(array &$queryParams, array|string &$formParams, array &$headers): void
-    {
-        $headers['Authorization'] = str_replace('"', '', $this->resolveAccessToken());
-    }
-
-    /**
-     * Get the response
-     */
-    public function getResponse(): array
-    {
-        return $this->response;
-    }
-
-    /**
-     * Get the data from the response
-     */
-    public function getData(): array
-    {
-        return $this->getResponse()['data'];
-    }
-
-    /* Instantiate the http client wrapper class to make it available to the gateway classes
      *
+     * @throws InvalidConfigurationException
      */
-    public function httpClient(): HttpClientWrapper
+    protected function setSecret(): void
     {
-        return new HttpClientWrapper(baseUri: $this->baseUri, secret: $this->secret);
+        $secret = $this->runtimeConfig['secret'] ?? config("multipayment-gateways.{$this->gatewayName()}.secret");
+
+        if (! $secret) {
+            throw new InvalidConfigurationException("The secret key for `{$this->paymentGateway}` is missing. Please ensure that the `secret` config key for `{$this->paymentGateway}` is set correctly.");
+        }
+
+        $this->secret = $secret;
     }
 }

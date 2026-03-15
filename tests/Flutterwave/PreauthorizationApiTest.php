@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use MusahMusah\LaravelMultipaymentGateways\Contracts\FlutterwaveContract;
+use MusahMusah\LaravelMultipaymentGateways\Data\PaymentResponse;
 
 beforeEach(function () {
     $this->flutterwave = $this->mock(FlutterwaveContract::class);
@@ -15,7 +16,6 @@ it('can instantiate FlutterwaveContract instance', function () {
 });
 
 it('can create a preauth charge', function () {
-
     $payload = [
         'card_number' => '*****',
         'cvv' => '157',
@@ -38,23 +38,16 @@ it('can create a preauth charge', function () {
         ->shouldReceive('initiateCardCharge')
         ->once()
         ->withArgs([$payload])
-        ->andReturn([
-            'status' => 'success',
-            'message' => 'Preauth charge created',
-            'data' => ['*'],
-        ]);
+        ->andReturn(new PaymentResponse(true, 'Preauth charge created', ['*']));
 
-    expect($this->flutterwave->initiateCardCharge($payload))
-        ->toBeArray()
-        ->toBe([
-            'status' => 'success',
-            'message' => 'Preauth charge created',
-            'data' => ['*'],
-        ]);
+    $result = $this->flutterwave->initiateCardCharge($payload);
+
+    expect($result)->toBeInstanceOf(PaymentResponse::class)
+        ->and($result->successful)->toBeTrue()
+        ->and($result->message)->toBe('Preauth charge created');
 });
 
 it('can capture a charge', function () {
-
     $transactionRef = 'FLW-MOCK-PREAUTH-72544a3c7659bcd74cc3a3110fe95101';
     $payload = [
         'amount' => '100',
@@ -64,46 +57,32 @@ it('can capture a charge', function () {
         ->shouldReceive('captureCharge')
         ->once()
         ->withArgs([$transactionRef, $payload])
-        ->andReturn([
-            'status' => true,
-            'message' => 'Charge captured successfully',
-            'data' => ['*'],
-        ]);
+        ->andReturn(new PaymentResponse(true, 'Charge captured successfully', ['*']));
 
-    expect($this->flutterwave->captureCharge($transactionRef, $payload))
-        ->toBeArray()
-        ->toBe([
-            'status' => true,
-            'message' => 'Charge captured successfully',
-            'data' => ['*'],
-        ]);
+    $result = $this->flutterwave->captureCharge($transactionRef, $payload);
+
+    expect($result)->toBeInstanceOf(PaymentResponse::class)
+        ->and($result->successful)->toBeTrue()
+        ->and($result->message)->toBe('Charge captured successfully');
 });
 
 it('can void a charge', function () {
-
     $transactionRef = 'FLW-MOCK-PREAUTH-72544a3c7659bcd74cc3a3110fe95101';
 
     $this->flutterwave
         ->shouldReceive('voidCharge')
         ->once()
         ->withArgs([$transactionRef])
-        ->andReturn([
-            'status' => true,
-            'message' => 'Charge void successfully',
-            'data' => ['*'],
-        ]);
+        ->andReturn(new PaymentResponse(true, 'Charge void successfully', ['*']));
 
-    expect($this->flutterwave->voidCharge($transactionRef))
-        ->toBeArray()
-        ->toBe([
-            'status' => true,
-            'message' => 'Charge void successfully',
-            'data' => ['*'],
-        ]);
+    $result = $this->flutterwave->voidCharge($transactionRef);
+
+    expect($result)->toBeInstanceOf(PaymentResponse::class)
+        ->and($result->successful)->toBeTrue()
+        ->and($result->message)->toBe('Charge void successfully');
 });
 
 it('can create a refund for a charge', function () {
-
     $transactionRef = 'FLW-MOCK-PREAUTH-72544a3c7659bcd74cc3a3110fe95101';
     $payload = [
         'amount' => '100',
@@ -113,23 +92,16 @@ it('can create a refund for a charge', function () {
         ->shouldReceive('createRefund')
         ->once()
         ->withArgs([$transactionRef, $payload])
-        ->andReturn([
-            'status' => true,
-            'message' => 'Refund created successfully',
-            'data' => ['*'],
-        ]);
+        ->andReturn(new PaymentResponse(true, 'Refund created successfully', ['*']));
 
-    expect($this->flutterwave->createRefund($transactionRef, $payload))
-        ->toBeArray()
-        ->toBe([
-            'status' => true,
-            'message' => 'Refund created successfully',
-            'data' => ['*'],
-        ]);
+    $result = $this->flutterwave->createRefund($transactionRef, $payload);
+
+    expect($result)->toBeInstanceOf(PaymentResponse::class)
+        ->and($result->successful)->toBeTrue()
+        ->and($result->message)->toBe('Refund created successfully');
 });
 
 it('can capture a paypal charge', function () {
-
     $payload = [
         'flw_ref' => 'FLW-MOCK-PREAUTH-72544a3c7659bcd74cc3a3110fe95101',
     ];
@@ -138,23 +110,16 @@ it('can capture a paypal charge', function () {
         ->shouldReceive('capturePaypalCharge')
         ->once()
         ->withArgs([$payload])
-        ->andReturn([
-            'status' => true,
-            'message' => 'Charge captured successfully',
-            'data' => ['*'],
-        ]);
+        ->andReturn(new PaymentResponse(true, 'Charge captured successfully', ['*']));
 
-    expect($this->flutterwave->capturePaypalCharge($payload))
-        ->toBeArray()
-        ->toBe([
-            'status' => true,
-            'message' => 'Charge captured successfully',
-            'data' => ['*'],
-        ]);
+    $result = $this->flutterwave->capturePaypalCharge($payload);
+
+    expect($result)->toBeInstanceOf(PaymentResponse::class)
+        ->and($result->successful)->toBeTrue()
+        ->and($result->message)->toBe('Charge captured successfully');
 });
 
 it('can void a paypal charge', function () {
-
     $payload = [
         'flw_ref' => 'FLW-MOCK-PREAUTH-72544a3c7659bcd74cc3a3110fe95101',
     ];
@@ -163,17 +128,11 @@ it('can void a paypal charge', function () {
         ->shouldReceive('voidPaypalCharge')
         ->once()
         ->withArgs([$payload])
-        ->andReturn([
-            'status' => true,
-            'message' => 'Charge void successfully',
-            'data' => ['*'],
-        ]);
+        ->andReturn(new PaymentResponse(true, 'Charge void successfully', ['*']));
 
-    expect($this->flutterwave->voidPaypalCharge($payload))
-        ->toBeArray()
-        ->toBe([
-            'status' => true,
-            'message' => 'Charge void successfully',
-            'data' => ['*'],
-        ]);
+    $result = $this->flutterwave->voidPaypalCharge($payload);
+
+    expect($result)->toBeInstanceOf(PaymentResponse::class)
+        ->and($result->successful)->toBeTrue()
+        ->and($result->message)->toBe('Charge void successfully');
 });

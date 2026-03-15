@@ -17,6 +17,14 @@ use MusahMusah\LaravelMultipaymentGateways\Models\PaymentWebhookLog;
 
 class PaymentWebhookHandler
 {
+    public const WEBHOOK_HANDLER_JOB = 'job';
+
+    public const WEBHOOK_HANDLER_EVENT = 'event';
+
+    public const WEBHOOK_RESPONSE_MESSAGE = 'successful';
+
+    public const WEBHOOK_RESPONSE_STATUS = 200;
+
     protected Request $request;
 
     protected PaymentWebhookConfig $webhookConfig;
@@ -26,14 +34,6 @@ class PaymentWebhookHandler
     protected string $webhookHash;
 
     protected string $databaseTable;
-
-    public const WEBHOOK_HANDLER_JOB = 'job';
-
-    public const WEBHOOK_HANDLER_EVENT = 'event';
-
-    public const WEBHOOK_RESPONSE_MESSAGE = 'successful';
-
-    public const WEBHOOK_RESPONSE_STATUS = 200;
 
     public function __construct(
         Request $request,
@@ -110,7 +110,7 @@ class PaymentWebhookHandler
      */
     protected function hasWebhookBeenProcessed(string $hash): bool
     {
-        return $this->webhookConfig->paymentWebhookModel->where('request_hash', $hash)->exists();
+        return $this->webhookConfig->paymentWebhookModel::where('request_hash', $hash)->exists();
     }
 
     /**

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use MusahMusah\LaravelMultipaymentGateways\Contracts\FlutterwaveContract;
+use MusahMusah\LaravelMultipaymentGateways\Data\PaymentResponse;
 
 beforeEach(function () {
     $this->flutterwave = $this->mock(FlutterwaveContract::class);
@@ -15,7 +16,6 @@ it('can instantiate FlutterwaveContract instance', function () {
 });
 
 it('can create a transfer beneficiary', function () {
-
     $beneficiaryPayload = [
         'account_bank' => '044',
         'account_number' => '0690000032',
@@ -28,86 +28,59 @@ it('can create a transfer beneficiary', function () {
         ->shouldReceive('createTransferBeneficiary')
         ->once()
         ->withArgs([$beneficiaryPayload])
-        ->andReturn([
-            'status' => 'success',
-            'message' => 'Transfer beneficiary created',
-            'data' => ['*'],
-        ]);
+        ->andReturn(new PaymentResponse(true, 'Transfer beneficiary created', ['*']));
 
-    expect($this->flutterwave->createTransferBeneficiary($beneficiaryPayload))
-        ->toBeArray()
-        ->toBe([
-            'status' => 'success',
-            'message' => 'Transfer beneficiary created',
-            'data' => ['*'],
-        ]);
+    $result = $this->flutterwave->createTransferBeneficiary($beneficiaryPayload);
+
+    expect($result)->toBeInstanceOf(PaymentResponse::class)
+        ->and($result->successful)->toBeTrue()
+        ->and($result->message)->toBe('Transfer beneficiary created');
 });
 
 it('can delete a transfer beneficiary a subscription', function () {
-
     $beneficiaryId = 1234;
 
     $this->flutterwave
         ->shouldReceive('deleteTransferBeneficiary')
         ->once()
         ->withArgs([$beneficiaryId])
-        ->andReturn([
-            'status' => true,
-            'message' => 'Transfer beneficiary deleted',
-            'data' => ['*'],
-        ]);
+        ->andReturn(new PaymentResponse(true, 'Transfer beneficiary deleted', ['*']));
 
-    expect($this->flutterwave->deleteTransferBeneficiary($beneficiaryId))
-        ->toBeArray()
-        ->toBe([
-            'status' => true,
-            'message' => 'Transfer beneficiary deleted',
-            'data' => ['*'],
-        ]);
+    $result = $this->flutterwave->deleteTransferBeneficiary($beneficiaryId);
+
+    expect($result)->toBeInstanceOf(PaymentResponse::class)
+        ->and($result->successful)->toBeTrue()
+        ->and($result->message)->toBe('Transfer beneficiary deleted');
 });
 
 it('can get information for a transfer beneficiary', function () {
-
     $beneficiaryId = 1234;
 
     $this->flutterwave
         ->shouldReceive('getTransferBeneficiary')
         ->once()
         ->withArgs([$beneficiaryId])
-        ->andReturn([
-            'status' => true,
-            'message' => 'Beneficiary retrieved',
-            'data' => ['*'],
-        ]);
+        ->andReturn(new PaymentResponse(true, 'Beneficiary retrieved', ['*']));
 
-    expect($this->flutterwave->getTransferBeneficiary($beneficiaryId))
-        ->toBeArray()
-        ->toBe([
-            'status' => true,
-            'message' => 'Beneficiary retrieved',
-            'data' => ['*'],
-        ]);
+    $result = $this->flutterwave->getTransferBeneficiary($beneficiaryId);
+
+    expect($result)->toBeInstanceOf(PaymentResponse::class)
+        ->and($result->successful)->toBeTrue()
+        ->and($result->message)->toBe('Beneficiary retrieved');
 });
 
 it('can get information for all transfer beneficiaries', function () {
-
     $queryParams = ['page' => 1];
 
     $this->flutterwave
         ->shouldReceive('getAllTransferBeneficiaries')
         ->once()
         ->withArgs([$queryParams])
-        ->andReturn([
-            'status' => true,
-            'message' => 'All Transfer Beneficiaries retrieved',
-            'data' => ['*'],
-        ]);
+        ->andReturn(new PaymentResponse(true, 'All Transfer Beneficiaries retrieved', ['*']));
 
-    expect($this->flutterwave->getAllTransferBeneficiaries($queryParams))
-        ->toBeArray()
-        ->toBe([
-            'status' => true,
-            'message' => 'All Transfer Beneficiaries retrieved',
-            'data' => ['*'],
-        ]);
+    $result = $this->flutterwave->getAllTransferBeneficiaries($queryParams);
+
+    expect($result)->toBeInstanceOf(PaymentResponse::class)
+        ->and($result->successful)->toBeTrue()
+        ->and($result->message)->toBe('All Transfer Beneficiaries retrieved');
 });

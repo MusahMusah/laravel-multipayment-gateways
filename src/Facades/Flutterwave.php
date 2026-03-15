@@ -6,6 +6,7 @@ namespace MusahMusah\LaravelMultipaymentGateways\Facades;
 
 use Illuminate\Support\Facades\Facade;
 use MusahMusah\LaravelMultipaymentGateways\Contracts\FlutterwaveContract;
+use MusahMusah\LaravelMultipaymentGateways\Gateways\FlutterwaveService;
 use MusahMusah\LaravelMultipaymentGateways\Services\HttpClientWrapper;
 
 /**
@@ -16,7 +17,7 @@ use MusahMusah\LaravelMultipaymentGateways\Services\HttpClientWrapper;
  * @method static HttpClientWrapper delete(string $url, array $formParams = [], array $query = [], array $headers = [])
  * @method static HttpClientWrapper patch(string $url, array $formParams = [], array $query = [], array $headers = [])
  *
- * @see \MusahMusah\LaravelMultipaymentGateways\Gateways\FlutterwaveService
+ * @see FlutterwaveService
  */
 class Flutterwave extends Facade
 {

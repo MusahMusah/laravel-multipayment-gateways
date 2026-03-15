@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use MusahMusah\LaravelMultipaymentGateways\Contracts\FlutterwaveContract;
+use MusahMusah\LaravelMultipaymentGateways\Data\PaymentResponse;
 
 beforeEach(function () {
     $this->flutterwave = $this->mock(FlutterwaveContract::class);
@@ -15,7 +16,6 @@ it('can instantiate FlutterwaveContract instance', function () {
 });
 
 it('can create a payment plan', function () {
-
     $planDetails = [
         'name' => 'Test Plan',
         'amount' => 1000,
@@ -27,23 +27,16 @@ it('can create a payment plan', function () {
         ->shouldReceive('createPaymentPlan')
         ->once()
         ->withArgs([$planDetails])
-        ->andReturn([
-            'status' => 'success',
-            'message' => 'Payment plan created',
-            'data' => ['*'],
-        ]);
+        ->andReturn(new PaymentResponse(true, 'Payment plan created', ['*']));
 
-    expect($this->flutterwave->createPaymentPlan($planDetails))
-        ->toBeArray()
-        ->toBe([
-            'status' => 'success',
-            'message' => 'Payment plan created',
-            'data' => ['*'],
-        ]);
+    $result = $this->flutterwave->createPaymentPlan($planDetails);
+
+    expect($result)->toBeInstanceOf(PaymentResponse::class)
+        ->and($result->successful)->toBeTrue()
+        ->and($result->message)->toBe('Payment plan created');
 });
 
 it('can update a payment plan', function () {
-
     $paymentPlanId = 123;
 
     $planDetails = [
@@ -55,86 +48,59 @@ it('can update a payment plan', function () {
         ->shouldReceive('updatePaymentPlan')
         ->once()
         ->withArgs([$paymentPlanId, $planDetails])
-        ->andReturn([
-            'status' => true,
-            'message' => 'Payment plan updated',
-            'data' => ['*'],
-        ]);
+        ->andReturn(new PaymentResponse(true, 'Payment plan updated', ['*']));
 
-    expect($this->flutterwave->updatePaymentPlan($paymentPlanId, $planDetails))
-        ->toBeArray()
-        ->toBe([
-            'status' => true,
-            'message' => 'Payment plan updated',
-            'data' => ['*'],
-        ]);
+    $result = $this->flutterwave->updatePaymentPlan($paymentPlanId, $planDetails);
+
+    expect($result)->toBeInstanceOf(PaymentResponse::class)
+        ->and($result->successful)->toBeTrue()
+        ->and($result->message)->toBe('Payment plan updated');
 });
 
 it('can get all payment plans', function () {
-
     $queryParams = ['status' => 'active'];
 
     $this->flutterwave
         ->shouldReceive('getAllPaymentPlans')
         ->once()
         ->withArgs([$queryParams])
-        ->andReturn([
-            'status' => 'success',
-            'message' => 'Payment plans retrieved',
-            'data' => ['*'],
-        ]);
+        ->andReturn(new PaymentResponse(true, 'Payment plans retrieved', ['*']));
 
-    expect($this->flutterwave->getAllPaymentPlans($queryParams))
-        ->toBeArray()
-        ->toBe([
-            'status' => 'success',
-            'message' => 'Payment plans retrieved',
-            'data' => ['*'],
-        ]);
+    $result = $this->flutterwave->getAllPaymentPlans($queryParams);
+
+    expect($result)->toBeInstanceOf(PaymentResponse::class)
+        ->and($result->successful)->toBeTrue()
+        ->and($result->message)->toBe('Payment plans retrieved');
 });
 
 it('can get a payment plan', function () {
-
     $paymentPlanId = 123456789;
 
     $this->flutterwave
         ->shouldReceive('getPaymentPlan')
         ->once()
         ->withArgs([$paymentPlanId])
-        ->andReturn([
-            'status' => true,
-            'message' => 'Payment plan retrieved',
-            'data' => ['*'],
-        ]);
+        ->andReturn(new PaymentResponse(true, 'Payment plan retrieved', ['*']));
 
-    expect($this->flutterwave->getPaymentPlan($paymentPlanId))
-        ->toBeArray()
-        ->toBe([
-            'status' => true,
-            'message' => 'Payment plan retrieved',
-            'data' => ['*'],
-        ]);
+    $result = $this->flutterwave->getPaymentPlan($paymentPlanId);
+
+    expect($result)->toBeInstanceOf(PaymentResponse::class)
+        ->and($result->successful)->toBeTrue()
+        ->and($result->message)->toBe('Payment plan retrieved');
 });
 
 it('can cancel a payment plan', function () {
-
     $paymentPlanId = 1234;
 
     $this->flutterwave
         ->shouldReceive('cancelPaymentPlan')
         ->once()
         ->withArgs([$paymentPlanId])
-        ->andReturn([
-            'status' => 'success',
-            'message' => 'Payment plan cancelled',
-            'data' => ['*'],
-        ]);
+        ->andReturn(new PaymentResponse(true, 'Payment plan cancelled', ['*']));
 
-    expect($this->flutterwave->cancelPaymentPlan($paymentPlanId))
-        ->toBeArray()
-        ->toBe([
-            'status' => 'success',
-            'message' => 'Payment plan cancelled',
-            'data' => ['*'],
-        ]);
+    $result = $this->flutterwave->cancelPaymentPlan($paymentPlanId);
+
+    expect($result)->toBeInstanceOf(PaymentResponse::class)
+        ->and($result->successful)->toBeTrue()
+        ->and($result->message)->toBe('Payment plan cancelled');
 });

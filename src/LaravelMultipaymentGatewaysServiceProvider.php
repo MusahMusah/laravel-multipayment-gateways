@@ -7,10 +7,12 @@ namespace MusahMusah\LaravelMultipaymentGateways;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use MusahMusah\LaravelMultipaymentGateways\Contracts\FlutterwaveContract;
+use MusahMusah\LaravelMultipaymentGateways\Contracts\KudaContract;
 use MusahMusah\LaravelMultipaymentGateways\Contracts\PaystackContract;
 use MusahMusah\LaravelMultipaymentGateways\Contracts\StripeContract;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidPaymentWebhookConfig;
 use MusahMusah\LaravelMultipaymentGateways\Gateways\FlutterwaveService;
+use MusahMusah\LaravelMultipaymentGateways\Gateways\KudaService;
 use MusahMusah\LaravelMultipaymentGateways\Gateways\PaystackService;
 use MusahMusah\LaravelMultipaymentGateways\Gateways\StripeService;
 use MusahMusah\LaravelMultipaymentGateways\Http\Controllers\PaymentWebhookController;
@@ -34,6 +36,11 @@ class LaravelMultipaymentGatewaysServiceProvider extends PackageServiceProvider
         $this->app->bind(PaystackContract::class, PaystackService::class);
         $this->app->bind(StripeContract::class, StripeService::class);
         $this->app->bind(FlutterwaveContract::class, FlutterwaveService::class);
+        $this->app->bind(KudaContract::class, KudaService::class);
+
+        $this->app->bind(PaymentManager::class, fn ($app) => new PaymentManager($app));
+
+        $this->app->alias(PaymentManager::class, 'payment');
 
         $this->registerWebHookConfig();
     }
@@ -43,9 +50,12 @@ class LaravelMultipaymentGatewaysServiceProvider extends PackageServiceProvider
         return [
             PaystackContract::class,
             StripeContract::class,
+            FlutterwaveContract::class,
+            KudaContract::class,
+            PaymentManager::class,
+            'payment',
             PaymentWebhookConfigRepository::class,
             PaymentWebhookConfig::class,
-            FlutterwaveContract::class,
         ];
     }
 
@@ -57,7 +67,7 @@ class LaravelMultipaymentGatewaysServiceProvider extends PackageServiceProvider
 
     private function registerWebHookRoute(): void
     {
-        Route::macro('webhooks', function (string $url, string $name = 'stripe') {
+        Route::macro('webhooks', function (string $url, string $name) {
             return Route::post($url, PaymentWebhookController::class)->name("{$name}-payment-webhook");
         });
     }
