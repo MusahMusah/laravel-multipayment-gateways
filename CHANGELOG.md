@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-multipayment-gateways` will be documented in this file.
 
+## 2.0.0-beta.1 - 2026-03-15
+
+### What's Changed
+
+* feat(deps): drop PHP 8.0/8.1 and Laravel 8/9 support by @MusahMusah in https://github.com/MusahMusah/laravel-multipayment-gateways/pull/37
+
+**Full Changelog**: https://github.com/MusahMusah/laravel-multipayment-gateways/compare/1.8.0...2.0.0-beta.1
+
 ## Laravel 12 - 2026-03-01
 
 ### What's Changed
@@ -89,6 +97,7 @@ All notable changes to `laravel-multipayment-gateways` will be documented in thi
 
 
 
+
 ```
 - Optimized codebase with significant refactor
 
@@ -116,6 +125,7 @@ In addition, the `HttpClientWrapper` is available via `helpers`, `dependency inj
  // all payment gateways provided by the package can use the httpClient
  Flutterwave::httpClient()->get('/banks/056');
  stripe()->httpClient()->get('v1/customers/cus_4QFOF3xrvBT2nU');
+
 
 
 
