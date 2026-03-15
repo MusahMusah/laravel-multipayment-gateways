@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MusahMusah\LaravelMultipaymentGateways\Services;
 
 use MusahMusah\LaravelMultipaymentGateways\Contracts\HttpClientWrapperContract;
@@ -9,7 +11,7 @@ class HttpClientWrapper implements HttpClientWrapperContract
 {
     use ConsumesExternalServices;
 
-    public function __construct(protected $baseUri, protected $secret) {}
+    public function __construct(protected string $baseUri, #[\SensitiveParameter] protected string $secret) {}
 
     /**
      * Send a GET request to the payment gateway
@@ -85,7 +87,7 @@ class HttpClientWrapper implements HttpClientWrapperContract
         );
     }
 
-    private function resolveAuthorization(&$queryParams, &$formParams, &$headers): string
+    private function resolveAuthorization(array &$queryParams, array|string &$formParams, array &$headers): string
     {
         return $headers['Authorization'] = str_replace('"', '', "Bearer {$this->secret}");
     }

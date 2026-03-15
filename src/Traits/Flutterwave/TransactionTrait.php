@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave;
 
-use MusahMusah\LaravelMultipaymentGateways\Constants\FlutterwaveConstant;
 
 trait TransactionTrait
 {
@@ -17,7 +18,7 @@ trait TransactionTrait
     public function verifyTransaction(string $transactionId): array
     {
         return $this->httpClient()->get(
-            url: FlutterwaveConstant::TRANSACTION_ENDPOINT.$transactionId.'/verify'
+            url: '/transactions/'.$transactionId.'/verify'
         );
     }
 
@@ -30,7 +31,7 @@ trait TransactionTrait
     public function createTransactionRefund(string $transactionId, array $formParams = []): array
     {
         return $this->httpClient()->post(
-            url: FlutterwaveConstant::TRANSACTION_ENDPOINT.$transactionId.'/refund',
+            url: '/transactions/'.$transactionId.'/refund',
             formParams: $formParams
         );
     }
@@ -43,7 +44,7 @@ trait TransactionTrait
     public function getTransactions(array $queryParams = []): array
     {
         return $this->httpClient()->get(
-            url: FlutterwaveConstant::TRANSACTION_ENDPOINT,
+            url: '/transactions/',
             query: $queryParams
         );
     }
@@ -56,7 +57,7 @@ trait TransactionTrait
     public function getRefundTransactions(array $queryParams = []): array
     {
         return $this->httpClient()->get(
-            url: FlutterwaveConstant::REFUND_ENDPOINT,
+            url: '/refunds/',
             query: $queryParams
         );
     }
@@ -69,7 +70,7 @@ trait TransactionTrait
     public function getRefundDetails(string $refundId): array
     {
         return $this->httpClient()->get(
-            url: FlutterwaveConstant::REFUND_ENDPOINT.$refundId
+            url: '/refunds/'.$refundId
         );
     }
 
@@ -81,7 +82,7 @@ trait TransactionTrait
     public function getTransactionFee(array $queryParams): array
     {
         return $this->httpClient()->get(
-            url: FlutterwaveConstant::TRANSACTION_ENDPOINT.'fee',
+            url: '/transactions/fee',
             query: $queryParams
         );
     }
@@ -95,7 +96,7 @@ trait TransactionTrait
     public function resendFailedWebhook(string $transactionId, array $formParams = []): array
     {
         return $this->httpClient()->post(
-            url: FlutterwaveConstant::TRANSACTION_ENDPOINT.$transactionId.'/resend-hook',
+            url: '/transactions/'.$transactionId.'/resend-hook',
             formParams: $formParams
         );
     }
@@ -108,7 +109,7 @@ trait TransactionTrait
     public function viewTransactionTimeline(string $transactionId): array
     {
         return $this->httpClient()->get(
-            url: FlutterwaveConstant::TRANSACTION_ENDPOINT.$transactionId.'/timeline'
+            url: '/transactions/'.$transactionId.'/timeline'
         );
     }
 }

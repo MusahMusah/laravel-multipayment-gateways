@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MusahMusah\LaravelMultipaymentGateways\Facades;
 
 use Illuminate\Support\Facades\Facade;
@@ -32,7 +34,7 @@ use MusahMusah\LaravelMultipaymentGateways\Services\HttpClientWrapper;
  */
 class Paystack extends Facade
 {
-    protected static function getFacadeAccessor()
+    protected static function getFacadeAccessor(): string
     {
         return PaystackContract::class;
     }

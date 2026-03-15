@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MusahMusah\LaravelMultipaymentGateways\Contracts;
 
 interface GatewayContract
@@ -10,7 +12,7 @@ interface GatewayContract
 
     public function setSecret(): void;
 
-    public function resolveAuthorization(&$queryParams, &$formParams, &$headers): void;
+    public function resolveAuthorization(array &$queryParams, array|string &$formParams, array &$headers): void;
 
     public function resolveAccessToken(): string;
 

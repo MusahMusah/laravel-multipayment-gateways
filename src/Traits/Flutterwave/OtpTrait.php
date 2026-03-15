@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave;
 
-use MusahMusah\LaravelMultipaymentGateways\Constants\FlutterwaveConstant;
 
 trait OtpTrait
 {
@@ -14,7 +15,7 @@ trait OtpTrait
     public function createOtp(array $formParams): array
     {
         return $this->httpClient()->post(
-            url: FlutterwaveConstant::OTP_ENDPOINT,
+            url: '/otps/',
             formParams: $formParams
         );
     }
@@ -27,7 +28,7 @@ trait OtpTrait
     public function verifyOtp(string $reference, array $formParams): array
     {
         return $this->httpClient()->post(
-            url: FlutterwaveConstant::OTP_ENDPOINT.$reference.'/validate',
+            url: '/otps/'.$reference.'/validate',
             formParams: $formParams
         );
     }

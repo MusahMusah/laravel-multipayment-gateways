@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave;
 
-use MusahMusah\LaravelMultipaymentGateways\Constants\FlutterwaveConstant;
 
 trait TransferTrait
 {
@@ -14,7 +15,7 @@ trait TransferTrait
     public function initiateTransfer(array $formParams): array
     {
         return $this->httpClient()->post(
-            url: FlutterwaveConstant::TRANSFER_ENDPOINT,
+            url: '/transfers/',
             formParams: $formParams
         );
     }
@@ -27,7 +28,7 @@ trait TransferTrait
     public function getAllTransfers(array $queryParams = []): array
     {
         return $this->httpClient()->get(
-            url: FlutterwaveConstant::TRANSFER_ENDPOINT,
+            url: '/transfers/',
             query: $queryParams
         );
     }
@@ -40,7 +41,7 @@ trait TransferTrait
     public function getTransferFees(array $queryParams = []): array
     {
         return $this->httpClient()->get(
-            url: FlutterwaveConstant::TRANSFER_ENDPOINT.'fee',
+            url: '/transfers/fee',
             query: $queryParams
         );
     }
@@ -63,7 +64,7 @@ trait TransferTrait
         ];
 
         return $this->httpClient()->post(
-            url: FlutterwaveConstant::BULK_TRANSFER_ENDPOINT,
+            url: '/bulk-transfers/',
             formParams: $requestPayload
         );
     }
@@ -78,7 +79,7 @@ trait TransferTrait
     public function getTransfer(int $transferId): array
     {
         return $this->httpClient()->get(
-            url: FlutterwaveConstant::TRANSFER_ENDPOINT.$transferId,
+            url: '/transfers/'.$transferId,
         );
     }
 
@@ -90,7 +91,7 @@ trait TransferTrait
     public function getTransferRates(array $queryParams): array
     {
         return $this->httpClient()->get(
-            url: FlutterwaveConstant::TRANSFER_ENDPOINT.'rates',
+            url: '/transfers/rates',
             query: $queryParams
         );
     }
@@ -105,7 +106,7 @@ trait TransferTrait
     public function retryTransfer(int $transferId): array
     {
         return $this->httpClient()->post(
-            url: FlutterwaveConstant::TRANSFER_ENDPOINT.$transferId.'/retries',
+            url: '/transfers/'.$transferId.'/retries',
         );
     }
 
@@ -119,7 +120,7 @@ trait TransferTrait
     public function getTransferRetry(int $transferId): array
     {
         return $this->httpClient()->get(
-            url: FlutterwaveConstant::TRANSFER_ENDPOINT.$transferId.'/retries',
+            url: '/transfers/'.$transferId.'/retries',
         );
     }
 
@@ -131,7 +132,7 @@ trait TransferTrait
     public function fetchBulkTransfer(array $queryParams): array
     {
         return $this->httpClient()->get(
-            url: FlutterwaveConstant::BULK_TRANSFER_ENDPOINT,
+            url: '/bulk-transfers/',
             query: $queryParams
         );
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Http;
 use MusahMusah\LaravelMultipaymentGateways\Contracts\PaystackContract;

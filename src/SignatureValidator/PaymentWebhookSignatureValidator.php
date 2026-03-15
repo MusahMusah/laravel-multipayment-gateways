@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MusahMusah\LaravelMultipaymentGateways\SignatureValidator;
 
 use Illuminate\Http\Request;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MusahMusah\LaravelMultipaymentGateways\Models;
 
 use Exception;
@@ -9,15 +11,18 @@ use MusahMusah\LaravelMultipaymentGateways\Services\PaymentWebhookConfig;
 
 class PaymentWebhookLog extends Model
 {
-    public $guarded = [];
+    protected $guarded = [];
 
-    protected $casts = [
-        'request_headers' => 'array',
-        'request_body' => 'array',
-        'request_exception' => 'array',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'request_headers' => 'array',
+            'request_body' => 'array',
+            'request_exception' => 'array',
+        ];
+    }
 
-    public static function storePaymentWebhook(PaymentWebhookConfig $config, Request $request, $requestHash): PaymentWebhookLog
+    public static function storePaymentWebhook(PaymentWebhookConfig $config, Request $request, string $requestHash): self
     {
         return self::create([
             'payment_gateway' => $config->name,
@@ -31,12 +36,11 @@ class PaymentWebhookLog extends Model
 
     public function savePaymentWebhookException(Exception $exception): self
     {
-        // @phpstan-ignore-next-line
-        $this->request_exception = [
+        $this->setAttribute('request_exception', [
             'code' => $exception->getCode(),
             'message' => $exception->getMessage(),
             'trace' => $exception->getTraceAsString(),
-        ];
+        ]);
 
         $this->save();
 

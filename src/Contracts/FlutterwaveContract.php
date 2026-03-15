@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MusahMusah\LaravelMultipaymentGateways\Contracts;
 
 interface FlutterwaveContract
@@ -7,7 +9,7 @@ interface FlutterwaveContract
     /**
      * Resolve the authorization URL / Endpoint
      */
-    public function resolveAuthorization(&$queryParams, &$formParams, &$headers): void;
+    public function resolveAuthorization(array &$queryParams, array|string &$formParams, array &$headers): void;
 
     /**
      * Set the access token for the request
@@ -17,15 +19,15 @@ interface FlutterwaveContract
     /**
      * Decode the response
      */
-    public function decodeResponse(): mixed;
+    public function decodeResponse(): array|string;
 
     /**
      * Get the response
      */
-    public function getResponse(): mixed;
+    public function getResponse(): array;
 
     /**
      * Get the data from the response
      */
-    public function getData(): mixed;
+    public function getData(): array;
 }

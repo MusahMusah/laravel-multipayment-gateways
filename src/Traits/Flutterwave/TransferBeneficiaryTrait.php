@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave;
 
-use MusahMusah\LaravelMultipaymentGateways\Constants\FlutterwaveConstant;
 
 trait TransferBeneficiaryTrait
 {
@@ -11,10 +12,10 @@ trait TransferBeneficiaryTrait
      *
      * This method allows you to create beneficiaries for Transfers.
      */
-    public function createTransferBeneficiary(array $transferBeneficiaryDetails): mixed
+    public function createTransferBeneficiary(array $transferBeneficiaryDetails): array
     {
         return $this->httpClient()->post(
-            url: FlutterwaveConstant::BENEFICIARY_ENDPOINT,
+            url: '/beneficiaries/',
             formParams: $transferBeneficiaryDetails
         );
     }
@@ -29,7 +30,7 @@ trait TransferBeneficiaryTrait
     public function getAllTransferBeneficiaries(array $queryParams = []): array
     {
         return $this->httpClient()->get(
-            url: FlutterwaveConstant::BENEFICIARY_ENDPOINT,
+            url: '/beneficiaries/',
             query: $queryParams
         );
     }
@@ -42,7 +43,7 @@ trait TransferBeneficiaryTrait
     public function getTransferBeneficiary(int $beneficiaryId): array
     {
         return $this->httpClient()->get(
-            url: FlutterwaveConstant::BENEFICIARY_ENDPOINT.$beneficiaryId,
+            url: '/beneficiaries/'.$beneficiaryId,
         );
     }
 
@@ -54,7 +55,7 @@ trait TransferBeneficiaryTrait
     public function deleteTransferBeneficiary(int $beneficiaryId): array
     {
         return $this->httpClient()->delete(
-            url: FlutterwaveConstant::BENEFICIARY_ENDPOINT.$beneficiaryId,
+            url: '/beneficiaries/'.$beneficiaryId,
         );
     }
 }

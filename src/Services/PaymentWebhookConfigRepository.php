@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MusahMusah\LaravelMultipaymentGateways\Services;
 
 class PaymentWebhookConfigRepository
 {
-    protected array $webhookConfig;
+    protected array $webhookConfig = [];
 
     /**
      * Store the webhook configuration for a specific payment gateway

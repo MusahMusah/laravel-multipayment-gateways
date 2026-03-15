@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave;
 
-use MusahMusah\LaravelMultipaymentGateways\Constants\FlutterwaveConstant;
+use MusahMusah\LaravelMultipaymentGateways\Enums\FlutterwaveChargeType;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidConfigurationException;
 
 trait ChargeTrait
@@ -17,11 +19,11 @@ trait ChargeTrait
     public function initiateCardCharge(array $formParams): array
     {
         $queryParams = [
-            'type' => FlutterwaveConstant::CARD_PAYMENT_CHARGE_TYPE,
+            'type' => FlutterwaveChargeType::CARD->value,
         ];
 
         return $this->httpClient()->post(
-            url: FlutterwaveConstant::CHARGE_ENDPOINT,
+            url: '/charges/',
             formParams: $this->encryptPayload($formParams),
             query: $queryParams
         );
@@ -34,7 +36,7 @@ trait ChargeTrait
      */
     public function initiateBankTransfer(array $formParams): array
     {
-        return $this->chargePayment(FlutterwaveConstant::BANK_TRANSFER_CHARGE_TYPE, $formParams);
+        return $this->chargePayment(FlutterwaveChargeType::BANK_TRANSFER, $formParams);
     }
 
     /**
@@ -47,7 +49,7 @@ trait ChargeTrait
      */
     public function chargeNigerianBankAccount(array $formParams): array
     {
-        return $this->chargePayment(FlutterwaveConstant::NG_ACCOUNT_DEBIT_TYPE, $formParams);
+        return $this->chargePayment(FlutterwaveChargeType::NG_ACCOUNT_DEBIT, $formParams);
     }
 
     /**
@@ -60,7 +62,7 @@ trait ChargeTrait
      */
     public function chargeUkBankAccount(array $formParams): array
     {
-        return $this->chargePayment(FlutterwaveConstant::UK_ACCOUNT_DEBIT_TYPE, $formParams);
+        return $this->chargePayment(FlutterwaveChargeType::UK_ACCOUNT_DEBIT, $formParams);
     }
 
     /**
@@ -72,7 +74,7 @@ trait ChargeTrait
      */
     public function chargeAchPayment(array $formParams): array
     {
-        return $this->chargePayment(FlutterwaveConstant::ACH_PAYMENT_CHARGE_TYPE, $formParams);
+        return $this->chargePayment(FlutterwaveChargeType::ACH_PAYMENT, $formParams);
     }
 
     /**
@@ -85,7 +87,7 @@ trait ChargeTrait
      */
     public function chargeApplePay(array $formParams): array
     {
-        return $this->chargePayment(FlutterwaveConstant::APPLE_PAY_CHARGE_TYPE, $formParams);
+        return $this->chargePayment(FlutterwaveChargeType::APPLE_PAY, $formParams);
     }
 
     /**
@@ -98,7 +100,7 @@ trait ChargeTrait
      */
     public function chargeGooglePay(array $formParams): array
     {
-        return $this->chargePayment(FlutterwaveConstant::APPLE_PAY_CHARGE_TYPE, $formParams);
+        return $this->chargePayment(FlutterwaveChargeType::GOOGLE_PAY, $formParams);
     }
 
     /**
@@ -110,7 +112,7 @@ trait ChargeTrait
      */
     public function chargeFawryPay(array $formParams): array
     {
-        return $this->chargePayment(FlutterwaveConstant::FAWRY_PAY_CHARGE_TYPE, $formParams);
+        return $this->chargePayment(FlutterwaveChargeType::FAWRY_PAY, $formParams);
     }
 
     /**
@@ -122,7 +124,7 @@ trait ChargeTrait
      */
     public function chargePaypal(array $formParams): array
     {
-        return $this->chargePayment(FlutterwaveConstant::PAYPAL_CHARGE_TYPE, $formParams);
+        return $this->chargePayment(FlutterwaveChargeType::PAYPAL, $formParams);
     }
 
     /**
@@ -134,7 +136,7 @@ trait ChargeTrait
      */
     public function chargeMpesa(array $formParams): array
     {
-        return $this->chargePayment(FlutterwaveConstant::MPESA_PAY_CHARGE_TYPE, $formParams);
+        return $this->chargePayment(FlutterwaveChargeType::MPESA, $formParams);
     }
 
     /**
@@ -146,7 +148,7 @@ trait ChargeTrait
      */
     public function chargeGhanaMobileMoney(array $formParams): array
     {
-        return $this->chargePayment(FlutterwaveConstant::GHANA_MOBILE_MONEY_CHARGE_TYPE, $formParams);
+        return $this->chargePayment(FlutterwaveChargeType::GHANA_MOBILE_MONEY, $formParams);
     }
 
     /**
@@ -158,7 +160,7 @@ trait ChargeTrait
      */
     public function chargeUgandaMobileMoney(array $formParams): array
     {
-        return $this->chargePayment(FlutterwaveConstant::UGANDA_MOBILE_MONEY_CHARGE_TYPE, $formParams);
+        return $this->chargePayment(FlutterwaveChargeType::UGANDA_MOBILE_MONEY, $formParams);
     }
 
     /**
@@ -170,7 +172,7 @@ trait ChargeTrait
      */
     public function chargeMobileMoneyFranco(array $formParams): array
     {
-        return $this->chargePayment(FlutterwaveConstant::FRANCOPHONE_MOBILE_MONEY_CHARGE_TYPE, $formParams);
+        return $this->chargePayment(FlutterwaveChargeType::FRANCOPHONE_MOBILE_MONEY, $formParams);
     }
 
     /**
@@ -182,7 +184,7 @@ trait ChargeTrait
      */
     public function chargeMobileMoneyRwanda(array $formParams): array
     {
-        return $this->chargePayment(FlutterwaveConstant::RWANDA_MOBILE_MONEY_CHARGE_TYPE, $formParams);
+        return $this->chargePayment(FlutterwaveChargeType::RWANDA_MOBILE_MONEY, $formParams);
     }
 
     /**
@@ -194,7 +196,7 @@ trait ChargeTrait
      */
     public function chargeZambiaMobileMoney(array $formParams): array
     {
-        return $this->chargePayment(FlutterwaveConstant::ZAMBIA_MOBILE_MONEY_CHARGE_TYPE, $formParams);
+        return $this->chargePayment(FlutterwaveChargeType::ZAMBIA_MOBILE_MONEY, $formParams);
     }
 
     /**
@@ -206,23 +208,22 @@ trait ChargeTrait
      */
     public function chargeUssd(array $formParams): array
     {
-        return $this->chargePayment(FlutterwaveConstant::USSD_CHARGE_TYPE, $formParams);
+        return $this->chargePayment(FlutterwaveChargeType::USSD, $formParams);
     }
 
     /**
      * Charge a customer's payment using the specified payment method.
      *
-     * @param  string  $paymentMethod  The payment method to use.
      * @param  array  $formParams  An associative array of charge data.
      */
-    private function chargePayment(string $paymentMethod, array $formParams): array
+    private function chargePayment(FlutterwaveChargeType $chargeType, array $formParams): array
     {
         $queryParams = [
-            'type' => $paymentMethod,
+            'type' => $chargeType->value,
         ];
 
         return $this->httpClient()->post(
-            url: FlutterwaveConstant::CHARGE_ENDPOINT,
+            url: '/charges/',
             formParams: $formParams,
             query: $queryParams
         );
@@ -257,7 +258,7 @@ trait ChargeTrait
     public function validateCharge(array $formParams): array
     {
         return $this->httpClient()->post(
-            url: FlutterwaveConstant::VALIDATE_CHARGE_ENDPOINT,
+            url: '/validate-charge',
             formParams: $formParams,
         );
     }
@@ -271,7 +272,7 @@ trait ChargeTrait
     public function captureCharge(string $flwRef, array $formParams): array
     {
         return $this->httpClient()->post(
-            url: FlutterwaveConstant::CHARGE_ENDPOINT.$flwRef.'/capture',
+            url: '/charges/'.$flwRef.'/capture',
             formParams: $formParams
         );
     }
@@ -284,7 +285,7 @@ trait ChargeTrait
     public function voidCharge(string $flwRef): array
     {
         return $this->httpClient()->post(
-            url: FlutterwaveConstant::CHARGE_ENDPOINT.$flwRef.'/void',
+            url: '/charges/'.$flwRef.'/void',
         );
     }
 
@@ -297,7 +298,7 @@ trait ChargeTrait
     public function createRefund(string $flwRef, array $formParams): array
     {
         return $this->httpClient()->post(
-            url: FlutterwaveConstant::CHARGE_ENDPOINT.$flwRef.'/refund',
+            url: '/charges/'.$flwRef.'/refund',
             formParams: $formParams,
         );
     }
@@ -310,7 +311,7 @@ trait ChargeTrait
     public function capturePaypalCharge(array $formParams): array
     {
         return $this->httpClient()->post(
-            url: FlutterwaveConstant::CHARGE_ENDPOINT.'/paypal-capture',
+            url: '/charges/'.'/paypal-capture',
             formParams: $formParams,
         );
     }
@@ -323,7 +324,7 @@ trait ChargeTrait
     public function voidPaypalCharge(array $formParams): array
     {
         return $this->httpClient()->post(
-            url: FlutterwaveConstant::CHARGE_ENDPOINT.'/void',
+            url: '/charges/'.'/void',
             formParams: $formParams,
         );
     }

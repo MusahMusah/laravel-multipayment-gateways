@@ -32,11 +32,6 @@ class FlutterwaveService extends BaseGateWay implements FlutterwaveContract
         TransferTrait;
 
     /**
-     * The redirect url to consume the Flutterwave's service
-     */
-    protected string $redirectUrl;
-
-    /**
      * The payload to initiate the transaction
      */
     protected array $payload;
@@ -109,7 +104,7 @@ class FlutterwaveService extends BaseGateWay implements FlutterwaveContract
     /**
      * Resolve the authorization URL / Endpoint
      */
-    public function resolveAuthorization(&$queryParams, &$formParams, &$headers): void
+    public function resolveAuthorization(array &$queryParams, array|string &$formParams, array &$headers): void
     {
         $headers['Authorization'] = $this->resolveAccessToken();
     }

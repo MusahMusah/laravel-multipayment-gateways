@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave;
 
-use MusahMusah\LaravelMultipaymentGateways\Constants\FlutterwaveConstant;
 
 trait PaymentPlanTrait
 {
@@ -16,7 +17,7 @@ trait PaymentPlanTrait
     public function createPaymentPlan(array $planDetails): array
     {
         return $this->httpClient()->post(
-            url: FlutterwaveConstant::PAYMENT_PLAN_ENDPOINT,
+            url: '/payment-plans/',
             formParams: $planDetails,
         );
     }
@@ -32,7 +33,7 @@ trait PaymentPlanTrait
     public function updatePaymentPlan(int $paymentPlanId, array $planDetails): array
     {
         return $this->httpClient()->put(
-            url: FlutterwaveConstant::PAYMENT_PLAN_ENDPOINT.$paymentPlanId,
+            url: '/payment-plans/'.$paymentPlanId,
             formParams: $planDetails,
         );
     }
@@ -47,7 +48,7 @@ trait PaymentPlanTrait
     public function getAllPaymentPlans(array $queryParams = []): array
     {
         return $this->httpClient()->get(
-            url: FlutterwaveConstant::PAYMENT_PLAN_ENDPOINT,
+            url: '/payment-plans/',
             query: $queryParams
         );
     }
@@ -62,7 +63,7 @@ trait PaymentPlanTrait
     public function getPaymentPlan(int $paymentPlanId): array
     {
         return $this->httpClient()->get(
-            url: FlutterwaveConstant::PAYMENT_PLAN_ENDPOINT.$paymentPlanId,
+            url: '/payment-plans/'.$paymentPlanId,
         );
     }
 
@@ -76,7 +77,7 @@ trait PaymentPlanTrait
     public function cancelPaymentPlan(int $paymentPlanId): array
     {
         return $this->httpClient()->put(
-            url: FlutterwaveConstant::PAYMENT_PLAN_ENDPOINT.$paymentPlanId.'/cancel',
+            url: '/payment-plans/'.$paymentPlanId.'/cancel',
         );
     }
 }

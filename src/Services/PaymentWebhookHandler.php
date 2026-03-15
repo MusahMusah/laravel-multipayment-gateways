@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MusahMusah\LaravelMultipaymentGateways\Services;
 
 use Exception;
@@ -10,27 +12,28 @@ use MusahMusah\LaravelMultipaymentGateways\Events\PaymentWebhookReceivedEvent;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidPaymentWebhookConfig;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidPaymentWebhookHandler;
 use MusahMusah\LaravelMultipaymentGateways\Exceptions\InvalidPaymentWebhookSignature;
+use MusahMusah\LaravelMultipaymentGateways\Jobs\ProcessPaymentWebhookJob;
 use MusahMusah\LaravelMultipaymentGateways\Models\PaymentWebhookLog;
 
 class PaymentWebhookHandler
 {
-    protected $request;
+    protected Request $request;
 
     protected PaymentWebhookConfig $webhookConfig;
 
-    protected $webhookPayload;
+    protected array $webhookPayload;
 
-    protected $webhookHash;
+    protected string $webhookHash;
 
-    protected $databaseTable;
+    protected string $databaseTable;
 
-    const WEBHOOK_HANDLER_JOB = 'job';
+    public const string WEBHOOK_HANDLER_JOB = 'job';
 
-    const WEBHOOK_HANDLER_EVENT = 'event';
+    public const string WEBHOOK_HANDLER_EVENT = 'event';
 
-    const WEBHOOK_RESPONSE_MESSAGE = 'successful';
+    public const string WEBHOOK_RESPONSE_MESSAGE = 'successful';
 
-    const WEBHOOK_RESPONSE_STATUS = 200;
+    public const int WEBHOOK_RESPONSE_STATUS = 200;
 
     public function __construct(
         Request $request,
@@ -181,7 +184,7 @@ class PaymentWebhookHandler
      *
      * @throws InvalidPaymentWebhookConfig
      */
-    protected function createWebhookJob()
+    protected function createWebhookJob(): ProcessPaymentWebhookJob
     {
         if (empty($this->webhookConfig->paymentWebhookJobClass)) {
             // job class is missing
@@ -194,7 +197,7 @@ class PaymentWebhookHandler
     /**
      * Create the webhook event
      */
-    protected function createWebhookEvent()
+    protected function createWebhookEvent(): PaymentWebhookReceivedEvent
     {
         if (empty($this->webhookConfig->paymentWebhookEventClass)) {
             return new PaymentWebhookReceivedEvent($this->webhookPayload);

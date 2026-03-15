@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MusahMusah\LaravelMultipaymentGateways\Traits\Paystack;
 
 trait TransferTrait
@@ -33,7 +35,7 @@ trait TransferTrait
     /**
      * Hit Paystack's API to initiate a Bulk Transfer
      */
-    public function initiateBulkTransfer(array $transfers): mixed
+    public function initiateBulkTransfer(array $transfers): array
     {
         return $this->httpClient()->post(url: 'transfer/bulk', formParams: $transfers);
     }
@@ -49,9 +51,9 @@ trait TransferTrait
     /**
      * Hit Paystack's API to verify a Transfer
      */
-    public function verifyTransfer(string $reference): mixed
+    public function verifyTransfer(string $reference): array
     {
-        return $this->httpClient()->get(url: "transfer/verify/$reference");
+        return $this->httpClient()->get(url: "transfer/verify/{$reference}");
     }
 
     /**
@@ -59,7 +61,7 @@ trait TransferTrait
      */
     public function getTransfer(string $transferCode): array
     {
-        return $this->httpClient()->get(url: "transfer/$transferCode");
+        return $this->httpClient()->get(url: "transfer/{$transferCode}");
     }
 
     /**

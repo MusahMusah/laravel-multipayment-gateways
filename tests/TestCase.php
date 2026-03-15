@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MusahMusah\LaravelMultipaymentGateways\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -12,6 +14,14 @@ use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {
+    protected PaystackContract $paystack;
+
+    protected FlutterwaveContract $flutterwave;
+
+    protected StripeContract $stripe;
+
+    protected HttpClientWrapper $httpClientWrapper;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -27,14 +37,14 @@ class TestCase extends Orchestra
         $this->httpClientWrapper = $this->instance('httpClientWrapper', $this->mock(HttpClientWrapper::class));
     }
 
-    protected function getPackageProviders($app)
+    protected function getPackageProviders($app): array
     {
         return [
             LaravelMultipaymentGatewaysServiceProvider::class,
         ];
     }
 
-    public function getEnvironmentSetUp($app)
+    public function getEnvironmentSetUp($app): void
     {
         config()->set('database.default', 'testing');
 

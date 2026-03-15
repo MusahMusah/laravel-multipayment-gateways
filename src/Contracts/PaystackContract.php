@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MusahMusah\LaravelMultipaymentGateways\Contracts;
 
 use GuzzleHttp\Exception\GuzzleException;
@@ -30,7 +32,7 @@ interface PaystackContract
      * @throws GuzzleException
      * @throws HttpMethodFoundException
      */
-    public function verifyTransaction(string $reference): array|object;
+    public function verifyTransaction(string $reference): array;
 
     /**
      * Hit Paystack's API to get all the Banks
@@ -38,7 +40,7 @@ interface PaystackContract
      *
      * @throws GuzzleException|HttpMethodFoundException
      */
-    public function getBanks(): mixed;
+    public function getBanks(): array;
 
     /**
      * Hit Paystack's API to resolve a bank account
@@ -83,7 +85,7 @@ interface PaystackContract
      * @throws GuzzleException
      * @throws HttpMethodFoundException
      */
-    public function initiateBulkTransfer(array $transfers): mixed;
+    public function initiateBulkTransfer(array $transfers): array;
 
     /**
      * Hit Paystack's API to finalize a Transfer
@@ -93,17 +95,17 @@ interface PaystackContract
     /**
      * Hit Paystack's API to verify a Transfer
      */
-    public function verifyTransfer(string $reference): mixed;
+    public function verifyTransfer(string $reference): array;
 
     /**
      * Hit Paystack's API to fetch a Transfer
      */
-    public function getTransfer(string $transferCode): mixed;
+    public function getTransfer(string $transferCode): array;
 
     /**
      * Hit Paystack's API to fetch all Transfers
      */
-    public function getAllTransfers(): mixed;
+    public function getAllTransfers(): array;
 
     public function getTransaction(string $reference): array;
 

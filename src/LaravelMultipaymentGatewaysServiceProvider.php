@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MusahMusah\LaravelMultipaymentGateways;
 
 use Illuminate\Support\Facades\Route;
@@ -27,7 +29,7 @@ class LaravelMultipaymentGatewaysServiceProvider extends PackageServiceProvider
             ->hasMigrations('create_payment_webhook_logs_table');
     }
 
-    public function packageRegistered()
+    public function packageRegistered(): void
     {
         $this->app->bind(PaystackContract::class, PaystackService::class);
         $this->app->bind(StripeContract::class, StripeService::class);
@@ -47,20 +49,20 @@ class LaravelMultipaymentGatewaysServiceProvider extends PackageServiceProvider
         ];
     }
 
-    private function registerWebHookConfig()
+    private function registerWebHookConfig(): void
     {
         $this->registerWebHookRoute();
         $this->registerWebHookBindings();
     }
 
-    private function registerWebHookRoute()
+    private function registerWebHookRoute(): void
     {
         Route::macro('webhooks', function (string $url, string $name = 'stripe') {
             return Route::post($url, PaymentWebhookController::class)->name("{$name}-payment-webhook");
         });
     }
 
-    private function registerWebHookBindings()
+    private function registerWebHookBindings(): void
     {
         $this->app->scoped(PaymentWebhookConfigRepository::class, function () {
             $configRepository = new PaymentWebhookConfigRepository;

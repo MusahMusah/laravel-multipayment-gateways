@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave;
 
-use MusahMusah\LaravelMultipaymentGateways\Constants\FlutterwaveConstant;
 
 trait SettlementTrait
 {
@@ -14,7 +15,7 @@ trait SettlementTrait
     public function getSettlement(int $settlementId): array
     {
         return $this->httpClient()->get(
-            url: FlutterwaveConstant::SETTLEMENT_ENDPOINT.$settlementId,
+            url: '/settlements/'.$settlementId,
         );
     }
 
@@ -26,7 +27,7 @@ trait SettlementTrait
     public function getAllSettlements(array $queryParams = []): array
     {
         return $this->httpClient()->get(
-            url: FlutterwaveConstant::SETTLEMENT_ENDPOINT,
+            url: '/settlements/',
             query: $queryParams
         );
     }

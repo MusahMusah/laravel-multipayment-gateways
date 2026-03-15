@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use MusahMusah\LaravelMultipaymentGateways\Contracts\FlutterwaveContract;
 use MusahMusah\LaravelMultipaymentGateways\Contracts\PaystackContract;
 use MusahMusah\LaravelMultipaymentGateways\Contracts\StripeContract;

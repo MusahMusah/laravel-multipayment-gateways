@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MusahMusah\LaravelMultipaymentGateways\Jobs;
 
 use Illuminate\Bus\Queueable;
@@ -12,10 +14,5 @@ class ProcessPaymentWebhookJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
-    public function __construct(public $webhookPayload) {}
+    public function __construct(public array $webhookPayload) {}
 }

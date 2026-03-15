@@ -1,14 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 use MusahMusah\LaravelMultipaymentGateways\Services\HttpClientWrapper;
 
 it('can take url from any payment gateway in HttpClientWrapper', function () {
     // randomly pick a base uri from the config
-    $baseUri = [array_rand([
+    $urls = [
         'https://api.paystack.co',
         'https://api.stripe.com',
         'https://api.flutterwave.com',
-    ])];
+    ];
+    $baseUri = $urls[array_rand($urls)];
 
     $httpClientWrapper = new HttpClientWrapper(baseUri: $baseUri, secret: 'sk_test_123456789');
 

@@ -15,12 +15,12 @@ abstract class BaseGateWay implements GatewayContract
     /**
      * The base uri to consume the payment gateway's service
      */
-    protected $baseUri;
+    protected string $baseUri;
 
     /**
      * The secret to consume the payment gateway's service
      */
-    protected $secret;
+    protected string $secret;
 
     /**
      * The redirect url to consume the payment gateway's service
@@ -67,7 +67,7 @@ abstract class BaseGateWay implements GatewayContract
     /**
      * Resolve the authorization URL / Endpoint
      */
-    public function resolveAuthorization(&$queryParams, &$formParams, &$headers): void
+    public function resolveAuthorization(array &$queryParams, array|string &$formParams, array &$headers): void
     {
         $headers['Authorization'] = str_replace('"', '', $this->resolveAccessToken());
     }

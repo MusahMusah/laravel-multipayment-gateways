@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave;
 
-use MusahMusah\LaravelMultipaymentGateways\Constants\FlutterwaveConstant;
 
 trait BankTrait
 {
@@ -12,7 +13,7 @@ trait BankTrait
     public function getBanks(string $countryCode): array
     {
         $banks = $this->httpClient()->get(
-            url: FlutterwaveConstant::BANK_ENDPOINT.$countryCode,
+            url: '/banks/'.$countryCode,
         );
 
         // sort banks by name
@@ -29,7 +30,7 @@ trait BankTrait
     public function getBankBranches(int $bankId): array
     {
         return $this->httpClient()->get(
-            url: FlutterwaveConstant::BANK_ENDPOINT.$bankId.'/branches',
+            url: '/banks/'.$bankId.'/branches',
         );
     }
 }

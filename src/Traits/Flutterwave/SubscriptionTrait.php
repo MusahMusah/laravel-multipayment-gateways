@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MusahMusah\LaravelMultipaymentGateways\Traits\Flutterwave;
 
-use MusahMusah\LaravelMultipaymentGateways\Constants\FlutterwaveConstant;
 
 trait SubscriptionTrait
 {
@@ -12,7 +13,7 @@ trait SubscriptionTrait
     public function getAllSubscriptions(array $queryParams = []): array
     {
         return $this->httpClient()->get(
-            url: FlutterwaveConstant::SUBSCRIPTION_ENDPOINT,
+            url: '/subscriptions/',
             query: $queryParams
         );
     }
@@ -23,7 +24,7 @@ trait SubscriptionTrait
     public function activateSubscription(int $subscriptionId): array
     {
         return $this->httpClient()->put(
-            url: FlutterwaveConstant::SUBSCRIPTION_ENDPOINT.$subscriptionId.'/activate',
+            url: '/subscriptions/'.$subscriptionId.'/activate',
         );
     }
 
@@ -33,7 +34,7 @@ trait SubscriptionTrait
     public function deactivateSubscription(int $subscriptionId): array
     {
         return $this->httpClient()->put(
-            url: FlutterwaveConstant::SUBSCRIPTION_ENDPOINT.$subscriptionId.'/cancel',
+            url: '/subscriptions/'.$subscriptionId.'/cancel',
         );
     }
 }

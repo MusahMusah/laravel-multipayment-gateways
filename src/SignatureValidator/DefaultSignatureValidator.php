@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MusahMusah\LaravelMultipaymentGateways\SignatureValidator;
 
 use Illuminate\Http\Request;
@@ -9,7 +11,7 @@ class DefaultSignatureValidator implements PaymentWebhookSignatureValidator
 {
     public function isValid(Request $request, PaymentWebhookConfig $config): bool
     {
-        if (! config(key: $config->verify_signature)) {
+        if (! config(key: $config->verifySignature)) {
             return true;
         }
 
@@ -26,7 +28,7 @@ class DefaultSignatureValidator implements PaymentWebhookSignatureValidator
         return hash_equals(known_string: $signature, user_string: $request->header(key: $config->signatureHeaderName));
     }
 
-    private function validateSignature($gatewayName, $requestContent, $signingSecret): string
+    private function validateSignature(string $gatewayName, string $requestContent, #[\SensitiveParameter] string $signingSecret): string
     {
         // @phpstan-ignore-next-line
         return match ($gatewayName) {

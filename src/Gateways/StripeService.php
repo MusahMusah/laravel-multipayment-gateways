@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MusahMusah\LaravelMultipaymentGateways\Gateways;
 
 use MusahMusah\LaravelMultipaymentGateways\Abstracts\BaseGateWay;

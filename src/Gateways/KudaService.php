@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MusahMusah\LaravelMultipaymentGateways\Gateways;
 
 use MusahMusah\LaravelMultipaymentGateways\Abstracts\BaseGateWay;
@@ -43,7 +45,7 @@ class KudaService extends BaseGateWay
         $this->email = config('multipaymentgateways.kuda.email');
     }
 
-    public function resolveAuthorization(&$queryParams, &$formParams, &$headers): void
+    public function resolveAuthorization(array &$queryParams, array|string &$formParams, array &$headers): void
     {
         // extend the base class method to add the authorization header
         parent::resolveAuthorization($queryParams, $formParams, $headers);
@@ -58,7 +60,7 @@ class KudaService extends BaseGateWay
         return "Bearer {$this->retrieveApiToken()}";
     }
 
-    public function retrieveApiToken()
+    public function retrieveApiToken(): mixed
     {
         return cache()->remember('kuda_token', now()->addMinutes(20), function () {
             return $this->makeRequest(
