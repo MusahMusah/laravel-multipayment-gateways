@@ -4,9 +4,33 @@ All notable changes to `laravel-multipayment-gateways` will be documented in thi
 
 ## 2.0.0-beta.1 - 2026-03-15
 
-### What's Changed
+> **This is a beta release.** Stable release is scheduled for **March 17, 2026**.
+> Install via: `composer require musahmusah/laravel-multipayment-gateways:^2.0@beta`
 
-* feat(deps): drop PHP 8.0/8.1 and Laravel 8/9 support by @MusahMusah in https://github.com/MusahMusah/laravel-multipayment-gateways/pull/37
+### Breaking Changes
+
+- Dropped support for PHP 8.0 and 8.1 — **PHP 8.2+ is now required**
+- Dropped support for Laravel 8, 9, and 10 — **Laravel 11, 12, and 13 are now supported**
+- Removed `ConsumesExternalServices` trait; HTTP layer is now handled internally via Laravel HTTP Client
+- `FlutterwaveConstant` class removed — replaced by the `FlutterwaveChargeType` enum
+- `HttpMethodFoundException` removed — consolidated into `HttpClientException`
+
+### New Features
+
+- **`PaymentResponse` DTO** — all gateway responses are now returned as a typed `PaymentResponse` data object instead of raw arrays, giving you consistent, predictable response structures across all gateways
+- **`PaymentManager`** — new unified entry point to resolve any gateway at runtime via `Payment::gateway('paystack')` or the `Payment` facade
+- **Runtime config overrides** — gateway credentials can now be overridden at runtime without touching config files, useful for multi-tenant applications
+- **`PaymentGateway` enum** — type-safe enum for referencing supported gateways (`PaymentGateway::Paystack`, `PaymentGateway::Flutterwave`, etc.)
+- **`Kuda` facade** — new `Kuda` facade added alongside the existing gateway facades
+- **Split contracts** — `FlutterwaveContract` and `PaystackContract` are now broken into focused sub-contracts (e.g. `FlutterwaveChargeContract`, `PaystackTransactionContract`) for better IDE support and extensibility
+
+### Improvements
+
+- **Replaced Guzzle with Laravel HTTP Client** — removed the `guzzlehttp/guzzle` dependency; the package now uses Laravel's built-in HTTP Client, reducing dependencies and improving testability
+- **Strict types enforced** — `declare(strict_types=1)` added across the entire codebase for stronger type safety
+- **Enums over constants** — PHP 8.1+ native enums replace all string/integer constant classes
+- **Improved `HttpClientException`** — richer exception context with better error messages from gateway responses
+- **Expanded test coverage** — tests rewritten to use `Http::fake()` throughout; new integration tests added for Flutterwave, Paystack, and Stripe
 
 **Full Changelog**: https://github.com/MusahMusah/laravel-multipayment-gateways/compare/1.8.0...2.0.0-beta.1
 
