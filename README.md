@@ -44,17 +44,18 @@ The package currently supports multiple gateways such as **Paystack**, **Flutter
 The package offers an easy to use interface that abstracts the complexities of integrating with these payment gateways.
 It also provides a way to handle webhooks from the payment gateways.
 
+## Installation
+
+```bash
+composer require musahmusah/laravel-multipayment-gateways
+```
+
 ## Version Compatibility
 
 | Package | Laravel | PHP  |
 |---------|---------|------|
 | 1.x     | 8–12    | 8.0+ |
 | 2.x     | 11–13   | 8.2+ |
-
-> **v2.x is currently in beta** (stable release: March 17, 2026). To install the beta:
-> ```bash
-> composer require musahmusah/laravel-multipayment-gateways:^2.0@beta
-> ```
 
 > If you are on Laravel 10 or below, install the previous major version:
 > `composer require musahmusah/laravel-multipayment-gateways:^1.0`
